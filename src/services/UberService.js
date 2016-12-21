@@ -1,8 +1,9 @@
 'use es6';
 
 import {List} from 'immutable';
-
 import {UberClient} from 'uber-client';
+
+import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
 
 export default class UberService {
   constructor() {
@@ -12,20 +13,16 @@ export default class UberService {
 
   getTimeEstimates(address) {
     return this.geocodeService.getLocations(address)
-                              .then(locations => {
-                                if (locations.isEmpty()) {
-                                  throw new RangeError('no locations for address');
-                                }
+               .then(locations => UberService.getFirstLocation(locations))
+               .then(location => this.client.getTimeEstimates({ start: location.coordinate }))
+               .then(estimates => TimeEstimatesTranslator.translate(estimates));
+  }
 
-                                return locations.first();
-                              })
-                              .then(location => {
-                                return this.client.getTimeEstimates({
-                                  start: location.coordinate
-                                });
-                              })
-                              .then(estimates => {
+  static getFirstLocation(locations) {
+    if (locations.isEmpty()) {
+      throw new RangeError('no locations for address');
+    }
 
-                              });
+    return locations.first();
   }
 }
