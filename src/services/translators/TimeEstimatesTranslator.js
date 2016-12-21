@@ -1,5 +1,9 @@
 'use es6';
 
+import {List} from 'immutable';
+
+import TimeEstimate from '../../data/TimeEstimate';
+
 export default class TimeEstimatesTranslator {
   static translate(response) {
     if (!('times' in response)) {
