@@ -17,7 +17,7 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected prices to be an array');
     }
 
-    return List(estimates.map(estimate => TimeEstimatesTranslator.translateEstimate(estimate)));
+    return List(estimates.map(estimate => PriceEstimatesTranslator.translateEstimate(estimate)));
   }
 
   static translateEstimate(estimate) {
@@ -61,18 +61,28 @@ export default class PriceEstimatesTranslator {
     }
 
     let highEstimate = estimate['high_estimate'];
-    if (!Number.isInteger(highEstimate)) {
+
+    // estimates can be null for non-applicable products like Taxi
+    if (highEstimate == null) {
+      highEstimate = undefined;
+    } else if (!Number.isInteger(highEstimate)) {
       throw new TypeError('expected high estimate to be an integer');
     }
 
     let lowEstimate = estimate['low_estimate'];
-    if (!Number.isInteger(lowEstimate)) {
+    if (lowEstimate == null) {
+      lowEstimate = undefined;
+    } else if (!Number.isInteger(lowEstimate)) {
       throw new TypeError('expected low estimate to be an integer');
     }
 
     let currencyCode = estimate['currency_code'];
-    if (typeof currencyCode !== 'string') {
-      throw new TypeError('expected localized display name to be a string');
+
+    // currency code can be null for non-applicable products like Taxi
+    if (currencyCode == null) {
+      currencyCode = undefined;
+    } else if (typeof currencyCode !== 'string') {
+      throw new TypeError('expected currency code name to be a string');
     }
 
     let args = Map({
@@ -86,6 +96,7 @@ export default class PriceEstimatesTranslator {
       currencyCode: currencyCode
     });
 
+    // wont show up unless > 1
     if ('surgeMultiplier' in estimate) {
       let surge = estimate['surgeMultiplier'];
       if (!Utilities.isFloat(surge)) {

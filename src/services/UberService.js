@@ -5,6 +5,7 @@ import {UberClient} from 'uber-client';
 
 import GeocodeService from './GeocodeService';
 import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
+import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
 
 export default class UberService {
   constructor() {
