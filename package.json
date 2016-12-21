@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
     "chai-immutable": "1.6.0",
     "mocha": "2.4.5",
     "coveralls": "2.11.9",
