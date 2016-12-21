@@ -6,7 +6,7 @@ import chaiImmutable from 'chai-immutable';
 import {List} from 'immutable';
 
 import Coordinate from '../src/data/Coordinate';
-import GeocodeFetcher from '../src/services/fetchers/GeocodeFetcher';
+import GeocodeService from '../src/services/GeocodeService';
 import Location from '../src/data/Location';
 
 import geocodeFile from './files/geocode';
@@ -15,8 +15,8 @@ chai.use(chaiAsPromised);
 chai.use(chaiImmutable);
 chai.should();
 
-describe('Test Geocode Fetcher', function() {
-  let geocodeFetcher = new GeocodeFetcher();
+describe('Test Geocode Service', function() {
+  let geocodeFetcher = new GeocodeService();
   let address = '25 first street cambridge ma';
   let location = new Location({
     name: '25 First St, Cambridge, MA 02141, USA',

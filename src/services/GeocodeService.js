@@ -2,10 +2,10 @@
 
 import GoogleMapsClient from '@google/maps';
 
-import Coordinate from '../../data/Coordinate';
-import GeocodeTranslator from '../translators/GeocodeTranslator';
+import Coordinate from '../data/Coordinate';
+import GeocodeTranslator from './translators/GeocodeTranslator';
 
-export default class GeocodeFetcher {
+export default class GeocodeService {
   constructor() {
     this.googleMapsClient = GoogleMapsClient.createClient({
       key: 'AIzaSyBfyXZ3kDp03V_o7_mak0wxVU4B2Zcl0Ak'
