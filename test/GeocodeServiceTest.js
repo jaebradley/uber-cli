@@ -16,7 +16,7 @@ chai.use(chaiImmutable);
 chai.should();
 
 describe('Test Geocode Service', function() {
-  let geocodeFetcher = new GeocodeService();
+  let service = new GeocodeService();
   let address = '25 first street cambridge ma';
   let location = new Location({
     name: '25 First St, Cambridge, MA 02141, USA',
@@ -27,10 +27,10 @@ describe('Test Geocode Service', function() {
   });
   let locations = List.of(location);
   it('tests data fetching', function() {
-    return geocodeFetcher.getData(address).should.eventually.eql(geocodeFile);
+    return service.getData(address).should.eventually.eql(geocodeFile);
   });
 
   it('tests location fetching', function() {
-    return geocodeFetcher.getLocations(address).should.eventually.eql(locations);
+    return service.getLocations(address).should.eventually.eql(locations);
   });
 });

@@ -3,6 +3,7 @@
 import {List} from 'immutable';
 import {UberClient} from 'uber-client';
 
+import GeocodeService from './GeocodeService';
 import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
 
 export default class UberService {
