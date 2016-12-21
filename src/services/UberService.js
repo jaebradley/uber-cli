@@ -4,6 +4,7 @@ import {List} from 'immutable';
 import {UberClient} from 'uber-client';
 
 import GeocodeService from './GeocodeService';
+import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
 import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
 
 export default class UberService {
@@ -17,6 +18,19 @@ export default class UberService {
                .then(locations => UberService.getFirstLocation(locations))
                .then(location => this.client.getTimeEstimates({ start: location.coordinate }))
                .then(estimates => TimeEstimatesTranslator.translate(estimates));
+  }
+
+  getPriceEstimates(start, end) {
+    let startLocation = this.geocodeService.getLocations(start)
+                                           .then(locations => UberService.getFirstLocation(locations));
+    let endLocation = this.geocodeService.getLocations(end)
+                                         .then(locations => UberService.getFirstLocation(locations));
+    return Promise.all([startLocation, endLocation])
+                  .then(values => this.client.getPriceEstimates({
+                    start: values[0].coordinate,
+                    end: values[1].coordinate
+                  }))
+                  .then(response => PriceEstimatesTranslator.translate(response));
   }
 
   static getFirstLocation(locations) {
