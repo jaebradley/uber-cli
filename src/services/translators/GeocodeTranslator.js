@@ -1,8 +1,10 @@
 'use es6';
 
-import Address from '../../data/Address';
+import {List} from 'immutable';
+
 import Coordinate from '../../data/Coordinate';
-import Utilities from '../../../Utilities';
+import Location from '../../data/Location';
+import Utilities from '../../Utilities';
 
 export default class GeocodeTranslator {
   static translate(json) {
@@ -14,6 +16,19 @@ export default class GeocodeTranslator {
       throw new TypeError('unexpected status value');
     }
 
+    if (!('results' in json)) {
+      throw new ReferenceError('expected results field');
+    }
+
+    let results = json['results'];
+    if (!Array.isArray(results)) {
+      throw new TypeError('expected array of results');
+    }
+
+    return List(results.map(result => GeocodeTranslator.translateLocation(result)));
+  }
+
+  static translateLocation(json) {
     if (!('formatted_address' in json)) {
       throw new ReferenceError('expected formatted address field');
     }
@@ -55,12 +70,12 @@ export default class GeocodeTranslator {
       throw new TypeError('expected longitude to be a float');
     }
 
-    return new Address({
+    return new Location({
       name: formattedAddress,
-      location: new Coordinate({
+      coordinate: new Coordinate({
         latitude: latitude,
         longitude: longitude
-      });
+      })
     });
   }
 }

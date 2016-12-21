@@ -6,8 +6,8 @@ import Coordinate from './Coordinate';
 
 let defaults = {
   name: '',
-  location: new Coordinate(),
+  coordinate: new Coordinate(),
 }
 
-export default class Address extends Record(defaults) {
+export default class Location extends Record(defaults) {
 }

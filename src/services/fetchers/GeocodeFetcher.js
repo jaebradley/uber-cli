@@ -2,7 +2,8 @@
 
 import GoogleMapsClient from '@google/maps';
 
-import Coordinate from '../data/Coordinate';
+import Coordinate from '../../data/Coordinate';
+import GeocodeTranslator from '../translators/GeocodeTranslator';
 
 export default class GeocodeFetcher {
   constructor() {
@@ -24,7 +25,8 @@ export default class GeocodeFetcher {
     });
   }
 
-  getCoordinates(address) {
-    return getData(address).then()
+  getLocations(address) {
+    return this.getData(address)
+               .then(response => GeocodeTranslator.translate(response));
   }
 }
