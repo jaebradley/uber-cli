@@ -4,7 +4,9 @@ import {List} from 'immutable';
 import {UberClient} from 'uber-client';
 
 import GeocodeService from './GeocodeService';
+import PriceEstimates from '../../data/PriceEstimates';
 import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
+import TimeEstimates from '../../data/TimeEstimates';
 import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
 
 export default class UberService {
@@ -17,7 +19,10 @@ export default class UberService {
     return this.geocodeService.getLocations(address)
                .then(locations => UberService.getFirstLocation(locations))
                .then(location => this.client.getTimeEstimates({ start: location.coordinate }))
-               .then(estimates => TimeEstimatesTranslator.translate(estimates));
+               .then(estimates => new TimeEstimates({
+                 location: location, 
+                 estimates: TimeEstimatesTranslator.translate(estimates)
+               }));
   }
 
   getPriceEstimates(start, end) {
@@ -30,7 +35,11 @@ export default class UberService {
                     start: values[0].coordinate,
                     end: values[1].coordinate
                   }))
-                  .then(response => PriceEstimatesTranslator.translate(response));
+                  .then(response => new PriceEstimates({
+                    start: values[0],
+                    end: values[1],
+                    estimates: PriceEstimatesTranslator.translate(response)
+                  }));
   }
 
   static getFirstLocation(locations) {
