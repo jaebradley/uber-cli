@@ -17,7 +17,8 @@
   "dependencies": {
     "uber-client": "0.0.0",
     "@google/maps": "0.3.1",
-    "immutable": "3.8.1"
+    "immutable": "3.8.1",
+    "cli-table2": "0.2.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
