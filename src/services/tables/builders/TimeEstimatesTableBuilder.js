@@ -3,10 +3,12 @@
 import {List,Map} from 'immutable';
 import Table from 'cli-table2';
 
+import Utilities from '../../../Utilities';
+
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
     let table = new Table({
-      head: ['Estimated Wait (Min.)', 'Services']
+      head: ['Estimated Wait', 'Services']
     });
     let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates);
     timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
