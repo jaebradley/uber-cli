@@ -10,10 +10,13 @@
     "prepublish": "npm run compile",
     "compile": "babel --presets es2015,stage-0 -d build/ src/"
   },
+  "bin": {
+    "uber": "build/executables/uber.js"
+  },
   "author": "Jae Bradley",
   "license": "MIT",
   "preferGlobal": true,
-  "main": "./build/index.js",
+  "main": "./build/executables/uber.js",
   "dependencies": {
     "uber-client": "0.0.0",
     "@google/maps": "0.3.1",
