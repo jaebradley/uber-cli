@@ -9,7 +9,8 @@ export default class TimeEstimatesTableBuilder {
       head: ['Estimated Wait (Min.)', 'Services']
     });
     let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates);
-    timeEstimateGroups.entrySeq().forEach(e => table.push([e[0], e[1].join(',')]));
+    timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
+                                                           e[1].join(',')]));
     return table.toString();
   }
 
