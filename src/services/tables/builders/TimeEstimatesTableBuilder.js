@@ -1,13 +1,14 @@
 'use es6'
 
 import {List,Map} from 'immutable';
+import Table from 'cli-table2';
 
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
     let table = new Table({
-      head: ['Estimated Wait (Min,)', 'Services']
+      head: ['Estimated Wait (Min.)', 'Services']
     });
-    let timeEstimateGroups = groupByTimeEstimate(estimates);
+    let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates);
     timeEstimateGroups.entrySeq().forEach(e => table.push([e[0], e[1].join(',')]));
     return table.toString();
   }
@@ -19,6 +20,8 @@ export default class TimeEstimatesTableBuilder {
         let productNames = timeEstimateGroups.get(estimate.estimateSeconds);
         productNames = productNames.push(estimate.productName);
         timeEstimateGroups = timeEstimateGroups.set(estimate.estimateSeconds, productNames);
+      } else {
+        timeEstimateGroups = timeEstimateGroups.set(estimate.estimateSeconds, List.of(estimate.productName));
       }
     });
     return timeEstimateGroups;
