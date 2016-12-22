@@ -7,7 +7,7 @@ import Utilities from '../../../Utilities';
 
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
-    let table = new Table({style:{head:[],border:[]}});
+    let table = new Table();
     table.push(
       [
         {
