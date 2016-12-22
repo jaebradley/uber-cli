@@ -35,10 +35,10 @@ describe('Test Time Estimates Table Builder', function() {
   });
 
   it('tests table creation', function() {
-    let expectedTableString = '┌───────────────────────────┐\n│         jaebaebae         │\n├────────────────┬──────────┤\n│ Estimated Wait │ Services │\n├────────────────┼──────────┤\n│ 1 s            │ jae,bae  │\n├────────────────┼──────────┤\n│ 2 s            │ bradley  │\n└────────────────┴──────────┘';
+    let expectedTableString = '\u001b[90m┌───────────────────────────┐\u001b[39m\n\u001b[90m│\u001b[39m         jaebaebae         \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┬──────────┤\u001b[39m\n\u001b[90m│\u001b[39m Estimated Wait \u001b[90m│\u001b[39m Services \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 1 s            \u001b[90m│\u001b[39m jae,bae  \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 2 s            \u001b[90m│\u001b[39m bradley  \u001b[90m│\u001b[39m\n\u001b[90m└────────────────\u001b[39m\u001b[90m┴──────────┘\u001b[39m';
     let tableString = TimeEstimatesTableBuilder.build(timeEstimates);
     console.log(expectedTableString);
     console.log(tableString);
-    expect(tableString).to.equal(expectedTableString);
+    expect(tableString).to.eql(expectedTableString);
   })
 });

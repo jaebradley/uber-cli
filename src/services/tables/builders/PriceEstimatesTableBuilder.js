@@ -13,7 +13,7 @@ export default class PriceEstimatesTableBuilder {
     estimates.estimates.forEach(function(estimate) {
       let surge = estimate.surgeMultiplier == 1
         ? 'NO SURGE HERE'
-        : `${surgeMultiplier}x`;
+        : `${estimate.surgeMultiplier}x`;
       table.push(
         [
           estimate.productName,
