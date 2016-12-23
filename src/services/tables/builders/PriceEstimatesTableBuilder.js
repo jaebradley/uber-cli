@@ -27,11 +27,14 @@ export default class PriceEstimatesTableBuilder {
 
   static buildInitialTable() {
     let table = new Table();
+    let formattedHeaders = List();
     PriceEstimatesTableBuilder.getTableHeaders()
-                              .forEach(header => table.push({
-                                content: header,
-                                hAlign: 'center'
+                              .forEach(header =>
+                                formattedHeaders = formattedHeaders.push({
+                                  content: header,
+                                  hAlign: 'center'
                               }));
+    table.push(formattedHeaders.toJS());
     return table;
   }
 
@@ -48,18 +51,16 @@ export default class PriceEstimatesTableBuilder {
   }
 
   static buildSurgeMultiplierSymbol(surgeMultiplier) {
-    if (surgeMultiplier === 1) {
-      return emoji.get('no_entry_sign');
-    }
-
-    return `${estimate.surgeMultiplier}x ${emoji.get('grimacing')}`;
+    return surgeMultiplier === 1
+      ? emoji.get('no_entry_sign')
+      : `${surgeMultiplier}x ${emoji.get('grimacing')}`;
   }
 
   static buildLocationRow(name, isEnd) {
-    let symbol = emoji.get('round_pushpin');
-    if (isEnd) {
-      symbol = emoji.get('end');
-    }
+    let symbol = isEnd
+      ? emoji.get('end')
+      : emoji.get('round_pushpin');
+
     return [
       {
         colSpan: 1,
