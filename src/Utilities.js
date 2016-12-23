@@ -6,6 +6,14 @@ export default class Utilities {
   }
 
   static generateFormattedTime(seconds) {
+    if (seconds < 0) {
+      throw new RangeError('Cannot generate formatted time for negative seconds');
+    }
+
+    if (seconds === 0) {
+      return '0 sec.';
+    }
+
     let days = Math.floor(seconds / 86400);
     seconds %= 86400;
 
@@ -17,21 +25,22 @@ export default class Utilities {
 
     let formattedTime = '';
     if (days !== 0) {
-      formattedTime += days + ' days ';
+      formattedTime += ` ${days} days`;
     }
 
     if (hours !== 0) {
-      formattedTime += hours + ' hrs. ';
+      formattedTime += ` ${hours} hrs.`;
     }
 
     if (minutes !== 0) {
-      formattedTime += minutes + ' min. ';
+      formattedTime += ` ${minutes} min.`;
     }
 
     if (seconds !== 0) {
-      formattedTime += seconds + ' sec.';
+      formattedTime += ` ${seconds} sec.`;
     }
 
-    return formattedTime;
+    // GAWD THIS IS SO FUCKING HACKY I HATE EVERYTHING
+    return formattedTime.trim();
   }
 }

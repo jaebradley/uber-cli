@@ -26,7 +26,7 @@ describe('Test Geocode Translator', function() {
     location: location1
   };
   let locationJson = {
-    formatted_address:address1,
+    formatted_address: address1,
     geometry: geometry1
   };
 
@@ -66,5 +66,20 @@ describe('Test Geocode Translator', function() {
 
     expect(() => GeocodeTranslator.translateLocation(json)).to.throw(TypeError);
     json['geometry']['location']['lat'] = 1.234;
+  });
+
+  it('tests full translation error cases', function() {
+    let json = {};
+
+    expect(() => GeocodeTranslator.translate(json)).to.throw(ReferenceError);
+    json['status'] = 'jae';
+
+    expect(() => GeocodeTranslator.translate(json)).to.throw(TypeError);
+    json['status'] = 'OK';
+
+    expect(() => GeocodeTranslator.translate(json)).to.throw(ReferenceError);
+    json['results'] = undefined;
+
+    expect(() => GeocodeTranslator.translate(json)).to.throw(TypeError);
   });
 });
