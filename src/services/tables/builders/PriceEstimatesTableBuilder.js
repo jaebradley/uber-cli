@@ -11,18 +11,20 @@ export default class PriceEstimatesTableBuilder {
       head: ['Service', 'Price Range', 'Distance', 'Trip Time', 'Surge']
     });
     estimates.estimates.forEach(function(estimate) {
-      let surge = estimate.surgeMultiplier == 1
-        ? 'NO SURGE HERE'
-        : `${estimate.surgeMultiplier}x`;
-      table.push(
-        [
-          estimate.productName,
-          estimate.getFormattedRange(),
-          estimate.distance,
-          Utilities.generateFormattedTime(estimate.duration),
-          surge
-        ]
-      );
+      if (estimate.productName !== 'TAXI') {
+        let surge = estimate.surgeMultiplier == 1
+          ? 'NO SURGE HERE'
+          : `${estimate.surgeMultiplier}x`;
+        table.push(
+          [
+            estimate.productName,
+            estimate.getFormattedRange(),
+            estimate.distance,
+            Utilities.generateFormattedTime(estimate.duration),
+            surge
+          ]
+        );
+      }
     });
     table.push(
       [

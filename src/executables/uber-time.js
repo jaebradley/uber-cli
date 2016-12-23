@@ -10,9 +10,10 @@ program
   .arguments('<address>')
   .action(address => {
     try {
-      console.log(service.executeTimeEstimates(address));
+        service.executeTimeEstimates(address)
+               .then(table => console.log(table));
     } catch (Error) {
-      console.error('Could not get time estimates for');
+      console.error('Could not get time estimates');
     }
   })
   .parse(process.argv);
