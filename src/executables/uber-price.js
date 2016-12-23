@@ -10,9 +10,10 @@ program
   .arguments('<start address> <end address>')
   .action((start, end) => {
     try {
-      console.log(service.executePriceEstimates(start, end));
+      return service.executePriceEstimates(start, end)
+                    .then(table => console.log(table));
     } catch (Error) {
-      console.error('Could not get price estimates for');
+      console.error('Could not get price estimates');
     }
   })
   .parse(process.argv);
