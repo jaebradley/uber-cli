@@ -27,13 +27,8 @@ export default class PriceEstimatesTableBuilder {
 
   static buildInitialTable() {
     let table = new Table();
-    let formattedHeaders = List();
-    PriceEstimatesTableBuilder.getTableHeaders()
-                              .forEach(header =>
-                                formattedHeaders = formattedHeaders.push({
-                                  content: header,
-                                  hAlign: 'center'
-                              }));
+    let formattedHeaders = List(PriceEstimatesTableBuilder.getTableHeaders()
+                              .map(header => Map({ content: header, hAlign: 'center' })));
     table.push(formattedHeaders.toJS());
     return table;
   }
