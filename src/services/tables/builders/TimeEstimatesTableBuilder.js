@@ -8,30 +8,31 @@ import Utilities from '../../../Utilities';
 
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
-    let table = new Table();
-    table.push(
-      [
-        {
-          colSpan: 2,
-          content: `${emoji.get('round_pushpin')} ${estimates.location.name}`,
-          hAlign: 'center'
-        }
-      ],
-      [
-        {
-          content: emoji.get('hourglass_flowing_sand'),
-          hAlign: 'center'
-        },
-        {
-          content: emoji.get('oncoming_automobile'),
-          hAlign: 'center'
-        }
-      ]
-    );
-    let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates);
-    timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
-                                                           e[1].join(',')]));
+    let table = TimeEstimatesTableBuilder.buildInitialTable(estimates.location.name);
+    TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates)
+                             .entrySeq()
+                             .forEach(e => table.push([Utilities.generateFormattedTime(e[0]), e[1].join(',')]));
     return table.toString();
+  }
+
+  static getTableHeaders() {
+    return List.of(
+      emoji.get('hourglass_flowing_sand'),
+      emoji.get('oncoming_automobile')
+    );
+  }
+
+  static buildInitialTable(locationName) {
+    let table = new Table();
+    table.push([{
+      colSpan: 2,
+      content: `${emoji.get('round_pushpin')} ${locationName}`,
+      hAlign: 'center'
+    }]);
+    let formattedHeaders = List(TimeEstimatesTableBuilder.getTableHeaders()
+                              .map(header => Map({ content: header, hAlign: 'center' })));
+    table.push(formattedHeaders.toJS());
+    return table;
   }
 
   static groupByTimeEstimate(estimates) {
