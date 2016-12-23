@@ -9,7 +9,11 @@ import Utilities from '../../../Utilities';
 export default class PriceEstimatesTableBuilder {
   static build(estimates) {
     let table = PriceEstimatesTableBuilder.buildInitialTable();
-    estimates.estimates.forEach(estimate => table.push(PriceEstimatesTableBuilder.buildEstimateRow(estimate)));
+    estimates.estimates.forEach(estimate => {
+      if (estimate.productName !== 'TAXI') {
+        table.push(PriceEstimatesTableBuilder.buildEstimateRow(estimate));
+      }
+    });
     table.push(PriceEstimatesTableBuilder.buildLocationRow(estimates.start.name, false));
     table.push(PriceEstimatesTableBuilder.buildLocationRow(estimates.end.name, true));
     return table.toString();
@@ -34,15 +38,13 @@ export default class PriceEstimatesTableBuilder {
   }
 
   static buildEstimateRow(estimate) {
-    if (estimate.productName !== 'TAXI') {
-      return [
-        estimate.productName,
-        estimate.getFormattedRange(),
-        estimate.getFormattedDistance(),
-        Utilities.generateFormattedTime(estimate.duration),
-        PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)
-      ];
-    }
+    return [
+      estimate.productName,
+      estimate.getFormattedRange(),
+      estimate.getFormattedDistance(),
+      Utilities.generateFormattedTime(estimate.duration),
+      PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)
+    ];
   }
 
   static buildSurgeMultiplierSymbol(surgeMultiplier) {
@@ -55,7 +57,6 @@ export default class PriceEstimatesTableBuilder {
     let symbol = isEnd
       ? emoji.get('end')
       : emoji.get('round_pushpin');
-
     return [
       {
         colSpan: 1,
