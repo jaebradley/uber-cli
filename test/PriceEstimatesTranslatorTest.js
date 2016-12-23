@@ -6,9 +6,7 @@ import {List} from 'immutable';
 
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
-import Range from "../src/data/Range";
-
-import geocodeFile from './files/geocode';
+import Range from '../src/data/Range';
 
 chai.use(chaiImmutable);
 
