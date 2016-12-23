@@ -80,6 +80,6 @@ describe('Test Geocode Translator', function() {
     expect(() => GeocodeTranslator.translate(json)).to.throw(ReferenceError);
     json['results'] = undefined;
 
-    expect(() => GeocodeTranslator.translate(json)).to.throw(ReferenceError);
+    expect(() => GeocodeTranslator.translate(json)).to.throw(TypeError);
   });
 });
