@@ -60,17 +60,16 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected duration to be an integer');
     }
 
-    let highEstimate = estimate['high_estimate'];
-
     // estimates can be null for non-applicable products like Taxi
-    if (highEstimate == null) {
+    let highEstimate = estimate['high_estimate'];
+    if (highEstimate === null) {
       highEstimate = undefined;
     } else if (!Number.isInteger(highEstimate)) {
       throw new TypeError('expected high estimate to be an integer');
     }
 
     let lowEstimate = estimate['low_estimate'];
-    if (lowEstimate == null) {
+    if (lowEstimate === null) {
       lowEstimate = undefined;
     } else if (!Number.isInteger(lowEstimate)) {
       throw new TypeError('expected low estimate to be an integer');
@@ -79,7 +78,7 @@ export default class PriceEstimatesTranslator {
     let currencyCode = estimate['currency_code'];
 
     // currency code can be null for non-applicable products like Taxi
-    if (currencyCode == null) {
+    if (currencyCode === null) {
       currencyCode = undefined;
     } else if (typeof currencyCode !== 'string') {
       throw new TypeError('expected currency code name to be a string');
@@ -103,7 +102,7 @@ export default class PriceEstimatesTranslator {
         throw new TypeError('expected surge to be a float');
       }
 
-      let args = args.set('surgeMultiplier', surge);
+      args = args.set('surgeMultiplier', surge);
     }
 
     return new PriceEstimate(args);

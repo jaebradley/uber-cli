@@ -4,6 +4,7 @@ import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 import {List} from 'immutable';
 
+import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
 import Range from "../src/data/Range";
 
@@ -25,7 +26,7 @@ describe('Test Price Estimates Translator', function() {
     'localized_display_name': localizedDisplayName,
     'distance': distance,
     'high_estimate': highEstimate,
-    'low_estimate'; lowEstimate,
+    'low_estimate': lowEstimate,
     'duration': duration,
     'currency_code': currencyCode
   };
@@ -34,6 +35,7 @@ describe('Test Price Estimates Translator', function() {
     let expectedEstimate = new PriceEstimate({
       productName: localizedDisplayName,
       distance: distance,
+      duration: duration,
       range: new Range({
         high: highEstimate,
         low: lowEstimate
@@ -49,6 +51,7 @@ describe('Test Price Estimates Translator', function() {
     let expectedEstimate = new PriceEstimate({
       productName: localizedDisplayName,
       distance: distance,
+      duration: duration,
       range: new Range({
         high: highEstimate,
         low: lowEstimate
@@ -99,6 +102,10 @@ describe('Test Price Estimates Translator', function() {
   });
 
   it('tests full translation error cases', function() {
+    let json = {};
+    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(ReferenceError);
 
+    json['prices'] = undefined;
+    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(TypeError);
   });
 });
