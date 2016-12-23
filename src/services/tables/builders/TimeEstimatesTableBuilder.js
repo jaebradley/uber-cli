@@ -1,8 +1,8 @@
 'use es6'
 
+import emoji from 'node-emoji';
 import {List,Map} from 'immutable';
 import Table from 'cli-table2';
-import emoji from 'node-emoji';
 
 import Utilities from '../../../Utilities';
 
