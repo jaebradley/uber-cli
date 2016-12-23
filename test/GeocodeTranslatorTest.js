@@ -16,8 +16,8 @@ let expect = chai.expect;
 
 describe('Test Geocode Translator', function() {
   let address1 = 'jae';
-  let latitude1 = 1;
-  let longitude1 = 2;
+  let latitude1 = 1.2;
+  let longitude1 = 2.3;
   let location1 = {
     lat: latitude1,
     lng: longitude1
@@ -36,7 +36,7 @@ describe('Test Geocode Translator', function() {
       coordinate: new Coordinate({
         longitude: longitude1,
         latitude: latitude1
-      });
+      })
     });
     expect(GeocodeTranslator.translateLocation(locationJson)).to.eql(expectedLocation);
   });
