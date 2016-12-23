@@ -9,7 +9,13 @@ import Utilities from '../../../Utilities';
 export default class PriceEstimatesTableBuilder {
   static build(estimates) {
     let table = new Table({
-      head: [emoji.get('oncoming_automobile'), emoji.get('money_with_wings'), 'Distance', emoji.get('hourglass_flowing_sand'), 'Surge']
+      head: [
+        emoji.get('oncoming_automobile'),
+        emoji.get('money_with_wings'),
+        emoji.get('arrows_clockwise'),
+        emoji.get('hourglass_flowing_sand'),
+        `${emoji.get('boom')} Surge${emoji.get('boom')}`
+      ]
     });
     estimates.estimates.forEach(function(estimate) {
       if (estimate.productName !== 'TAXI') {
@@ -20,7 +26,7 @@ export default class PriceEstimatesTableBuilder {
           [
             estimate.productName,
             estimate.getFormattedRange(),
-            estimate.distance,
+            estimate.getFormattedDistance(),
             Utilities.generateFormattedTime(estimate.duration),
             surge
           ]
@@ -31,7 +37,7 @@ export default class PriceEstimatesTableBuilder {
       [
         {
           colSpan: 1,
-          content: 'Start'
+          content: emoji.get('round_pushpin')
         },
         {
           colSpan: 4,
@@ -41,7 +47,7 @@ export default class PriceEstimatesTableBuilder {
       [
         {
           colSpan: 1,
-          content: 'End'
+          content: emoji.get('end')
         },
         {
           colSpan: 4,
