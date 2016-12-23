@@ -17,7 +17,16 @@ export default class TimeEstimatesTableBuilder {
           hAlign: 'center'
         }
       ],
-      [emoji.get('hourglass_flowing_sand'), emoji.get('oncoming_automobile')]
+      [
+        {
+          content: emoji.get('hourglass_flowing_sand'),
+          hAlign: 'center'
+        },
+        {
+          content: emoji.get('oncoming_automobile'),
+          hAlign: 'center'
+        }
+      ]
     );
     let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates);
     timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
