@@ -40,4 +40,31 @@ describe('Test Geocode Translator', function() {
     });
     expect(GeocodeTranslator.translateLocation(locationJson)).to.eql(expectedLocation);
   });
+
+  it('tests location translation error cases', function() {
+    let json = {};
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(ReferenceError);
+    json['formatted_address'] = undefined;
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(ReferenceError);
+    json['geometry'] = {};
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(ReferenceError);
+    json['geometry']['location'] = {};
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(ReferenceError);
+    json['geometry']['location']['lat'] = undefined;
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(ReferenceError);
+    json['geometry']['location']['lng'] = undefined;
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(TypeError);
+    json['formatted_address'] = '';
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(TypeError);
+    json['geometry']['location']['lng'] = 1.234;
+
+    expect(() => GeocodeTranslator.translateLocation(json)).to.throw(TypeError);
+    json['geometry']['location']['lat'] = 1.234;
+  });
 });
