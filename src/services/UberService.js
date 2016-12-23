@@ -18,11 +18,13 @@ export default class UberService {
   getTimeEstimates(address) {
     return this.geocodeService.getLocations(address)
                .then(locations => UberService.getFirstLocation(locations))
-               .then(location => this.client.getTimeEstimates({ start: location.coordinate }))
-               .then(estimates => new TimeEstimates({
-                 location: location,
-                 estimates: TimeEstimatesTranslator.translate(estimates)
-               }));
+               .then(location => {
+                 return this.client.getTimeEstimates({ start: location.coordinate })
+                                   .then(estimates => new TimeEstimates({
+                                     location: location,
+                                     estimates: TimeEstimatesTranslator.translate(estimates)
+                                   }));
+               });
   }
 
   getPriceEstimates(start, end) {
@@ -31,15 +33,14 @@ export default class UberService {
     let endLocation = this.geocodeService.getLocations(end)
                                          .then(locations => UberService.getFirstLocation(locations));
     return Promise.all([startLocation, endLocation])
-                  .then(values => this.client.getPriceEstimates({
-                    start: values[0].coordinate,
-                    end: values[1].coordinate
-                  }))
-                  .then(response => new PriceEstimates({
-                    start: values[0],
-                    end: values[1],
-                    estimates: PriceEstimatesTranslator.translate(response)
-                  }));
+                  .then(values => {
+                    return this.client
+                      .getPriceEstimates({ start: values[0].coordinate,
+                                           end: values[1].coordinate })
+                      .then(response => new PriceEstimates({ start: values[0],
+                                                             end: values[1],
+                                                             estimates: PriceEstimatesTranslator.translate(response) }));
+                  });
   }
 
   static getFirstLocation(locations) {
