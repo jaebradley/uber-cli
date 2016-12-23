@@ -7,16 +7,25 @@ import Utilities from '../../../Utilities';
 
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
-    let table = new Table({
-      head: ['Estimated Wait', 'Services']
-    });
-    let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates);
+    let table = new Table();
+    table.push(
+      [
+        {
+          colSpan: 2,
+          content: estimates.location.name,
+          hAlign: 'center'
+        }
+      ],
+      ['Estimated Wait', 'Services']
+    );
+    let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates);
     timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
                                                            e[1].join(',')]));
     return table.toString();
   }
 
   static groupByTimeEstimate(estimates) {
+    console.log(estimates);
     let timeEstimateGroups = Map();
     estimates.forEach(function(estimate) {
       if (timeEstimateGroups.has(estimate.estimateSeconds)) {

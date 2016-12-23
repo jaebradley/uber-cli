@@ -17,4 +17,7 @@ let defaults = {
 };
 
 export default class PriceEstimate extends Record(defaults) {
+  getFormattedRange() {
+    return `${this.range.low}-${this.range.high}`;
+  }
 }

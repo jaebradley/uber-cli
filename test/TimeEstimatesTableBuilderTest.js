@@ -4,10 +4,17 @@ import {expect} from 'chai';
 
 import {List, Map} from 'immutable';
 
+import Coordinate from '../src/data/Coordinate';
+import Location from '../src/data/Location';
 import TimeEstimate from '../src/data/TimeEstimate';
+import TimeEstimates from '../src/data/TimeEstimates';
 import TimeEstimatesTableBuilder from '../src/services/tables/builders/TimeEstimatesTableBuilder';
 
 describe('Test Time Estimates Table Builder', function() {
+  let location = new Location({
+    name: 'jaebaebae',
+    coordinate: new Coordinate()
+  });
   let estimates = List.of(
     new TimeEstimate({
       productName: 'jae',
@@ -22,12 +29,16 @@ describe('Test Time Estimates Table Builder', function() {
       estimateSeconds: 2
     })
   );
+  let timeEstimates = new TimeEstimates({
+    location: location,
+    estimates: estimates
+  });
 
   it('tests table creation', function() {
-    let expectedTableString = '\u001b[90m┌────────────────\u001b[39m\u001b[90m┬──────────┐\u001b[39m\n\u001b[90m│\u001b[39m\u001b[31m Estimated Wait \u001b[39m\u001b[90m│\u001b[39m\u001b[31m Services \u001b[39m\u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 1 s            \u001b[90m│\u001b[39m jae,bae  \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 2 s            \u001b[90m│\u001b[39m bradley  \u001b[90m│\u001b[39m\n\u001b[90m└────────────────\u001b[39m\u001b[90m┴──────────┘\u001b[39m';
-    let tableString = TimeEstimatesTableBuilder.build(estimates);
+    let expectedTableString = '\u001b[90m┌───────────────────────────┐\u001b[39m\n\u001b[90m│\u001b[39m         jaebaebae         \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┬──────────┤\u001b[39m\n\u001b[90m│\u001b[39m Estimated Wait \u001b[90m│\u001b[39m Services \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 1 s            \u001b[90m│\u001b[39m jae,bae  \u001b[90m│\u001b[39m\n\u001b[90m├────────────────\u001b[39m\u001b[90m┼──────────┤\u001b[39m\n\u001b[90m│\u001b[39m 2 s            \u001b[90m│\u001b[39m bradley  \u001b[90m│\u001b[39m\n\u001b[90m└────────────────\u001b[39m\u001b[90m┴──────────┘\u001b[39m';
+    let tableString = TimeEstimatesTableBuilder.build(timeEstimates);
     console.log(expectedTableString);
     console.log(tableString);
-    expect(tableString).to.equal(expectedTableString);
+    expect(tableString).to.eql(expectedTableString);
   })
 });
