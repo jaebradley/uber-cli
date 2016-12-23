@@ -1,6 +1,7 @@
 # Uber CLI
 [![Coverage Status](https://coveralls.io/repos/github/jaebradley/uber-cli/badge.svg?branch=master)](https://coveralls.io/github/jaebradley/uber-cli?branch=master)
 [![Build Status](https://travis-ci.org/jaebradley/uber-cli.svg?branch=master)](https://travis-ci.org/jaebradley/uber-cli)
+[![npm version](https://badge.fury.io/js/uber-cli.svg)](https://badge.fury.io/js/uber-cli)
 
 ## Introduction
 Clearly, I'm a lazy person (just look at what this tool does - it helps me
