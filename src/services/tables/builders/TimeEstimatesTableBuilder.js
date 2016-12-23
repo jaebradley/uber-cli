@@ -1,5 +1,6 @@
 'use es6'
 
+import emoji from 'node-emoji';
 import {List,Map} from 'immutable';
 import Table from 'cli-table2';
 
@@ -12,11 +13,20 @@ export default class TimeEstimatesTableBuilder {
       [
         {
           colSpan: 2,
-          content: estimates.location.name,
+          content: `${emoji.get('round_pushpin')} ${estimates.location.name}`,
           hAlign: 'center'
         }
       ],
-      ['Estimated Wait', 'Services']
+      [
+        {
+          content: emoji.get('hourglass_flowing_sand'),
+          hAlign: 'center'
+        },
+        {
+          content: emoji.get('oncoming_automobile'),
+          hAlign: 'center'
+        }
+      ]
     );
     let timeEstimateGroups = TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates);
     timeEstimateGroups.entrySeq().forEach(e => table.push([Utilities.generateFormattedTime(e[0]),
@@ -25,7 +35,6 @@ export default class TimeEstimatesTableBuilder {
   }
 
   static groupByTimeEstimate(estimates) {
-    console.log(estimates);
     let timeEstimateGroups = Map();
     estimates.forEach(function(estimate) {
       if (timeEstimateGroups.has(estimate.estimateSeconds)) {

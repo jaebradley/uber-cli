@@ -17,19 +17,19 @@ export default class Utilities {
 
     let formattedTime = '';
     if (days !== 0) {
-      formattedTime += days + ' d';
+      formattedTime += days + ' days ';
     }
 
     if (hours !== 0) {
-      formattedTime += hours + ' h';
+      formattedTime += hours + ' hrs. ';
     }
 
     if (minutes !== 0) {
-      formattedTime += minutes + ' m';
+      formattedTime += minutes + ' min. ';
     }
 
     if (seconds !== 0) {
-      formattedTime += seconds + ' s';
+      formattedTime += seconds + ' sec.';
     }
 
     return formattedTime;

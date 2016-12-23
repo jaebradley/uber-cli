@@ -1,6 +1,7 @@
 'use es6';
 
 import {Record} from 'immutable';
+import CurrencySymbol from 'currency-symbol-map';
 
 import Range from './Range';
 
@@ -18,6 +19,10 @@ let defaults = {
 
 export default class PriceEstimate extends Record(defaults) {
   getFormattedRange() {
-    return `${this.range.low}-${this.range.high}`;
+    return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
+  }
+
+  getFormattedDistance() {
+    return `${this.distance} mi.`;
   }
 }
