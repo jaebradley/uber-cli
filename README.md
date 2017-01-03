@@ -26,11 +26,13 @@ npm install uber-cli -g
 ```
 uber time 'pickup address here'
 ```
+![alt_text](http://imgur.com/9k16YDl.png)
 
 ### Get Price Estimates
 ```
-uber price 'start address' 'end address'
+uber price -s 'start address' -e 'end address'
 ```
+![alt_text](http://imgur.com/2QLJCSw.png)
 
 ## A Note On Address Identification
 So the [Uber API identifies time](https://developer.uber.com/docs/riders/references/api/v1.2/estimates-time-get) and price estimates based on a coordinate and not an address. In order to support those
