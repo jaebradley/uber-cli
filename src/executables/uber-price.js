@@ -7,13 +7,13 @@ import CommandExecutionService from '../services/CommandExecutionService';
 let service = new CommandExecutionService();
 
 program
-  .arguments('<start address> <end address>')
-  .action((start, end) => {
-    try {
-      return service.executePriceEstimates(start, end)
-                    .then(table => console.log(table));
-    } catch (Error) {
-      console.error('Could not get price estimates');
-    }
-  })
+  .option('-s, --start <start>', 'specify start address')
+  .option('-e, --end <end>', 'specify end address')
   .parse(process.argv);
+
+try {
+  service.executePriceEstimates(program.start, program.end)
+         .then(table => console.log(table));
+} catch (Error) {
+  console.error('Could not get price estimates');
+}
