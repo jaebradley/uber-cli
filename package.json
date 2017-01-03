@@ -1,6 +1,6 @@
 {
   "name": "uber-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Uber CLI",
   "scripts": {
     "test": "npm run build && mocha --compilers js:babel-core/register",
