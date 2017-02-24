@@ -24,7 +24,7 @@
     "currency-symbol-map": "3.1.0",
     "immutable": "3.8.1",
     "node-emoji": "1.4.3",
-    "uber-client": "0.0.1",
+    "uber-client": "^0.0.2",
     "@google/maps": "0.3.1"
   },
   "devDependencies": {
