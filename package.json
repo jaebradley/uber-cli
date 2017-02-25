@@ -18,14 +18,15 @@
   "preferGlobal": true,
   "main": "./build/executables/uber.js",
   "dependencies": {
+    "@google/maps": "0.3.1",
     "cli-table2": "0.2.0",
     "colors": "1.1.2 ",
     "commander": "2.9.0",
+    "convert-units": "^2.0.1",
     "currency-symbol-map": "3.1.0",
     "immutable": "3.8.1",
     "node-emoji": "1.4.3",
-    "uber-client": "^0.0.2",
-    "@google/maps": "0.3.1"
+    "uber-client": "^0.0.2"
   },
   "devDependencies": {
     "chai": "3.5.0",
