@@ -6,8 +6,32 @@ import Table from 'cli-table2';
 
 import Utilities from '../../../Utilities';
 
+var emojiCarType = emoji.get('oncoming_automobile');
+var emojiPrice = emoji.get('money_with_wings');
+var emojiDistance = emoji.get('arrows_clockwise');
+var emojiETA = emoji.get('hourglass_flowing_sand');
+var emojiBoom = emoji.get('boom');
+var emojiNo = emoji.get('no_entry_sign');
+var emojiSurgePresent = emoji.get('grimacing');
+var emojiDestination = emoji.get('end');
+var emojiStartLocation = emoji.get('round_pushpin');
+
+
+
 export default class PriceEstimatesTableBuilder {
   static build(estimates) {
+     if(emojiSupportedOSList.indexOf(process.platform)<0) {
+      emojiCarType = 'Car Type ';
+      emojiPrice = 'Price ';
+      emojiDistance = 'Distance ';
+      emojiETA = 'ETA ';
+      emojiBoom = '*';
+      emojiNo = 'No ';
+      emojiSurgePresent = 'Yes';
+      emojiDestination = 'Destination ';
+      emojiStartLocation = 'Start Location ';
+    }
+
     let table = PriceEstimatesTableBuilder.buildInitialTable();
     estimates.estimates.forEach(estimate => {
       if (estimate.productName !== 'TAXI') {
@@ -21,11 +45,11 @@ export default class PriceEstimatesTableBuilder {
 
   static getTableHeaders() {
     return List.of(
-      emoji.get('oncoming_automobile'),
-      emoji.get('money_with_wings'),
-      emoji.get('arrows_clockwise'),
-      emoji.get('hourglass_flowing_sand'),
-      `${emoji.get('boom')} Surge${emoji.get('boom')}`
+      emojiCarType,
+      emojiPrice,
+      emojiDistance,
+      emojiETA,
+      `${emojiBoom} Surge${emojiBoom}`
     );
   }
 
@@ -49,14 +73,14 @@ export default class PriceEstimatesTableBuilder {
 
   static buildSurgeMultiplierSymbol(surgeMultiplier) {
     return surgeMultiplier === 1
-      ? emoji.get('no_entry_sign')
-      : `${surgeMultiplier}x ${emoji.get('grimacing')}`;
+      ? emojiNo
+      : `${surgeMultiplier}x ${emojiCarType}`;
   }
 
   static buildLocationRow(name, isEnd) {
     let symbol = isEnd
-      ? emoji.get('end')
-      : emoji.get('round_pushpin');
+      ? emojiDestination
+      : emojiStartLocation;
     return [
       {
         colSpan: 1,
@@ -70,3 +94,4 @@ export default class PriceEstimatesTableBuilder {
     ]
   }
 }
+

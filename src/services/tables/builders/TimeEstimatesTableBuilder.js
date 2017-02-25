@@ -6,8 +6,19 @@ import Table from 'cli-table2';
 
 import Utilities from '../../../Utilities';
 
+var emojiETA = emoji.get('hourglass_flowing_sand');
+var emojiCarType = emoji.get('oncoming_automobile');
+var emojiLocation = emoji.get('round_pushpin');
+var emojiSupportedOSList = ['darwin'];
+
 export default class TimeEstimatesTableBuilder {
   static build(estimates) {
+    if(emojiSupportedOSList.indexOf(process.platform)<0) {
+      emojiETA = 'ETA ';
+      emojiCarType = 'Car Type ';
+      emojiLocation = 'Location : ';
+    }
+
     let table = TimeEstimatesTableBuilder.buildInitialTable(estimates.location.name);
     TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates)
                              .entrySeq()
@@ -17,8 +28,8 @@ export default class TimeEstimatesTableBuilder {
 
   static getTableHeaders() {
     return List.of(
-      emoji.get('hourglass_flowing_sand'),
-      emoji.get('oncoming_automobile')
+      emojiETA,
+      emojiCarType
     );
   }
 
@@ -26,7 +37,7 @@ export default class TimeEstimatesTableBuilder {
     let table = new Table();
     table.push([{
       colSpan: 2,
-      content: `${emoji.get('round_pushpin')} ${locationName}`,
+      content: `${emojiLocation} ${locationName}`,
       hAlign: 'center'
     }]);
     let formattedHeaders = List(TimeEstimatesTableBuilder.getTableHeaders()
@@ -49,3 +60,4 @@ export default class TimeEstimatesTableBuilder {
     return timeEstimateGroups;
   }
 }
+
