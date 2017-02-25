@@ -6,6 +6,7 @@ import {List, Map} from 'immutable';
 
 import Coordinate from '../src/data/Coordinate';
 import Distance from '../src/data/Distance';
+import Duration from '../src/data/Duration';
 import Location from '../src/data/Location';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimates from '../src/data/PriceEstimates';
@@ -34,7 +35,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 3,
         currencyCode: 'USD'
       }),
-      duration: 4,
+      duration: new Duration({
+        value: 4,
+        unit: Unit.SECOND
+      }),
       surgeMultiplier: 1
     }),
     new PriceEstimate({
@@ -48,7 +52,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 7,
         currencyCode: 'GBP'
       }),
-      duration: 8,
+      duration: new Duration({
+        value: 8,
+        unit: Unit.SECOND
+      }),
       surgeMultiplier: 1.1
     }),
     new PriceEstimate({
@@ -62,7 +69,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 11,
         currencyCode: 'EUR'
       }),
-      duration: 12,
+      duration: new Duration({
+        value: 12,
+        unit: Unit.SECOND
+      }),
       surgeMultiplier: 13
     }),
   );

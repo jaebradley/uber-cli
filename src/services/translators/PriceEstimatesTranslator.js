@@ -6,6 +6,7 @@ import DistanceConverter from '../DistanceConverter';
 import PriceEstimate from '../../data/PriceEstimate';
 import Range from '../../data/Range';
 import Distance from '../../data/Distance';
+import Duration from '../../data/Duration';
 import Unit from '../../data/Unit';
 import Utilities from '../../Utilities';
 
@@ -97,7 +98,11 @@ export default class PriceEstimatesTranslator {
     let args = Map({
       productName: displayName,
       distance: convertedDistance,
-      duration: duration,
+      // Uber returns seconds
+      duration: new Duration({
+        value: duration,
+        unit: Unit.SECOND
+      }),
       range: new Range({
         high: highEstimate,
         low: lowEstimate,

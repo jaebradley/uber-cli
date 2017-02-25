@@ -43,7 +43,8 @@ export default class PriceEstimatesTableBuilder {
       estimate.productName,
       PriceEstimateFormatter.getFormattedRange(estimate.range),
       PriceEstimateFormatter.getFormattedDistance(estimate.distance),
-      Utilities.generateFormattedTime(estimate.duration),
+      // This is a ticking time-bomb
+      Utilities.generateFormattedTime(estimate.duration.value),
       PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)
     ];
   }
