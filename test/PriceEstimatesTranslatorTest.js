@@ -7,6 +7,8 @@ import {List} from 'immutable';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
 import Range from '../src/data/Range';
+import Distance from '../src/data/Distance';
+import Unit from '../src/data/Unit';
 
 chai.use(chaiImmutable);
 
@@ -14,7 +16,11 @@ let expect = chai.expect;
 
 describe('Test Price Estimates Translator', function() {
   let localizedDisplayName = 'jae';
-  let distance = 1.234;
+  const distanceValue = 1.234;
+  let distance = new Distance({
+    value: distanceValue,
+    unit: Unit.MILE
+  });
   let highEstimate = 2;
   let lowEstimate = 3;
   let duration = 4;
@@ -22,7 +28,7 @@ describe('Test Price Estimates Translator', function() {
   let surgeMultiplier = 5.678;
   let baseJson = {
     'localized_display_name': localizedDisplayName,
-    'distance': distance,
+    'distance': distanceValue,
     'high_estimate': highEstimate,
     'low_estimate': lowEstimate,
     'duration': duration,
@@ -85,7 +91,7 @@ describe('Test Price Estimates Translator', function() {
     json['localized_display_name'] = localizedDisplayName;
 
     expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
-    json['distance'] = distance;
+    json['distance'] = distanceValue;
 
     expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
     json['duration'] = duration;

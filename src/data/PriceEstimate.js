@@ -25,6 +25,6 @@ export default class PriceEstimate extends Record(defaults) {
   }
 
   getFormattedDistance(unit) {
-    return `${DistanceConverter.convert(distance, unit)} ${unit.abbreviation.toLowerCase()}`;
+    return `${Math.round(DistanceConverter.convert(this.distance, unit).value * 100) / 100} ${unit.abbreviation.toLowerCase()}.`;
   }
 }
