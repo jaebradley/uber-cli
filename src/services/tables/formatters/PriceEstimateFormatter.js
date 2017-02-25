@@ -5,9 +5,9 @@ import CurrencySymbol from 'currency-symbol-map';
 import DistanceConverter from '../../DistanceConverter';
 
 export default class PriceEstimateFormatter {
-  static getFormattedRange(estimate) {
-    const currencySymbol = CurrencySymbol(estimate.currencyCode);
-    return `${currencySymbol}${estimate.range.low}-${currencySymbol}${estimate.range.high}`;
+  static getFormattedRange(range) {
+    const currencySymbol = CurrencySymbol(range.currencyCode);
+    return `${currencySymbol}${range.low}-${currencySymbol}${range.high}`;
   }
 
   static getFormattedDistance(distance) {
