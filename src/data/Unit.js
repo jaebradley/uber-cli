@@ -9,5 +9,7 @@ Unit.initEnum({
   },
   KILOMETER: {
     abbreviation: 'KM'
+  },
+  SECOND: {
   }
 });
