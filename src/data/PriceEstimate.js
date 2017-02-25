@@ -2,6 +2,9 @@
 
 import {Record} from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
+import convert from 'convert-units';
+
+import Unit from 'Unit';
 
 import Range from './Range';
 
@@ -22,7 +25,19 @@ export default class PriceEstimate extends Record(defaults) {
     return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
   }
 
-  getFormattedDistance() {
-    return `${this.distance} mi.`;
+  getFormattedDistance(unit) {
+    return `${this.getConvertedDistance()} ${unit.abbreviation.toLowerCase()}`;
+  }
+
+  getConvertedDistance(unit) {
+    case (unit) {
+      switch Unit.KILOMETER: {
+        return convert(this.distance).from('mi').to('m') * 1000;
+      }
+
+      default: {
+        return this.distance;
+      }
+    }
   }
 }

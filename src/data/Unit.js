@@ -2,8 +2,8 @@
 
 import {Enum} from 'enumify';
 
-export default class Units extends Enum {}
-Units.initEnum({
+export default class Unit extends Enum {}
+Unit.initEnum({
   MILE: {
     abbreviation: 'MI'
   },
