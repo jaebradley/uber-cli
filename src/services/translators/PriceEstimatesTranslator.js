@@ -4,6 +4,8 @@ import {List, Map} from 'immutable';
 
 import PriceEstimate from '../../data/PriceEstimate';
 import Range from '../../data/Range';
+import Distance from '../../data/Distance';
+import Unit from '../../data/Unit';
 import Utilities from '../../Utilities';
 
 export default class PriceEstimatesTranslator {
@@ -86,7 +88,12 @@ export default class PriceEstimatesTranslator {
 
     let args = Map({
       productName: displayName,
-      distance: distance,
+      // Uber returns miles
+      // https://developer.uber.com/docs/riders/references/api/v1.2/estimates-price-get
+      distance: new Distance({
+        value: distance,
+        unit: Unit.MILE
+      }),
       duration: duration,
       range: new Range({
         high: highEstimate,

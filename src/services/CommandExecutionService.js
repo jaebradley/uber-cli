@@ -11,7 +11,7 @@ export default class CommandExecutionService {
     this.uberService = new UberService();
   }
 
-  executePriceEstimates(start, end) {
+  executePriceEstimates(start, end, distanceUnit) {
     if (typeof start !== 'string') {
       throw new TypeError('start address should be a string');
     }
@@ -21,7 +21,7 @@ export default class CommandExecutionService {
     }
 
     return this.uberService.getPriceEstimates(start, end)
-                           .then(estimates => PriceEstimatesTableBuilder.build(estimates));
+                           .then(estimates => PriceEstimatesTableBuilder.build(estimates, distanceUnit));
   }
 
   executeTimeEstimates(address) {
