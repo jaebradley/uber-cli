@@ -4,15 +4,15 @@ import emoji from 'node-emoji';
 import {List,Map} from 'immutable';
 import Table from 'cli-table2';
 
-import DistanceConverter from '../../DistanceConverter';
+import PriceEstimateFormatter from '../formatters/PriceEstimateFormatter';
 import Utilities from '../../../Utilities';
 
 export default class PriceEstimatesTableBuilder {
-  static build(estimates, distanceUnit) {
+  static build(estimates) {
     let table = PriceEstimatesTableBuilder.buildInitialTable();
     estimates.estimates.forEach(estimate => {
       if (estimate.productName !== 'TAXI') {
-        table.push(PriceEstimatesTableBuilder.buildEstimateRow(estimate, distanceUnit));
+        table.push(PriceEstimatesTableBuilder.buildEstimateRow(estimate));
       }
     });
     table.push(PriceEstimatesTableBuilder.buildLocationRow(estimates.start.name, false));
@@ -38,11 +38,11 @@ export default class PriceEstimatesTableBuilder {
     return table;
   }
 
-  static buildEstimateRow(estimate, distanceUnit) {
+  static buildEstimateRow(estimate) {
     return [
       estimate.productName,
-      estimate.getFormattedRange(),
-      estimate.getFormattedDistance(distanceUnit),
+      PriceEstimateFormatter.getFormattedRange(estimate),
+      PriceEstimateFormatter.getFormattedDistance(estimate.distance),
       Utilities.generateFormattedTime(estimate.duration),
       PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)
     ];

@@ -46,7 +46,7 @@ describe('Test Price Estimates Translator', function() {
       }),
       currencyCode: currencyCode
     });
-    expect(PriceEstimatesTranslator.translateEstimate(baseJson)).to.eql(expectedEstimate);
+    expect(PriceEstimatesTranslator.translateEstimate(baseJson, Unit.MILE)).to.eql(expectedEstimate);
   });
 
   it('tests price estimate translation with surge', function() {
@@ -63,53 +63,53 @@ describe('Test Price Estimates Translator', function() {
       currencyCode: currencyCode,
       surgeMultiplier: surgeMultiplier
     });
-    expect(PriceEstimatesTranslator.translateEstimate(json)).to.eql(expectedEstimate);
+    expect(PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.eql(expectedEstimate);
   });
 
   it('tests price estimates translation error cases', function() {
     let json = {};
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['localized_display_name'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['distance'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['high_estimate'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['low_estimate'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['duration'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['currency_code'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['localized_display_name'] = localizedDisplayName;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['distance'] = distanceValue;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['duration'] = duration;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['high_estimate'] = highEstimate;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['low_estimate'] = lowEstimate;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
   });
 
   it('tests full translation error cases', function() {
     let json = {};
-    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translate(json, Unit.MILE)).to.throw(ReferenceError);
 
     json['prices'] = undefined;
-    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translate(json, Unit.MILE)).to.throw(TypeError);
   });
 });

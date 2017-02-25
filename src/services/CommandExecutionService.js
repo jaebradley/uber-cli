@@ -21,7 +21,7 @@ export default class CommandExecutionService {
     }
 
     return this.uberService.getPriceEstimates(start, end)
-                           .then(estimates => PriceEstimatesTableBuilder.build(estimates, distanceUnit));
+                           .then(estimates => PriceEstimatesTableBuilder.build(estimates));
   }
 
   executeTimeEstimates(address) {

@@ -1,12 +1,9 @@
 'use es6';
 
-import {Record} from 'immutable';
-import CurrencySymbol from 'currency-symbol-map';
+import { Record } from 'immutable';
 
 import Distance from './Distance';
 import Range from './Range';
-
-import DistanceConverter from '../services/DistanceConverter';
 
 let defaults = {
   productName: '',
@@ -20,11 +17,4 @@ let defaults = {
 };
 
 export default class PriceEstimate extends Record(defaults) {
-  getFormattedRange() {
-    return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
-  }
-
-  getFormattedDistance(unit) {
-    return `${Math.round(DistanceConverter.convert(this.distance, unit).value * 100) / 100} ${unit.abbreviation.toLowerCase()}.`;
-  }
 }

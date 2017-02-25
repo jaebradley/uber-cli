@@ -27,7 +27,7 @@ export default class UberService {
                });
   }
 
-  getPriceEstimates(start, end) {
+  getPriceEstimates(start, end, distanceUnit) {
     let startLocation = this.geocodeService.getLocations(start)
                                            .then(locations => UberService.getFirstLocation(locations));
     let endLocation = this.geocodeService.getLocations(end)
@@ -39,7 +39,7 @@ export default class UberService {
                                            end: values[1].coordinate })
                       .then(response => new PriceEstimates({ start: values[0],
                                                              end: values[1],
-                                                             estimates: PriceEstimatesTranslator.translate(response) }));
+                                                             estimates: PriceEstimatesTranslator.translate(response, distanceUnit) }));
                   });
   }
 

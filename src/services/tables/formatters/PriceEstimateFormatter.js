@@ -2,7 +2,7 @@
 
 import CurrencySymbol from 'currency-symbol-map';
 
-import DistanceConverter from '../services/DistanceConverter';
+import DistanceConverter from '../../DistanceConverter';
 
 export default class PriceEstimateFormatter {
   static getFormattedRange(estimate) {
@@ -10,10 +10,9 @@ export default class PriceEstimateFormatter {
     return `${currencySymbol}${estimate.range.low}-${currencySymbol}${estimate.range.high}`;
   }
 
-  static getFormattedDistance(estimate, unit) {
-    const convertedDistance = DistanceConverter.convert(this.distance, unit);
+  static getFormattedDistance(distance) {
     // 2 decimal places
-    const roundedDistanceValue = Math.round(convertedDistance.value * 100) / 100;
-    return `${roundedDistanceValue} ${unit.abbreviation.toLowerCase()}.`;
+    const roundedDistanceValue = Math.round(distance.value * 100) / 100;
+    return `${roundedDistanceValue} ${distance.unit.abbreviation.toLowerCase()}.`;
   }
 }
