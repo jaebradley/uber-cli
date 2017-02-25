@@ -31,10 +31,10 @@ describe('Test Price Estimates Table Builder', function() {
       }),
       range: new Range({
         low: 2,
-        high: 3
+        high: 3,
+        currencyCode: 'USD'
       }),
       duration: 4,
-      currencyCode: 'USD',
       surgeMultiplier: 1
     }),
     new PriceEstimate({
@@ -45,10 +45,10 @@ describe('Test Price Estimates Table Builder', function() {
       }),
       range: new Range({
         low: 6,
-        high: 7
+        high: 7,
+        currencyCode: 'GBP'
       }),
       duration: 8,
-      currencyCode: 'GBP',
       surgeMultiplier: 1.1
     }),
     new PriceEstimate({
@@ -59,10 +59,10 @@ describe('Test Price Estimates Table Builder', function() {
       }),
       range: new Range({
         low: 10,
-        high: 11
+        high: 11,
+        currencyCode: 'EUR'
       }),
       duration: 12,
-      currencyCode: 'EUR',
       surgeMultiplier: 13
     }),
   );
