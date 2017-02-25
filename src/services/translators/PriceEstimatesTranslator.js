@@ -100,9 +100,9 @@ export default class PriceEstimatesTranslator {
       duration: duration,
       range: new Range({
         high: highEstimate,
-        low: lowEstimate
-      }),
-      currencyCode: currencyCode
+        low: lowEstimate,
+        currencyCode: currencyCode
+      })
     });
 
     // wont show up unless > 1
