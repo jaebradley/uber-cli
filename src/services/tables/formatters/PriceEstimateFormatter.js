@@ -2,30 +2,18 @@
 
 import CurrencySymbol from 'currency-symbol-map';
 
-import Unit from 'Unit';
+import DistanceConverter from '../services/DistanceConverter';
 
 export default class PriceEstimateFormatter {
   static getFormattedRange(estimate) {
-    return `${CurrencySymbol(estimate.currencyCode)}${estimate.range.low}-${CurrencySymbol(estimate.currencyCode)}${estimate.range.high}`;
+    const currencySymbol = CurrencySymbol(estimate.currencyCode);
+    return `${currencySymbol}${estimate.range.low}-${currencySymbol}${estimate.range.high}`;
   }
 
-  static getFormattedDistance(estimate) {
-    return `${PriceEstimateFormatter.getConvertedDistance(estimate.unit)} ${estimate.unit.abbreviation.toLowerCase()}`;
-  }
-
-  static getConvertedDistance(unit) {
-    switch (unit) {
-      case Unit.KILOMETER: {
-        return convert(this.distance).from('mi').to('m') * 1000;
-      }
-
-      case Unit.MILE: {
-        return this.distance;
-      }
-
-      default: {
-        throw new TypeError('Unexpected Unit');
-      }
-    }
+  static getFormattedDistance(estimate, unit) {
+    const convertedDistance = DistanceConverter.convert(this.distance, unit);
+    // 2 decimal places
+    const roundedDistanceValue = Math.round(convertedDistance.value * 100) / 100;
+    return `${roundedDistanceValue} ${unit.abbreviation.toLowerCase()}.`;
   }
 }
