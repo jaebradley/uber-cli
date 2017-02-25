@@ -42,9 +42,9 @@ describe('Test Price Estimates Translator', function() {
       duration: duration,
       range: new Range({
         high: highEstimate,
-        low: lowEstimate
-      }),
-      currencyCode: currencyCode
+        low: lowEstimate,
+        currencyCode: currencyCode
+      })
     });
     expect(PriceEstimatesTranslator.translateEstimate(baseJson, Unit.MILE)).to.eql(expectedEstimate);
   });
@@ -58,9 +58,9 @@ describe('Test Price Estimates Translator', function() {
       duration: duration,
       range: new Range({
         high: highEstimate,
-        low: lowEstimate
+        low: lowEstimate,
+        currencyCode: currencyCode
       }),
-      currencyCode: currencyCode,
       surgeMultiplier: surgeMultiplier
     });
     expect(PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.eql(expectedEstimate);
