@@ -15,6 +15,7 @@ var emojiNo = emoji.get('no_entry_sign');
 var emojiSurgePresent = emoji.get('grimacing');
 var emojiDestination = emoji.get('end');
 var emojiStartLocation = emoji.get('round_pushpin');
+var emojiSupportedOSList = ['darwin'];
 
 
 
