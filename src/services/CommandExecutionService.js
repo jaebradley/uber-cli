@@ -5,13 +5,14 @@ import program from 'commander';
 import UberService from './UberService';
 import PriceEstimatesTableBuilder from './tables/builders/PriceEstimatesTableBuilder';
 import TimeEstimatesTableBuilder from './tables/builders/TimeEstimatesTableBuilder';
+import Unit from '../../src/data/Unit';
 
 export default class CommandExecutionService {
   constructor() {
     this.uberService = new UberService();
   }
 
-  executePriceEstimates(start, end) {
+  executePriceEstimates(start, end, distanceUnitValue) {
     if (typeof start !== 'string') {
       throw new TypeError('start address should be a string');
     }
@@ -20,7 +21,12 @@ export default class CommandExecutionService {
       throw new TypeError('end address should be a string');
     }
 
-    return this.uberService.getPriceEstimates(start, end)
+    let distanceUnit = Unit.MILE;
+    if (typeof distanceUnitValue === 'string') {
+      distanceUnit = Unit.enumValueOf(distanceUnitValue);
+    }
+
+    return this.uberService.getPriceEstimates(start, end, distanceUnit)
                            .then(estimates => PriceEstimatesTableBuilder.build(estimates));
   }
 

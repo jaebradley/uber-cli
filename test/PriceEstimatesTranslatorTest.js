@@ -7,6 +7,9 @@ import {List} from 'immutable';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
 import Range from '../src/data/Range';
+import Distance from '../src/data/Distance';
+import Duration from '../src/data/Duration';
+import Unit from '../src/data/Unit';
 
 chai.use(chaiImmutable);
 
@@ -14,18 +17,26 @@ let expect = chai.expect;
 
 describe('Test Price Estimates Translator', function() {
   let localizedDisplayName = 'jae';
-  let distance = 1.234;
+  const distanceValue = 1.234;
+  let distance = new Distance({
+    value: distanceValue,
+    unit: Unit.MILE
+  });
   let highEstimate = 2;
   let lowEstimate = 3;
-  let duration = 4;
+  let durationValue = 4;
+  let duration = new Duration({
+    value: durationValue,
+    unit: Unit.SECOND
+  });
   let currencyCode = 'baebae';
   let surgeMultiplier = 5.678;
   let baseJson = {
     'localized_display_name': localizedDisplayName,
-    'distance': distance,
+    'distance': distanceValue,
     'high_estimate': highEstimate,
     'low_estimate': lowEstimate,
-    'duration': duration,
+    'duration': durationValue,
     'currency_code': currencyCode
   };
 
@@ -36,11 +47,11 @@ describe('Test Price Estimates Translator', function() {
       duration: duration,
       range: new Range({
         high: highEstimate,
-        low: lowEstimate
-      }),
-      currencyCode: currencyCode
+        low: lowEstimate,
+        currencyCode: currencyCode
+      })
     });
-    expect(PriceEstimatesTranslator.translateEstimate(baseJson)).to.eql(expectedEstimate);
+    expect(PriceEstimatesTranslator.translateEstimate(baseJson, Unit.MILE)).to.eql(expectedEstimate);
   });
 
   it('tests price estimate translation with surge', function() {
@@ -52,58 +63,58 @@ describe('Test Price Estimates Translator', function() {
       duration: duration,
       range: new Range({
         high: highEstimate,
-        low: lowEstimate
+        low: lowEstimate,
+        currencyCode: currencyCode
       }),
-      currencyCode: currencyCode,
       surgeMultiplier: surgeMultiplier
     });
-    expect(PriceEstimatesTranslator.translateEstimate(json)).to.eql(expectedEstimate);
+    expect(PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.eql(expectedEstimate);
   });
 
   it('tests price estimates translation error cases', function() {
     let json = {};
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['localized_display_name'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['distance'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['high_estimate'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['low_estimate'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['duration'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(ReferenceError);
     json['currency_code'] = undefined;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['localized_display_name'] = localizedDisplayName;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
-    json['distance'] = distance;
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
+    json['distance'] = distanceValue;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
-    json['duration'] = duration;
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
+    json['duration'] = durationValue;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['high_estimate'] = highEstimate;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
     json['low_estimate'] = lowEstimate;
 
-    expect(() => PriceEstimatesTranslator.translateEstimate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translateEstimate(json, Unit.MILE)).to.throw(TypeError);
   });
 
   it('tests full translation error cases', function() {
     let json = {};
-    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(ReferenceError);
+    expect(() => PriceEstimatesTranslator.translate(json, Unit.MILE)).to.throw(ReferenceError);
 
     json['prices'] = undefined;
-    expect(() => PriceEstimatesTranslator.translate(json)).to.throw(TypeError);
+    expect(() => PriceEstimatesTranslator.translate(json, Unit.MILE)).to.throw(TypeError);
   });
 });
