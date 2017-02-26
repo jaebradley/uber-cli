@@ -8,6 +8,7 @@ import {List} from 'immutable';
 
 import UberService from '../src/services/UberService';
 import TimeEstimate from '../src/data/TimeEstimate';
+import DistanceUnit from '../src/data/DistanceUnit';
 
 chai.use(chaiAsPromised);
 chai.use(chaiImmutable);
@@ -28,11 +29,11 @@ describe('Test Uber Service', function() {
   });
 
   it('tests price estimates fulfillment', function() {
-    return service.getPriceEstimates(address, address2).should.be.fulfilled;
+    return service.getPriceEstimates(address, address2, DistanceUnit.MILE).should.be.fulfilled;
   })
 
   it('tests price estimates fetching', function() {
-    return service.getPriceEstimates(address, address2)
+    return service.getPriceEstimates(address, address2, DistanceUnit.MILE)
                   .then(results => console.log(results));
   });
 });

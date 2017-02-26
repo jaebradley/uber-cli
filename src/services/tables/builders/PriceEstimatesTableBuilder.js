@@ -4,6 +4,7 @@ import emoji from 'node-emoji';
 import {List,Map} from 'immutable';
 import Table from 'cli-table2';
 
+import PriceEstimateFormatter from './PriceEstimateFormatter';
 import Utilities from '../../../Utilities';
 
 export default class PriceEstimatesTableBuilder {
@@ -41,7 +42,7 @@ export default class PriceEstimatesTableBuilder {
     return [
       estimate.productName,
       estimate.getFormattedRange(),
-      estimate.getFormattedDistance(),
+      PriceEstimateFormatter.formatDistance(estimate.distance),
       Utilities.generateFormattedTime(estimate.duration),
       PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)
     ];

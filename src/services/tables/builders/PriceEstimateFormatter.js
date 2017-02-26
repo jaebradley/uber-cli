@@ -11,7 +11,7 @@ export default class PriceEstimateFormatter {
     return `${currencySymbol}${range.low}-${currencySymbol}${range.high}`;
   }
 
-  static getFormattedDistance(distance) {
+  static formatDistance(distance) {
     // 2 decimal places
     const roundedDistanceValue = Math.round(distance.value * 100) / 100;
     return `${roundedDistanceValue} ${PriceEstimateFormatter.getDistanceUnitAbbreviation(distance.unit)}.`;

@@ -12,18 +12,18 @@ export default class DistanceConverter {
     const convertedValue = convert(distance.value).from(fromUnitIdentifier).to(toUnitIdentifier);
 
     switch (toUnit) {
-      case Unit.KILOMETER: {
+      case DistanceUnit.KILOMETER: {
         // Note divided by 1000 because convert library does not have kilometers, so using meters
         return new Distance({
           value: convertedValue / 1000,
-          unit: Unit.KILOMETER
+          unit: DistanceUnit.KILOMETER
         });
       }
 
-      case Unit.MILE: {
+      case DistanceUnit.MILE: {
         return new Distance({
           value: convertedValue,
-          unit: Unit.MILE
+          unit: DistanceUnit.MILE
         });
       }
 
@@ -35,11 +35,11 @@ export default class DistanceConverter {
 
   static getUnitConversionIdentifier(unit) {
     switch (unit) {
-      case Unit.MILE: {
+      case DistanceUnit.MILE: {
         return 'mi';
       }
 
-      case Unit.KILOMETER: {
+      case DistanceUnit.KILOMETER: {
         return 'm';
       }
 
