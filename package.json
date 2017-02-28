@@ -1,55 +1,59 @@
 {
   "name": "uber-cli",
-  "version": "0.0.3",
   "description": "Uber CLI",
-  "scripts": {
-    "test": "npm run build && mocha --compilers js:babel-core/register",
-    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha -- --compilers js:babel-register ",
-    "coveralls": "npm run compile && npm run-script coverage && node_modules/.bin/coveralls < coverage/lcov.info",
-    "build": "babel src --presets babel-preset-es2015 --out-dir build",
-    "prepublish": "npm run compile",
-    "compile": "babel --presets es2015,stage-0 -d build/ src/"
-  },
+  "version": "0.0.3",
+  "author": "Jae Bradley",
   "bin": {
     "uber": "build/executables/uber.js"
   },
-  "author": "Jae Bradley",
-  "license": "MIT",
-  "preferGlobal": true,
-  "main": "./build/executables/uber.js",
   "dependencies": {
-    "cli-table2": "0.2.0",
-    "colors": "1.1.2 ",
-    "commander": "2.9.0",
-    "currency-symbol-map": "3.1.0",
-    "immutable": "3.8.1",
-    "node-emoji": "1.4.3",
-    "uber-client": "^0.0.2",
-    "@google/maps": "0.3.1"
+    "@google/maps": "^0.3.1",
+    "cli-table2": "^0.2.0",
+    "colors": "^1.1.2 ",
+    "commander": "^2.9.0",
+    "currency-symbol-map": "^3.1.0",
+    "immutable": "^3.8.1",
+    "node-emoji": "^1.4.3",
+    "uber-client": "^0.0.2"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
-    "chai-immutable": "1.6.0",
-    "mocha": "2.4.5",
-    "coveralls": "2.11.9",
-    "mocha-lcov-reporter": "1.2.0 ",
-    "istanbul": "1.0.0-alpha.2",
-    "babel-core": "6.8.0",
-    "babel-preset-es2015": "6.6.0",
-    "babel-node-debug": "2.0.0",
-    "babel-cli": "6.7.7",
-    "babel-preset-stage-0": "6.5.0",
-    "babel-register": "6.8.0",
-    "babel-polyfill": "6.8.0",
-    "babel-istanbul": "0.8.0"
+    "babel-cli": "^6.7.7",
+    "babel-core": "^6.8.0",
+    "babel-istanbul": "^0.8.0",
+    "babel-node-debug": "^2.0.0",
+    "babel-polyfill": "^6.8.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.8.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-immutable": "^1.6.0",
+    "coveralls": "^2.11.9",
+    "istanbul": "^1.0.0-alpha.2",
+    "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0 "
   },
   "directories": {
     "lib": "build",
     "test": "test"
   },
+  "homepage": "https://github.com/jaebradley/uber-cli",
+  "keywords": [
+    "uber"
+  ],
+  "license": "MIT",
+  "main": "./build/executables/uber.js",
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/jaebradley/uber-cli/tree/master"
+  },
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir build",
+    "compile": "babel --presets es2015,stage-0 -d build/ src/",
+    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha -- --compilers js:babel-register ",
+    "coveralls": "npm run compile && npm run-script coverage && node_modules/.bin/coveralls < coverage/lcov.info",
+    "prepublish": "npm run compile",
+    "test": "npm run build && mocha --compilers js:babel-core/register"
   }
 }
