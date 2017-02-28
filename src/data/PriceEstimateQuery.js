@@ -12,9 +12,12 @@ const defaults = {
 
 export default class PriceEstimateQuery extends Record(defaults) {
   static from(startAddress, endAddress, distanceUnitName) {
-    const distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
-    if (typeof distanceUnit == 'undefined') {
-      throw new TypeError('Unknown distance unit');
+    let distanceUnit = DistanceUnit.MILE;
+    if (typeof distanceUnitName !== 'undefined') {
+      distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
+      if (typeof distanceUnit == 'undefined') {
+        throw new TypeError('Unknown distance unit');
+      }
     }
 
     return new PriceEstimateQuery({
