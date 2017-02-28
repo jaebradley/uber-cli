@@ -89,11 +89,11 @@ export default class PriceEstimatesTranslator {
 
     // Uber returns miles
     // // https://developer.uber.com/docs/riders/references/api/v1.2/estimates-price-get
-    const mileDistance = new Distance({
+    const distanceInMiles = new Distance({
       value: distanceValue,
       unit: DistanceUnit.MILE
     });
-    const convertedDistance = DistanceConverter.convert(mileDistance, distanceUnit);
+    const convertedDistance = DistanceConverter.convert(distanceInMiles, distanceUnit);
 
     let args = Map({
       productName: displayName,

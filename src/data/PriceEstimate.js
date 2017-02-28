@@ -3,12 +3,13 @@
 import {Record} from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
 
+import Distance from './Distance';
 import Range from './Range';
 
 let defaults = {
   productName: '',
   // in miles
-  distance: 0,
+  distance: new Distance(),
   range: new Range(),
   // in seconds
   duration: 0,
