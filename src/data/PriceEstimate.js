@@ -1,6 +1,6 @@
 'use es6';
 
-import {Record} from 'immutable';
+import { Record } from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
 
 import Range from './Range';
@@ -18,11 +18,22 @@ let defaults = {
 };
 
 export default class PriceEstimate extends Record(defaults) {
+
   getFormattedRange() {
-    return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
+    return `${this.getFormattedPrice(this.range.low)}-${this.getFormattedPrice(this.range.high)}`
   }
 
   getFormattedDistance() {
     return `${this.distance} mi.`;
+  }
+
+  getFormattedPrice(price) {
+    // Result of 1394 will be $1,349
+    // TODO: There might be a better way to instatiate the formatter just once.
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      maximumFractionDigits: 0,
+      currency: this.currencyCode
+    }).format(price);
   }
 }
