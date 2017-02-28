@@ -22,8 +22,4 @@ export default class PriceEstimate extends Record(defaults) {
   getFormattedRange() {
     return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
   }
-
-  getFormattedDistance() {
-    return `${this.distance} mi.`;
-  }
 }
