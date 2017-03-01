@@ -8,7 +8,6 @@ import Range from './Range';
 
 let defaults = {
   productName: '',
-  // in miles
   distance: new Distance(),
   range: new Range(),
   // in seconds
