@@ -17,7 +17,4 @@ let defaults = {
 };
 
 export default class PriceEstimate extends Record(defaults) {
-  getFormattedRange() {
-    return `${CurrencySymbol(this.currencyCode)}${this.range.low}-${CurrencySymbol(this.currencyCode)}${this.range.high}`;
-  }
 }
