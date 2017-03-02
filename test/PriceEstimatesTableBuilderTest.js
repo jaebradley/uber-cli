@@ -7,11 +7,13 @@ import {List, Map} from 'immutable';
 import Coordinate from '../src/data/Coordinate';
 import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
+import Duration from '../src/data/Duration';
 import Location from '../src/data/Location';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimates from '../src/data/PriceEstimates';
 import PriceEstimatesTableBuilder from '../src/services/tables/builders/PriceEstimatesTableBuilder';
 import PriceRange from '../src/data/PriceRange';
+import TimeUnit from '../src/data/TimeUnit';
 
 describe('Test Price Estimates Table Builder', function() {
   let start = new Location({
@@ -34,7 +36,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 3,
         currencyCode: 'USD'
       }),
-      duration: 4,
+      duration: new Duration({
+        length: 4,
+        unit: TimeUnit.SECOND
+      }),
       surgeMultiplier: 1
     }),
     new PriceEstimate({
@@ -48,7 +53,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 7,
         currencyCode: 'GBP'
       }),
-      duration: 8,
+      duration: new Duration({
+        length: 8,
+        unit: TimeUnit.SECOND
+      }),
       surgeMultiplier: 1.1
     }),
     new PriceEstimate({
@@ -62,7 +70,10 @@ describe('Test Price Estimates Table Builder', function() {
         high: 11,
         currencyCode: 'EUR'
       }),
-      duration: 12,
+      duration: new Duration({
+        length: 12,
+        unit: TimeUnit.SECOND
+      }),
       surgeMultiplier: 13
     }),
   );

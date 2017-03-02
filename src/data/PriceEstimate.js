@@ -4,14 +4,14 @@ import {Record} from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
 
 import Distance from './Distance';
+import Duration from './Duration';
 import PriceRange from './PriceRange';
 
 let defaults = {
   productName: '',
   distance: new Distance(),
   range: new PriceRange(),
-  // in seconds
-  duration: 0,
+  duration: new Duration(),
   // wont show up unless > 1
   surgeMultiplier: 1
 };

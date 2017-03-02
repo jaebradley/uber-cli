@@ -1,12 +1,14 @@
 'use es6';
 
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 
 import Distance from '../../data/Distance';
 import DistanceConverter from '../DistanceConverter';
 import DistanceUnit from '../../data/DistanceUnit';
+import Duration from '../../data/Duration';
 import PriceEstimate from '../../data/PriceEstimate';
 import PriceRange from '../../data/PriceRange';
+import TimeUnit from '../../data/TimeUnit';
 import Utilities from '../../Utilities';
 
 export default class PriceEstimatesTranslator {
@@ -58,8 +60,9 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected distance to be an integer');
     }
 
-    let duration = estimate['duration'];
-    if (!Number.isInteger(duration)) {
+    // Uber returns duration in seconds
+    let durationInSeconds = estimate['duration'];
+    if (!Number.isInteger(durationInSeconds)) {
       throw new TypeError('expected duration to be an integer');
     }
 
@@ -98,7 +101,10 @@ export default class PriceEstimatesTranslator {
     let args = Map({
       productName: displayName,
       distance: convertedDistance,
-      duration: duration,
+      duration: new Duration({
+        length: durationInSeconds,
+        unit: TimeUnit.SECOND
+      }),
       range: new PriceRange({
         high: highEstimate,
         low: lowEstimate,
