@@ -1,7 +1,6 @@
 'use es6';
 
 import {Record} from 'immutable';
-import CurrencySymbol from 'currency-symbol-map';
 
 import Distance from './Distance';
 import Duration from './Duration';
