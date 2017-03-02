@@ -12,7 +12,6 @@ let defaults = {
   range: new PriceRange(),
   // in seconds
   duration: 0,
-  currencyCode: '',
   // wont show up unless > 1
   surgeMultiplier: 1
 };

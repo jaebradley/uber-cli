@@ -103,8 +103,7 @@ export default class PriceEstimatesTranslator {
         high: highEstimate,
         low: lowEstimate,
         currencyCode: currencyCode
-      }),
-      currencyCode: currencyCode
+      })
     });
 
     // wont show up unless > 1
