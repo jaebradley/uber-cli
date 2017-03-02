@@ -2,12 +2,15 @@
 
 import {List, Map} from 'immutable';
 
+import Distance from '../../data/Distance';
+import DistanceConverter from '../DistanceConverter';
+import DistanceUnit from '../../data/DistanceUnit';
 import PriceEstimate from '../../data/PriceEstimate';
 import Range from '../../data/Range';
 import Utilities from '../../Utilities';
 
 export default class PriceEstimatesTranslator {
-  static translate(response) {
+  static translate(response, distanceUnit) {
     if (!('prices' in response)) {
       throw new ReferenceError('expected prices field');
     }
@@ -17,10 +20,10 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected prices to be an array');
     }
 
-    return List(estimates.map(estimate => PriceEstimatesTranslator.translateEstimate(estimate)));
+    return List(estimates.map(estimate => PriceEstimatesTranslator.translateEstimate(estimate, distanceUnit)));
   }
 
-  static translateEstimate(estimate) {
+  static translateEstimate(estimate, distanceUnit) {
     if (!('localized_display_name' in estimate)) {
       throw new ReferenceError('expected localized display name field');
     }
@@ -50,8 +53,8 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected localized display name to be a string');
     }
 
-    let distance = estimate['distance'];
-    if (!Utilities.isFloat(distance)) {
+    let distanceValue = estimate['distance'];
+    if (!Utilities.isFloat(distanceValue)) {
       throw new TypeError('expected distance to be an integer');
     }
 
@@ -84,9 +87,17 @@ export default class PriceEstimatesTranslator {
       throw new TypeError('expected currency code name to be a string');
     }
 
+    // Uber returns miles
+    // // https://developer.uber.com/docs/riders/references/api/v1.2/estimates-price-get
+    const distanceInMiles = new Distance({
+      value: distanceValue,
+      unit: DistanceUnit.MILE
+    });
+    const convertedDistance = DistanceConverter.convert(distanceInMiles, distanceUnit);
+
     let args = Map({
       productName: displayName,
-      distance: distance,
+      distance: convertedDistance,
       duration: duration,
       range: new Range({
         high: highEstimate,

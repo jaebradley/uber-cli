@@ -5,13 +5,15 @@ import {expect} from 'chai';
 import {List, Map} from 'immutable';
 
 import Coordinate from '../src/data/Coordinate';
+import Distance from '../src/data/Distance';
+import DistanceUnit from '../src/data/DistanceUnit';
 import Location from '../src/data/Location';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimates from '../src/data/PriceEstimates';
 import PriceEstimatesTableBuilder from '../src/services/tables/builders/PriceEstimatesTableBuilder';
 import Range from '../src/data/Range';
 
-describe('Test Time Estimates Table Builder', function() {
+describe('Test Price Estimates Table Builder', function() {
   let start = new Location({
     name: 'start location name',
     coordinate: new Coordinate()
@@ -23,7 +25,10 @@ describe('Test Time Estimates Table Builder', function() {
   let estimates = List.of(
     new PriceEstimate({
       productName: 'jae',
-      distance: 1,
+      distance: new Distance({
+        value: 1,
+        unit: DistanceUnit.MILE
+      }),
       range: new Range({
         low: 2,
         high: 3
@@ -34,7 +39,10 @@ describe('Test Time Estimates Table Builder', function() {
     }),
     new PriceEstimate({
       productName: 'bradley',
-      distance: 5,
+      distance: new Distance({
+        value: 5,
+        unit: DistanceUnit.MILE
+      }),
       range: new Range({
         low: 6,
         high: 7
@@ -45,7 +53,10 @@ describe('Test Time Estimates Table Builder', function() {
     }),
     new PriceEstimate({
       productName: 'baebae',
-      distance: 9,
+      distance: new Distance({
+        value: 9,
+        unit: DistanceUnit.MILE
+      }),
       range: new Range({
         low: 10,
         high: 11
