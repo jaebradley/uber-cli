@@ -4,7 +4,6 @@ import {expect} from 'chai';
 
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
-import Range from '../src/data/Range';
 import Utilities from '../src/Utilities';
 
 describe('Tests Utilities', function() {

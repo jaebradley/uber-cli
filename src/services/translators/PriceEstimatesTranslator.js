@@ -6,7 +6,7 @@ import Distance from '../../data/Distance';
 import DistanceConverter from '../DistanceConverter';
 import DistanceUnit from '../../data/DistanceUnit';
 import PriceEstimate from '../../data/PriceEstimate';
-import Range from '../../data/Range';
+import PriceRange from '../../data/PriceRange';
 import Utilities from '../../Utilities';
 
 export default class PriceEstimatesTranslator {
@@ -99,11 +99,11 @@ export default class PriceEstimatesTranslator {
       productName: displayName,
       distance: convertedDistance,
       duration: duration,
-      range: new Range({
+      range: new PriceRange({
         high: highEstimate,
-        low: lowEstimate
-      }),
-      currencyCode: currencyCode
+        low: lowEstimate,
+        currencyCode: currencyCode
+      })
     });
 
     // wont show up unless > 1

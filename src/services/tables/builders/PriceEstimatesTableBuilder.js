@@ -41,7 +41,7 @@ export default class PriceEstimatesTableBuilder {
   static buildEstimateRow(estimate) {
     return [
       estimate.productName,
-      estimate.getFormattedRange(),
+      PriceEstimateFormatter.formatRange(estimate.range),
       PriceEstimateFormatter.formatDistance(estimate.distance),
       Utilities.generateFormattedTime(estimate.duration),
       PriceEstimatesTableBuilder.buildSurgeMultiplierSymbol(estimate.surgeMultiplier)

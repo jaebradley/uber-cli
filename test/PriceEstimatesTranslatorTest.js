@@ -8,7 +8,7 @@ import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
-import Range from '../src/data/Range';
+import PriceRange from '../src/data/PriceRange';
 
 chai.use(chaiImmutable);
 
@@ -40,11 +40,11 @@ describe('Test Price Estimates Translator', function() {
       productName: localizedDisplayName,
       distance: distance,
       duration: duration,
-      range: new Range({
+      range: new PriceRange({
         high: highEstimate,
-        low: lowEstimate
-      }),
-      currencyCode: currencyCode
+        low: lowEstimate,
+        currencyCode: currencyCode
+      })
     });
     expect(PriceEstimatesTranslator.translateEstimate(baseJson, DistanceUnit.MILE)).to.eql(expectedEstimate);
   });
@@ -56,11 +56,11 @@ describe('Test Price Estimates Translator', function() {
       productName: localizedDisplayName,
       distance: distance,
       duration: duration,
-      range: new Range({
+      range: new PriceRange({
         high: highEstimate,
-        low: lowEstimate
+        low: lowEstimate,
+        currencyCode: currencyCode
       }),
-      currencyCode: currencyCode,
       surgeMultiplier: surgeMultiplier
     });
     expect(PriceEstimatesTranslator.translateEstimate(json, DistanceUnit.MILE)).to.eql(expectedEstimate);

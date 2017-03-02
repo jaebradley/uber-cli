@@ -6,7 +6,7 @@ import DistanceUnit from '../../../data/DistanceUnit';
 import DistanceConverter from '../../DistanceConverter';
 
 export default class PriceEstimateFormatter {
-  static getFormattedRange(range) {
+  static formatRange(range) {
     const currencySymbol = CurrencySymbol(range.currencyCode);
     return `${currencySymbol}${range.low}-${currencySymbol}${range.high}`;
   }

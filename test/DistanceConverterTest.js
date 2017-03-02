@@ -4,7 +4,6 @@ import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 
 import Distance from '../src/data/Distance';
-import Range from '../src/data/Range';
 import DistanceUnit from '../src/data/DistanceUnit';
 
 import DistanceConverter from '../src/services/DistanceConverter';
