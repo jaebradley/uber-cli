@@ -5,7 +5,8 @@ import {Record} from 'immutable';
 let defaults = {
   low: 0,
   high: 0,
+  currencyCode: 'USD'
 };
 
-export default class Range extends Record(defaults){
+export default class PriceRange extends Record(defaults){
 };

@@ -11,7 +11,7 @@ import Location from '../src/data/Location';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimates from '../src/data/PriceEstimates';
 import PriceEstimatesTableBuilder from '../src/services/tables/builders/PriceEstimatesTableBuilder';
-import Range from '../src/data/Range';
+import PriceRange from '../src/data/PriceRange';
 
 describe('Test Price Estimates Table Builder', function() {
   let start = new Location({
@@ -29,9 +29,10 @@ describe('Test Price Estimates Table Builder', function() {
         value: 1,
         unit: DistanceUnit.MILE
       }),
-      range: new Range({
+      range: new PriceRange({
         low: 2,
-        high: 3
+        high: 3,
+        currencyCode: 'USD'
       }),
       duration: 4,
       currencyCode: 'USD',
@@ -43,9 +44,10 @@ describe('Test Price Estimates Table Builder', function() {
         value: 5,
         unit: DistanceUnit.MILE
       }),
-      range: new Range({
+      range: new PriceRange({
         low: 6,
-        high: 7
+        high: 7,
+        currencyCode: 'GBP'
       }),
       duration: 8,
       currencyCode: 'GBP',
@@ -57,9 +59,10 @@ describe('Test Price Estimates Table Builder', function() {
         value: 9,
         unit: DistanceUnit.MILE
       }),
-      range: new Range({
+      range: new PriceRange({
         low: 10,
-        high: 11
+        high: 11,
+        currencyCode: 'EUR'
       }),
       duration: 12,
       currencyCode: 'EUR',
