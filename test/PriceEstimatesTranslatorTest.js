@@ -37,7 +37,7 @@ describe('Test Price Estimates Translator', function() {
     'distance': distanceValue,
     'high_estimate': highEstimate,
     'low_estimate': lowEstimate,
-    'duration': duration,
+    'duration': durationLength,
     'currency_code': currencyCode
   };
 
