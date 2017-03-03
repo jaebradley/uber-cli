@@ -6,9 +6,11 @@ import {List} from 'immutable';
 
 import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
+import Duration from '../src/data/Duration';
 import PriceEstimate from '../src/data/PriceEstimate';
 import PriceEstimatesTranslator from '../src/services/translators/PriceEstimatesTranslator';
 import PriceRange from '../src/data/PriceRange';
+import TimeUnit from '../src/data/TimeUnit';
 
 chai.use(chaiImmutable);
 
@@ -23,7 +25,11 @@ describe('Test Price Estimates Translator', function() {
   });
   let highEstimate = 2;
   let lowEstimate = 3;
-  let duration = 4;
+  let durationLength = 4;
+  let duration = new Duration({
+    length: durationLength,
+    unit: TimeUnit.SECOND
+  });
   let currencyCode = 'baebae';
   let surgeMultiplier = 5.678;
   let baseJson = {
@@ -31,7 +37,7 @@ describe('Test Price Estimates Translator', function() {
     'distance': distanceValue,
     'high_estimate': highEstimate,
     'low_estimate': lowEstimate,
-    'duration': duration,
+    'duration': durationLength,
     'currency_code': currencyCode
   };
 
