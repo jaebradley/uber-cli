@@ -4,6 +4,9 @@ import CurrencySymbol from 'currency-symbol-map';
 
 import DistanceUnit from '../../../data/DistanceUnit';
 import DistanceConverter from '../../DistanceConverter';
+import DurationConverter from '../../DurationConverter';
+import TimeUnit from '../../../data/TimeUnit';
+import Utilities from '../../../Utilities';
 
 export default class PriceEstimateFormatter {
   static formatRange(range) {
@@ -15,6 +18,12 @@ export default class PriceEstimateFormatter {
     // 2 decimal places
     const roundedDistanceValue = Math.round(distance.value * 100) / 100;
     return `${roundedDistanceValue} ${PriceEstimateFormatter.getDistanceUnitAbbreviation(distance.unit)}.`;
+  }
+
+  static formatDuration(duration) {
+    // TODO @jbradley Utilities currently formats time in seconds - build better formatting logic
+    const durationInSeconds = DurationConverter.convert(duration, TimeUnit.SECOND);
+    return Utilities.generateFormattedTime(durationInSeconds.length);
   }
 
   static getDistanceUnitAbbreviation(unit) {
