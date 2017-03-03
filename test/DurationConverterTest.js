@@ -18,13 +18,13 @@ describe('Duration converter test', function() {
     expect(DurationConverter.getUnitConversionIdentifier(TimeUnit.MINUTE)).to.equal('min');
   });
 
-  const length = 1.234;
-  const minuteDuration = 74.04;
+  const length = 60
+  const minuteDuration = 1;
   const durationInSeconds = new Duration({
     length: length,
     unit: TimeUnit.SECOND
   });
-  const durationInMinutes = new Distance({
+  const durationInMinutes = new Duration({
     length: minuteDuration,
     unit: TimeUnit.MINUTE
   });

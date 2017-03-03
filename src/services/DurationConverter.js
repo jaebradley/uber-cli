@@ -7,7 +7,7 @@ import TimeUnit from '../data/TimeUnit';
 
 export default class DurationConverter {
   static convert(duration, toUnit) {
-    const fromUnitIdentifier = DurationConverter.getUnitConversionIdentifier(distance.unit);
+    const fromUnitIdentifier = DurationConverter.getUnitConversionIdentifier(duration.unit);
     const toUnitIdentifier = DurationConverter.getUnitConversionIdentifier(toUnit);
     const convertedLength = convert(duration.length).from(fromUnitIdentifier).to(toUnitIdentifier);
     return new Duration({
