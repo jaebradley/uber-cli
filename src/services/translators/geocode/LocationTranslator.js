@@ -6,7 +6,7 @@ import Coordinate from '../../../data/Coordinate';
 import Location from '../../../data/Location';
 import Utilities from '../../../Utilities';
 
-export default class GeocodeLocationTranslator {
+export default class LocationTranslator {
 
   constructor() {
     this.FORMATTED_ADDRESS_FIELD_NAME = 'formatted_address';
@@ -18,12 +18,12 @@ export default class GeocodeLocationTranslator {
 
   translate(json) {
     if (!this.isValid(json)) {
-      throw new Error(`Invalid json: ${json}`);
+      throw new Error(`Invalid json: ${JSON.stringify(json)}`);
     }
 
     const location = json[this.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME];
     return new Location({
-      name: json[this.FORMATTED_ADDRESS_NAME],
+      name: json[this.FORMATTED_ADDRESS_FIELD_NAME],
       coordinate: new Coordinate({
         latitude: location[this.LATITUDE_FIELD_NAME],
         longitude: location[this.LONGITUDE_FIELD_NAME]
