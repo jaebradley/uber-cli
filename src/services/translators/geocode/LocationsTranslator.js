@@ -2,14 +2,12 @@
 
 import { List } from 'immutable';
 
-import LocationTranslator from './LocationTranslator';
-
-export default class GeocodeLocationsTranslator {
-  constructor() {
+export default class LocationsTranslator {
+  constructor(locationTranslator) {
     this.STATUS_FIELD_NAME = 'status';
     this.EXPECTED_STATUS = 'OK';
     this.RESULTS_FIELD_NAME = 'results';
-    this.locationTranslator = new LocationTranslator();
+    this.locationTranslator = locationTranslator;
   }
 
   translate(json) {
@@ -17,7 +15,9 @@ export default class GeocodeLocationsTranslator {
       throw new Error(`Invalid json: ${json}`);
     }
 
-    return List(results.map(result => this.translate(result)));
+    const results = json[this.RESULTS_FIELD_NAME];
+
+    return List(results.map(result => this.locationTranslator.translate(result)));
   }
 
   isValid(json) {
