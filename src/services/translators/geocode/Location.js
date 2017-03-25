@@ -60,11 +60,11 @@ export default class GeocodeLocationTranslator {
       return false;
     }
 
-    if (!Utilities.isFloat(latitude)) {
+    if (!Utilities.isFloat(location[this.LATITUDE_FIELD_NAME])) {
       return false;
     }
 
-    if (!Utilities.isFloat(longitude)) {
+    if (!Utilities.isFloat(location[this.LONGITUDE_FIELD_NAME])) {
       return false;
     }
 

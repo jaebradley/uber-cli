@@ -15,15 +15,16 @@ describe('Location Geocode Translation', function() {
 
     describe('Valid', () => {
       const translator = new GeocodeLocationTranslator();
-      const json = {
-        translator.FORMATTED_ADDRESS_FIELD_NAME: 'foo',
-        translator.GEOMETRY_ADDRESS_FIELD_NAME: {
-          translator.LOCATION_FIELD_NAME: {
-            translator.LATITUDE_FIELD_NAME: 1.234,
-            translator.LONGITUDE_FIELD_NAME: 5.678
-          }
-        }
-      };
+      let location = {};
+      location[translator.LATITUDE_FIELD_NAME] = 1.234;
+      location[translator.LONGITUDE_FIELD_NAME] = 5.678;
+
+      let address = {};
+      address[translator.LOCATION_FIELD_NAME] = location;
+
+      let json = {};
+      json[translator.FORMATTED_ADDRESS_FIELD_NAME] = 'foo';
+      json[translator.GEOMETRY_ADDRESS_FIELD_NAME] = address;
 
       it('should be valid', () => {
         expect(translator.isValid(json)).to.be.true;
@@ -51,19 +52,15 @@ describe('Location Geocode Translation', function() {
       });
 
       it('invalid due to missing longitude field', () => {
-        json[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LATITUDE_FIELD_NAME] = {};
+        json[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LATITUDE_FIELD_NAME] = 'foo';
       });
 
       it('invalid due to invalid address type', () => {
-        json[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LONGITUDE_FIELD_NAME] = {};
-      });
-
-      it('invalid due to invalid address type', () => {
-        json[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LONGITUDE_FIELD_NAME] = {};
+        json[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LONGITUDE_FIELD_NAME] = 'foo';
       });
 
       it('invalid due to invalid latitude type', () => {
-        json[translator.GEOMETRY_ADDRESS_FIELD_NAME] = 'foo';
+        json[translator.FORMATTED_ADDRESS_FIELD_NAME] = 'foo';
       });
 
       it('invalid due to invalid longitude type', () => {
