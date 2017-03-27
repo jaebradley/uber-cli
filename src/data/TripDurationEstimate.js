@@ -3,7 +3,7 @@
 import { Record } from 'immutable';
 import Duration from './Duration';
 
-let TripDurationEstimate = {
+let defaults = {
   productName: '',
   estimatedDuration: new Duration(),
 };

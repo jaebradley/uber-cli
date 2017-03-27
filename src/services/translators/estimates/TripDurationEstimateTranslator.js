@@ -1,28 +1,26 @@
 'use es6';
 
-import {List} from 'immutable';
-
-import TripDurationEstimate from '../../data/TripDurationEstimate';
-import Duration from '../../data/Duration';
-import TimeUnit from '../../data/TimeUnit';
+import Duration from '../../../data/Duration';
+import TimeUnit from '../../../data/TimeUnit';
+import TripDurationEstimate from '../../../data/TripDurationEstimate';
 
 export default class TripDurationEstimateTranslator {
   translate(estimate) {
-    if (this.isValid()) {
+    if (!this.isValid()) {
       throw new Error(`Invalid estimate: ${estimate}`);
     }
 
     return new TripDurationEstimate({
-      productName: estimate[TripDurationEstimateTranslator.getLocalizedDisplayNameFieldName()],
+      productName: estimate[TripDurationEstimateTranslator.getProductNameFieldName()],
       estimatedDuration: new Duration({
-        length: estimate[TripDurationEstimateTranslator.getEstimateFieldName()];,
+        length: estimate[TripDurationEstimateTranslator.getEstimateFieldName()],
         unit: TimeUnit.SECOND
       })
     });
   }
 
   isValid(estimate) {
-    if (!(TripDurationEstimateTranslator.getLocalizedDisplayNameFieldName() in estimate)) {
+    if (!(TripDurationEstimateTranslator.getProductNameFieldName() in estimate)) {
       return false;
     }
 
@@ -30,7 +28,7 @@ export default class TripDurationEstimateTranslator {
       return false;
     }
 
-    const productName = estimate[TripDurationEstimateTranslator.getLocalizedDisplayNameFieldName()];
+    const productName = estimate[TripDurationEstimateTranslator.getProductNameFieldName()];
     if (typeof productName !== 'string') {
       return false;
     }
@@ -43,7 +41,7 @@ export default class TripDurationEstimateTranslator {
     return true;
   }
 
-  static getLocalizedDisplayNameFieldName() {
+  static getProductNameFieldName() {
     return 'localized_display_name';
   }
 
