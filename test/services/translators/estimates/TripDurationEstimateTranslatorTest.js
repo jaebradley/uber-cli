@@ -7,8 +7,6 @@ chai.use(sinonChai);
 
 const expect = chai.expect;
 
-import { List } from 'immutable';
-
 import Duration from '../../../../src/data/Duration';
 import TimeUnit from '../../../../src/data/TimeUnit';
 import TripDurationEstimate from '../../../../src/data/TripDurationEstimate';
