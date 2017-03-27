@@ -20,11 +20,11 @@ export default class TripDurationEstimatesTranslator {
   }
 
   isValid(estimates) {
-    if (!(TripDurationEstimatesTranslator.getEstimatedDurationsFieldName() in estimate)) {
+    if (!(TripDurationEstimatesTranslator.getEstimatedDurationsFieldName() in estimates)) {
       return false;
     }
 
-    if (!Array.isArray(estimate[TripDurationEstimatesTranslator.getEstimatedDurationsFieldName()])) {
+    if (!Array.isArray(estimates[TripDurationEstimatesTranslator.getEstimatedDurationsFieldName()])) {
       return false;
     }
 
