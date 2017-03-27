@@ -7,12 +7,14 @@ import GeocodeService from './GeocodeService';
 import PriceEstimates from '../data/PriceEstimates';
 import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
 import TimeEstimates from '../data/TimeEstimates';
-import TimeEstimatesTranslator from './translators/TimeEstimatesTranslator';
+import TripDurationEstimateTranslator from './translators/estiamtes/TripDurationEstimateTranslator';
+import TripDurationEstimatesTranslator from './translators/estiamtes/TripDurationEstimatesTranslator';
 
 export default class UberService {
   constructor() {
     this.client = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
     this.geocodeService = new GeocodeService();
+    this.tripDurationEstimatesTranslator = new TripDurationEstimatesTranslator(new TripDurationEstimateTranslator());
   }
 
   getTimeEstimates(address) {
@@ -22,7 +24,7 @@ export default class UberService {
                  return this.client.getTimeEstimates({ start: location.coordinate })
                                    .then(estimates => new TimeEstimates({
                                      location: location,
-                                     estimates: TimeEstimatesTranslator.translate(estimates)
+                                     estimates: this.tripDurationEstimatesTranslator.translate(estimates)
                                    }));
                });
   }
