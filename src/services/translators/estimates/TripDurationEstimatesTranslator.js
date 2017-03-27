@@ -15,7 +15,7 @@ export default class TripDurationEstimatesTranslator {
     const estimatedDurations = estimates[TripDurationEstimatesTranslator.getEstimatedDurationsFieldName()];
 
     return List(estimatedDurations.map(estimatedDuration => {
-      this.tripDurationEstimateTranslator.translate(estimatedDuration)
+      return this.tripDurationEstimateTranslator.translate(estimatedDuration);
     }));
   }
 

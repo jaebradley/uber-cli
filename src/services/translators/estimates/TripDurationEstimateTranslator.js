@@ -6,7 +6,7 @@ import TripDurationEstimate from '../../../data/TripDurationEstimate';
 
 export default class TripDurationEstimateTranslator {
   translate(estimate) {
-    if (!this.isValid()) {
+    if (!this.isValid(estimate)) {
       throw new Error(`Invalid estimate: ${estimate}`);
     }
 

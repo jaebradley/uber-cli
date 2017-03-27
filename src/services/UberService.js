@@ -7,8 +7,8 @@ import GeocodeService from './GeocodeService';
 import PriceEstimates from '../data/PriceEstimates';
 import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
 import TimeEstimates from '../data/TimeEstimates';
-import TripDurationEstimateTranslator from './translators/estiamtes/TripDurationEstimateTranslator';
-import TripDurationEstimatesTranslator from './translators/estiamtes/TripDurationEstimatesTranslator';
+import TripDurationEstimateTranslator from './translators/estimates/TripDurationEstimateTranslator';
+import TripDurationEstimatesTranslator from './translators/estimates/TripDurationEstimatesTranslator';
 
 export default class UberService {
   constructor() {
