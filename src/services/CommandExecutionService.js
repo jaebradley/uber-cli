@@ -14,12 +14,12 @@ export default class CommandExecutionService {
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
-    if (typeof startAddress !== 'string') {
-      throw new TypeError('start address should be a string');
-    }
-
-    if (typeof endAddress !== 'string') {
-      throw new TypeError('end address should be a string');
+    // commander.js doesn't support required arguments, and will always
+    // interpolate arguments into strings.
+    if (typeof startAddress !== 'string' || typeof endAddress !== 'string') {
+      throw new TypeError(
+        'Start and End addresses (-s \'<address>\' -e \'<address>\') are required.'
+      );
     }
 
     const query = PriceEstimateQuery.from(startAddress, endAddress, distanceUnitName);
