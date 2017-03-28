@@ -13,7 +13,11 @@ program
         service.executeTimeEstimates(address)
                .then(table => console.log(table));
     } catch (Error) {
-      console.error('Could not get time estimates');
+      console.error('Could not get time estimates:\n', Error.message);
     }
   })
   .parse(process.argv);
+
+if (typeof address !== 'string') {
+  console.error('Could not get time estimates:\n', "Address is required");
+}
