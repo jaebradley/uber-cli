@@ -1,6 +1,6 @@
 'use es6';
 
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 
 import Distance from '../../data/Distance';
 import DistanceConverter from '../DistanceConverter';
@@ -35,7 +35,7 @@ export default class PriceEstimateTranslator {
     });
 
     let args = Map({
-      productName: estimate[PriceEstimateTranslator.getProductNameField()],
+      productName: estimate[PriceEstimateTranslator.getProductNameFieldName()],
       distance: distance,
       duration: duration,
       range: range
@@ -49,7 +49,7 @@ export default class PriceEstimateTranslator {
   }
 
   isValid(estimate) {
-    if (!(PriceEstimateTranslator.getProductNameField() in estimate)) {
+    if (!(PriceEstimateTranslator.getProductNameFieldName() in estimate)) {
       return false;
     }
 
@@ -73,7 +73,7 @@ export default class PriceEstimateTranslator {
       return false;
     }
 
-    const productName = estimate[PriceEstimateTranslator.getProductFieldName()];
+    const productName = estimate[PriceEstimateTranslator.getProductNameFieldName()];
     if (typeof productName !== 'string') {
       return false;
     }
@@ -114,7 +114,7 @@ export default class PriceEstimateTranslator {
     return true;
   }
 
-  static getProductNameField() {
+  static getProductNameFieldName() {
     return 'localized_display_name';
   }
 
