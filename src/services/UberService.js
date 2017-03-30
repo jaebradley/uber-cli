@@ -5,16 +5,18 @@ import {UberClient} from 'uber-client';
 
 import GeocodeService from './GeocodeService';
 import PriceEstimates from '../data/PriceEstimates';
-import PriceEstimatesTranslator from './translators/PriceEstimatesTranslator';
 import TimeEstimates from '../data/TimeEstimates';
 import TripDurationEstimateTranslator from './translators/estimates/TripDurationEstimateTranslator';
 import TripDurationEstimatesTranslator from './translators/estimates/TripDurationEstimatesTranslator';
+import TripPriceEstimateTranslator from './translators/TripPriceEstimateTranslator';
+import TripPriceEstimatesTranslator from './translators/TripPriceEstimatesTranslator';
 
 export default class UberService {
   constructor() {
     this.client = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
     this.geocodeService = new GeocodeService();
     this.tripDurationEstimatesTranslator = new TripDurationEstimatesTranslator(new TripDurationEstimateTranslator());
+    this.tripPriceEstimatesTranslator = new TripPriceEstimatesTranslator(new TripPriceEstimateTranslator());
   }
 
   getTimeEstimates(address) {
@@ -35,13 +37,12 @@ export default class UberService {
     let endLocation = this.geocodeService.getLocations(query.endAddress)
                                          .then(locations => UberService.getFirstLocation(locations));
     return Promise.all([startLocation, endLocation])
-                  .then(values => {
+                  .then( ([start, end]) => {
                     return this.client
-                      .getPriceEstimates({ start: values[0].coordinate,
-                                           end: values[1].coordinate })
-                      .then(response => new PriceEstimates({ start: values[0],
-                                                             end: values[1],
-                                                             estimates: PriceEstimatesTranslator.translate(response, query.distanceUnit) }));
+                      .getPriceEstimates({ start: start.coordinate, end: end.coordinate })
+                      .then(response => new PriceEstimates({
+                        start: start, end: end,estimates: this.tripPriceEstimatesTranslator.translate(response)
+                      }));
                   });
   }
 
