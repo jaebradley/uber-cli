@@ -30,13 +30,26 @@ describe('Trip Price Estimate Row Formatter', () => {
     expect(rowFormatter.distanceUnitAbbreviations).to.eql(expected);
   });
 
-  describe('distance unit abbreviation', () => {
-    it('gets abbreviation', () => {
+  describe('fetches distance unit abbreviation', () => {
+    it('successful', () => {
       expect(rowFormatter.getDistanceUnitAbbreviation(DistanceUnit.MILE)).to.eql('mi');
     });
 
     it('throws exception', () => {
       expect(() => rowFormatter.getDistanceUnitAbbreviation('foo')).to.throw(TypeError);
+    });
+  });
+
+  describe('format range', () => {
+    const range = {
+      currencyCode: 'USD',
+      low: 'foo',
+      high: 'bar'
+    };
+    
+    it('successful', () => {
+      const expected = '$foo-$bar';
+      expect(rowFormatter.formatRange(range)).to.eql(expected);
     });
   });
 });
