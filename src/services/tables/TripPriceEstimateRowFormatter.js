@@ -1,6 +1,6 @@
 'use es6';
 
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
 
 import DistanceUnit from '../../data/DistanceUnit';
@@ -11,12 +11,13 @@ import Utilities from '../../Utilities';
 
 export default class TripPriceEstimateRowFormatter {
   constructor(distanceConverter, durationConverter) {
-    this.distanceUnitAbbreviations = {
-      DistanceUnit.MILE: 'mi',
-      DistanceUnit.KILOMETER: 'km'
-    };
+    let distanceUnitAbbreviations = {};
+    distanceUnitAbbreviations[DistanceUnit.MILE.name] = 'mi';
+    distanceUnitAbbreviations[DistanceUnit.KILOMETER.name] = 'km';
+
+    this.distanceUnitAbbreviations = Map(distanceUnitAbbreviations);
     this.distanceConverter = distanceConverter;
-    this.DurationConverter = durationConverter;
+    this.durationConverter = durationConverter;
   }
 
   format(estimate, rowDistanceUnit) {
