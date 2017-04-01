@@ -1,12 +1,9 @@
 'use es6';
 
-import { List, Map } from 'immutable';
 import CurrencySymbol from 'currency-symbol-map';
+import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../data/DistanceUnit';
-import DistanceConverter from '../DistanceConverter';
-import DurationConverter from '../DurationConverter';
-import TimeUnit from '../../data/TimeUnit';
 import Utilities from '../../Utilities';
 
 export default class TripPriceEstimateRowFormatter {
@@ -20,11 +17,11 @@ export default class TripPriceEstimateRowFormatter {
     this.durationConverter = durationConverter;
   }
 
-  format(estimate, rowDistanceUnit) {
+  format(estimate, rowDistanceUnit, rowDurationUnit) {
     return List.of(
       this.formatRange(estimate.range),
       this.formatDistance(estimate.distance, rowDistanceUnit),
-      this.formatDuration(estimate.duration)
+      this.formatDuration(estimate.duration, rowDurationUnit)
     );
   }
 
@@ -40,14 +37,14 @@ export default class TripPriceEstimateRowFormatter {
     return `${roundedDistanceValue} ${this.getDistanceUnitAbbreviation(convertedDistance.unit)}.`;
   }
 
-  formatDuration(duration) {
+  formatDuration(duration, rowDurationUnit) {
     // TODO @jbradley Utilities currently formats time in seconds - build better formatting logic
-    const durationInSeconds = this.durationConverter.convert(duration, TimeUnit.SECOND);
+    const durationInSeconds = this.durationConverter.convert(duration, rowDurationUnit);
     return Utilities.generateFormattedTime(durationInSeconds.length);
   }
 
   getDistanceUnitAbbreviation(unit) {
-    const abbreviation = this.distanceUnitAbbreviations[unit];
+    const abbreviation = this.distanceUnitAbbreviations.get(unit.name);
     if (abbreviation == null) {
       throw new TypeError(`Unknown unit: ${unit}`)
     }
