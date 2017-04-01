@@ -46,10 +46,20 @@ describe('Trip Price Estimate Row Formatter', () => {
       low: 'foo',
       high: 'bar'
     };
-    
+
     it('successful', () => {
       const expected = '$foo-$bar';
       expect(rowFormatter.formatRange(range)).to.eql(expected);
     });
+  });
+
+  describe('format distance', () => {
+    before( () => {
+      this.distanceConversion = sinon.stub(durationConverter, 'convert').return(1);
+    });
+
+    after( () => {
+      .restore();
+    })
   });
 });
