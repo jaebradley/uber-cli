@@ -9,18 +9,18 @@ const expect = chai.expect;
 
 import Duration from '../../../../src/data/Duration';
 import TimeUnit from '../../../../src/data/TimeUnit';
-import TripDurationEstimate from '../../../../src/data/TripDurationEstimate';
+import PickupTimeEstimate from '../../../../src/data/PickupTimeEstimate';
 
-import TripDurationEstimateTranslator from '../../../../src/services/translators/estimates/TripDurationEstimateTranslator';
+import PickupTimeEstimateTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimateTranslator';
 
-describe('Trip Duration Estimate Translation', function() {
+describe('Pickup Time Estimate Translation', function() {
   const productName = 'foo';
   const estimateSeconds = 1234;
-  const translator = new TripDurationEstimateTranslator();
+  const translator = new PickupTimeEstimateTranslator();
 
   let estimate = {};
-  estimate[TripDurationEstimateTranslator.getProductNameFieldName()] = productName;
-  estimate[TripDurationEstimateTranslator.getEstimateFieldName()] = estimateSeconds;
+  estimate[PickupTimeEstimateTranslator.getProductNameFieldName()] = productName;
+  estimate[PickupTimeEstimateTranslator.getEstimateFieldName()] = estimateSeconds;
 
   describe('JSON Validation', () => {
 
@@ -42,11 +42,11 @@ describe('Trip Duration Estimate Translation', function() {
       it('invalid due to missing estimate field', () => {});
 
       it('invalid due to invalid product name type', () => {
-        invalid[TripDurationEstimateTranslator.getProductNameFieldName()] = 1.234;
+        invalid[PickupTimeEstimateTranslator.getProductNameFieldName()] = 1.234;
       });
 
       it('invalid due to invalid estimate type', () => {
-        invalid[TripDurationEstimateTranslator.getEstimateFieldName()] = 'bar';
+        invalid[PickupTimeEstimateTranslator.getEstimateFieldName()] = 'bar';
       });
     });
   });

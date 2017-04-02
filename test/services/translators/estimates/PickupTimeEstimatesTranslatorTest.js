@@ -8,17 +8,17 @@ const expect = chai.expect;
 
 import { List } from 'immutable';
 
-import TripDurationEstimateTranslator from '../../../../src/services/translators/estimates/TripDurationEstimateTranslator';
-import TripDurationEstimatesTranslator from '../../../../src/services/translators/estimates/TripDurationEstimatesTranslator';
+import PickupTimeEstimateTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimateTranslator';
+import PickupTimeEstimatesTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimatesTranslator';
 
 describe('Trip Duration Estimats Translation', function() {
   const testValue = 'jaebaebae';
 
-  const estimateTranslator = new TripDurationEstimateTranslator();
-  const translator = new TripDurationEstimatesTranslator(estimateTranslator);
+  const estimateTranslator = new PickupTimeEstimateTranslator();
+  const translator = new PickupTimeEstimatesTranslator(estimateTranslator);
 
   let valid = {};
-  valid[TripDurationEstimatesTranslator.getEstimatedDurationsFieldName()] = [
+  valid[PickupTimeEstimatesTranslator.getEstimatedDurationsFieldName()] = [
     1, 2, 3
   ];
 
@@ -41,7 +41,7 @@ describe('Trip Duration Estimats Translation', function() {
       });
 
       it('is invalid due to invalid type for estimated durations field', () => {
-        invalid[TripDurationEstimatesTranslator.getEstimatedDurationsFieldName()] = testValue;
+        invalid[PickupTimeEstimatesTranslator.getEstimatedDurationsFieldName()] = testValue;
       });
     });
   });
