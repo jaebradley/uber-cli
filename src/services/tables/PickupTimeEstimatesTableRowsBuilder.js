@@ -16,10 +16,10 @@ export default class PickupTimeEstimatesTableRowsBuilder {
 
       if (rows.has(formattedDuration)) {
         let productNames = rows.get(formattedDuration);
-        productNames = productNames.push(estimate.productName);
+        productNames.push(estimate.productName);
         rows = rows.set(formattedDuration, productNames);
       } else {
-        rows = rows.set(formattedDuration, List.of(estimate.productName));
+        rows = rows.set(formattedDuration, [estimate.productName]);
       }
     });
     return rows.entrySeq();
