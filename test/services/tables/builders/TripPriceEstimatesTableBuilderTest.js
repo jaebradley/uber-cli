@@ -90,4 +90,61 @@ describe('Trip Price Estimates Table Builder', () => {
       expect(tableBuilder.buildLocationRow(name, false)).to.eql(expected);
     });
   });
+
+  describe('builds table', () => {
+
+    it('without taxi', () => {
+      const rowFormatting = sinon.stub(rowFormatter, 'format').callsFake((estimate, distanceUnit) => List.of(`foo_${estimate.productName}`));
+      const initialTableBuilding = sinon.stub(tableBuilder, 'buildInitialTable').returns(new Table());
+      const locationRowBuilding = sinon.stub(tableBuilder, 'buildLocationRow').returns(List.of('bar'));
+      const withoutTaxi = {
+        start: 'jae',
+        end: 'baebae',
+        estimates: [
+          {
+            productName: 1
+          },
+          {
+            productName: 2
+          },
+          {
+            productName: 3
+          }
+        ]
+      };
+      const expected = '\u001b[90m┌───────┐\u001b[39m\n\u001b[90m│\u001b[39m foo_1 \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m foo_2 \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m foo_3 \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m bar   \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m bar   \u001b[90m│\u001b[39m\n\u001b[90m└───────┘\u001b[39m';
+      console.log(`expected without taxi: ${expected}`);
+      expect(tableBuilder.build(withoutTaxi, {})).to.eql(expected);
+      rowFormatting.restore();
+      initialTableBuilding.restore();
+      locationRowBuilding.restore();
+    });
+
+    it('with taxi', () => {
+      const rowFormatting = sinon.stub(rowFormatter, 'format').callsFake((estimate, distanceUnit) => List.of(`foo_${estimate.productName}`));
+      const initialTableBuilding = sinon.stub(tableBuilder, 'buildInitialTable').returns(new Table());
+      const locationRowBuilding = sinon.stub(tableBuilder, 'buildLocationRow').returns(List.of('bar'));
+      const withTaxi = {
+        start: 'jae',
+        end: 'baebae',
+        estimates: [
+          {
+            productName: 1
+          },
+          {
+            productName: 'TAXI'
+          },
+          {
+            productName: 3
+          }
+        ]
+      };
+      const expected = '\u001b[90m┌───────┐\u001b[39m\n\u001b[90m│\u001b[39m foo_1 \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m foo_3 \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m bar   \u001b[90m│\u001b[39m\n\u001b[90m├───────┤\u001b[39m\n\u001b[90m│\u001b[39m bar   \u001b[90m│\u001b[39m\n\u001b[90m└───────┘\u001b[39m';
+      console.log(`expected with taxi: ${expected}`);
+      expect(tableBuilder.build(withTaxi, {})).to.eql(expected);
+      rowFormatting.restore();
+      initialTableBuilding.restore();
+      locationRowBuilding.restore();
+    });
+  });
 });

@@ -16,7 +16,7 @@ export default class TripPriceEstimatesTableBuilder {
     let table = this.buildInitialTable();
     estimates.estimates.forEach(estimate => {
       if (estimate.productName !== 'TAXI') {
-        table.push(this.rowFormatter.format(estimate, presentationDistanceUnit));
+        table.push(this.rowFormatter.format(estimate, presentationDistanceUnit).toJS());
       }
     });
     table.push(this.buildLocationRow(estimates.start.name, false).toJS());
