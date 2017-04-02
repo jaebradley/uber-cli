@@ -1,14 +1,23 @@
 'use es6';
 
 import convert from 'convert-units';
+import { Map } from 'immutable';
 
 import Distance from '../data/Distance';
 import DistanceUnit from '../data/DistanceUnit';
 
 export default class DistanceConverter {
-  static convert(distance, toUnit) {
-    const fromUnitIdentifier = DistanceConverter.getUnitConversionIdentifier(distance.unit);
-    const toUnitIdentifier = DistanceConverter.getUnitConversionIdentifier(toUnit);
+  constructor() {
+    let unitConversionIdentifier = {};
+    unitConversionIdentifier[DistanceUnit.MILE.name] = 'mi';
+    unitConversionIdentifier[DistanceUnit.KILOMETER.name] = 'm';
+
+    this.unitConversionIdentifier = Map(unitConversionIdentifier);
+  }
+
+  convert(distance, toUnit) {
+    const fromUnitIdentifier = this.getUnitConversionIdentifier(distance.unit);
+    const toUnitIdentifier = this.getUnitConversionIdentifier(toUnit);
     const convertedValue = convert(distance.value).from(fromUnitIdentifier).to(toUnitIdentifier);
 
     switch (toUnit) {
@@ -28,24 +37,16 @@ export default class DistanceConverter {
       }
 
       default: {
-        throw new TypeError('Unexpected Unit');
+        throw new TypeError(`Unknown unit: ${toUnit}`);
       }
     }
   }
 
-  static getUnitConversionIdentifier(unit) {
-    switch (unit) {
-      case DistanceUnit.MILE: {
-        return 'mi';
-      }
-
-      case DistanceUnit.KILOMETER: {
-        return 'm';
-      }
-
-      default: {
-        throw new TypeError('Unknown unit');
-      }
+  getUnitConversionIdentifier(unit) {
+    const identifier = this.unitConversionIdentifier.get(unit.name);
+    if (typeof identifier === "undefined") {
+      throw new TypeError('Unknown unit');
     }
+    return identifier;
   }
 }

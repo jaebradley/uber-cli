@@ -55,12 +55,11 @@ describe('Trip Duration Estimats Translation', function() {
 
     it('Returns list when JSON is Valid', () => {
       const translateEstimate = sinon.stub(estimateTranslator, 'translate')
-                                     .returns((value) => {
-                                       `translated ${value}`;
-                                     });
+                                     .callsFake(() => 'bar');
       const isValid = sinon.stub(translator, 'isValid')
                            .returns(true);
-      const expected = List.of('translated 1', 'translated 2', 'translated 3');
+      const expected = List.of('bar', 'bar', 'bar');
+      expect(translator.translate(valid)).to.eql(expected);
       translateEstimate.restore();
       isValid.restore();
     });
