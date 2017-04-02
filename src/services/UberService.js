@@ -8,8 +8,8 @@ import PriceEstimates from '../data/PriceEstimates';
 import TimeEstimates from '../data/TimeEstimates';
 import TripDurationEstimateTranslator from './translators/estimates/TripDurationEstimateTranslator';
 import TripDurationEstimatesTranslator from './translators/estimates/TripDurationEstimatesTranslator';
-import TripPriceEstimateTranslator from './translators/TripPriceEstimateTranslator';
-import TripPriceEstimatesTranslator from './translators/TripPriceEstimatesTranslator';
+import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
+import TripPriceEstimatesTranslator from './translators/estimates/TripPriceEstimatesTranslator';
 
 export default class UberService {
   constructor() {

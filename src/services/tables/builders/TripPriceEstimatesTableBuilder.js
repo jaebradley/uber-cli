@@ -1,11 +1,8 @@
 'use es6';
 
-import emoji from 'node-emoji';
-import {List,Map} from 'immutable';
 import Table from 'cli-table2';
-
-import PriceEstimateFormatter from './PriceEstimateFormatter';
-import Utilities from '../../../Utilities';
+import { List, Map } from 'immutable';
+import emoji from 'node-emoji';
 
 export default class TripPriceEstimatesTableBuilder {
   constructor(rowFormatter) {
