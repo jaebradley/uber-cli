@@ -8,6 +8,7 @@ chai.use(chaiImmutable);
 chai.use(sinonChai);
 
 import { List, Map } from 'immutable';
+import emoji from 'node-emoji';
 
 import DistanceUnit from '../../../src/data/DistanceUnit';
 
@@ -68,15 +69,27 @@ describe('Trip Price Estimate Row Formatter', () => {
     });
   });
 
+  describe('format surge multiplier', () => {
+    it('for no surge multiplier', () => {
+      expect(rowFormatter.formatSurgeMultiplier(1)).to.eql(emoji.get('no_entry_sign'));
+    });
+
+    it('for surge multiplier', () => {
+      const expected = `1.1x ${emoji.get('grimacing')}`;
+      expect(rowFormatter.formatSurgeMultiplier(1.1)).to.eql(expected);
+    });
+  });
+
   describe('format', () => {
     it('succeeds', () => {
       const rangeFormatting = sinon.stub(rowFormatter, 'formatRange').returns('foo');
       const distanceFormatting = sinon.stub(rowFormatter, 'formatDistance').returns('bar');
       const durationFormatting = sinon.stub(durationFormatter, 'format').returns('baz');
+      const surgeMultiplierFormatting = sinon.stub(rowFormatter, 'formatSurgeMultiplier').returns('jaebaebae');
 
-      const expected = List.of('foo', 'bar', 'baz');
+      const expected = List.of('productName', 'foo', 'bar', 'baz', 'jaebaebae');
 
-      expect(rowFormatter.format({}, {}, {})).to.eql(expected);
+      expect(rowFormatter.format({productName: 'productName'}, {}, {})).to.eql(expected);
     });
   });
 });

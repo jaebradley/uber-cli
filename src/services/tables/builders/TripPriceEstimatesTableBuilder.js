@@ -8,6 +8,10 @@ import PriceEstimateFormatter from './PriceEstimateFormatter';
 import Utilities from '../../../Utilities';
 
 export default class TripPriceEstimatesTableBuilder {
+  constructor(rowFormatter) {
+    this.rowFormatter = rowFormatter;
+  }
+
   build(estimates, presentationDistanceUnit) {
     let table = this.buildInitialTable();
     estimates.estimates.forEach(estimate => {

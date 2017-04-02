@@ -1,5 +1,6 @@
 'use es6';
 
+import emoji from 'node-emoji';
 import CurrencySymbol from 'currency-symbol-map';
 import { List, Map } from 'immutable';
 
@@ -18,9 +19,11 @@ export default class TripPriceEstimateRowFormatter {
 
   format(estimate, rowDistanceUnit, rowDurationUnit) {
     return List.of(
+      estimate.productName,
       this.formatRange(estimate.range),
       this.formatDistance(estimate.distance, rowDistanceUnit),
-      this.durationFormatter.format(estimate.duration)
+      this.durationFormatter.format(estimate.duration),
+      this.formatSurgeMultiplier(estimate.surgeMultiplier)
     );
   }
 
@@ -34,6 +37,14 @@ export default class TripPriceEstimateRowFormatter {
     const convertedDistance = this.distanceConverter.convert(distance, rowDistanceUnit);
     const roundedDistanceValue = Math.round(convertedDistance.value * 100) / 100;
     return `${roundedDistanceValue} ${this.getDistanceUnitAbbreviation(convertedDistance.unit)}.`;
+  }
+
+  formatSurgeMultiplier(surgeMultiplier) {
+    if (surgeMultiplier > 1) {
+      return `${surgeMultiplier}x ${emoji.get('grimacing')}`;
+    }
+
+    return emoji.get('no_entry_sign');
   }
 
   getDistanceUnitAbbreviation(unit) {
