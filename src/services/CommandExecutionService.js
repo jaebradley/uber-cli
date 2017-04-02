@@ -6,8 +6,9 @@ import DistanceUnit from '../data/DistanceUnit';
 import PriceEstimateQuery from '../data/PriceEstimateQuery';
 import UberService from './UberService';
 import DistanceConverter from './DistanceConverter';
+import DurationConverter from './DurationConverter';
 import DurationFormatter from './DurationFormatter';
-import TripPriceEstimateRowFormatter from './tables/builders/TripPriceEstimateRowFormatter';
+import TripPriceEstimateRowFormatter from './tables/TripPriceEstimateRowFormatter';
 import TripPriceEstimatesTableBuilder from './tables/builders/TripPriceEstimatesTableBuilder';
 import TimeEstimatesTableBuilder from './tables/builders/TimeEstimatesTableBuilder';
 
@@ -18,7 +19,7 @@ export default class CommandExecutionService {
     this.durationConverter = new DurationConverter();
     this.durationFormatter = new DurationFormatter(this.durationConverter);
     this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter);
-    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.rowFormatter);
+    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter);
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
@@ -30,7 +31,10 @@ export default class CommandExecutionService {
       throw new TypeError('end address should be a string');
     }
 
-    const distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
+    let distanceUnit = DistanceUnit.MILE;
+    if (typeof distanceUnitName !== 'undefined') {
+      distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
+    }
 
     if (typeof distanceUnit === 'undefined') {
       throw new TypeError(`Unknown distance unit: ${distanceUnitName}`);
