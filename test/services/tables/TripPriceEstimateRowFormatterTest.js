@@ -13,6 +13,7 @@ import DistanceUnit from '../../../src/data/DistanceUnit';
 
 import DistanceConverter from '../../../src/services/DistanceConverter';
 import DurationConverter from '../../../src/services/DurationConverter';
+import DurationFormatter from '../../../src/services/DurationFormatter';
 import TripPriceEstimateRowFormatter from '../../../src/services/tables/TripPriceEstimateRowFormatter';
 
 const expect = chai.expect;
@@ -31,7 +32,7 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('fetches distance unit abbreviation', () => {
-    it('successful', () => {
+    it('successfully', () => {
       expect(rowFormatter.getDistanceUnitAbbreviation(DistanceUnit.MILE)).to.eql('mi');
     });
 
@@ -47,19 +48,22 @@ describe('Trip Price Estimate Row Formatter', () => {
       high: 'bar'
     };
 
-    it('successful', () => {
+    it('successfully', () => {
       const expected = '$foo-$bar';
       expect(rowFormatter.formatRange(range)).to.eql(expected);
     });
   });
 
   describe('format distance', () => {
-    before( () => {
-      this.distanceConversion = sinon.stub(durationConverter, 'convert').return(1);
-    });
+    it('successfully', () => {
+      const distanceConversion = sinon.stub(distanceConverter, 'convert').returns({ value: 1 });
+      const distanceUnitAbbreviation = sinon.stub(rowFormatter, 'getDistanceUnitAbbreviation').returns('bar');
+      const expected = '1 bar.';
 
-    after( () => {
-      this.distanceConversion.restore();
-    })
+      expect(rowFormatter.formatDistance({})).to.eql(expected);
+
+      distanceConversion.restore();
+      distanceUnitAbbreviation.restore();
+    });
   });
 });
