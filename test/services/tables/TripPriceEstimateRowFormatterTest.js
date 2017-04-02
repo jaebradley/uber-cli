@@ -7,7 +7,7 @@ import sinonChai from 'sinon-chai';
 chai.use(chaiImmutable);
 chai.use(sinonChai);
 
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../../src/data/DistanceUnit';
 
@@ -21,7 +21,8 @@ const expect = chai.expect;
 describe('Trip Price Estimate Row Formatter', () => {
   const distanceConverter = new DistanceConverter();
   const durationConverter = new DurationConverter();
-  const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationConverter);
+  const durationFormatter = new DurationFormatter(durationConverter);
+  const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationFormatter);
 
   it('construction', () => {
     let abbreviations = {};
@@ -32,7 +33,7 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('fetches distance unit abbreviation', () => {
-    it('successfully', () => {
+    it('succeeds', () => {
       expect(rowFormatter.getDistanceUnitAbbreviation(DistanceUnit.MILE)).to.eql('mi');
     });
 
@@ -55,7 +56,7 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('format distance', () => {
-    it('successfully', () => {
+    it('succeeds', () => {
       const distanceConversion = sinon.stub(distanceConverter, 'convert').returns({ value: 1 });
       const distanceUnitAbbreviation = sinon.stub(rowFormatter, 'getDistanceUnitAbbreviation').returns('bar');
       const expected = '1 bar.';
@@ -64,6 +65,18 @@ describe('Trip Price Estimate Row Formatter', () => {
 
       distanceConversion.restore();
       distanceUnitAbbreviation.restore();
+    });
+  });
+
+  describe('format', () => {
+    it('succeeds', () => {
+      const rangeFormatting = sinon.stub(rowFormatter, 'formatRange').returns('foo');
+      const distanceFormatting = sinon.stub(rowFormatter, 'formatDistance').returns('bar');
+      const durationFormatting = sinon.stub(durationFormatter, 'format').returns('baz');
+
+      const expected = List.of('foo', 'bar', 'baz');
+
+      expect(rowFormatter.format({}, {}, {})).to.eql(expected);
     });
   });
 });
