@@ -59,7 +59,7 @@ describe('Trip Price Estimate Row Formatter', () => {
     });
 
     after( () => {
-      .restore();
+      this.distanceConversion.restore();
     })
   });
 });
