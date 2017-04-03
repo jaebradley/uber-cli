@@ -4,14 +4,14 @@ import Table from 'cli-table2';
 import { List, Map } from 'immutable';
 import emoji from 'node-emoji';
 
-import Utilities from '../../../Utilities';
-
 export default class PickupTimeEstimatesTableBuilder {
+  constructor(rowsBuilder) {
+    this.rowsBuilder = rowsBuilder;
+  }
+
   build(estimates) {
-    let table = TimeEstimatesTableBuilder.buildInitialTable(estimates.location.name);
-    TimeEstimatesTableBuilder.groupByTimeEstimate(estimates.estimates)
-                             .entrySeq()
-                             .forEach(e => table.push([Utilities.generateFormattedTime(e[0]), e[1].join(',')]));
+    let table = this.buildInitialTable(estimates.location.name);
+    this.rowsBuilder(estimates).forEach(row => table.push(row));
     return table.toString();
   }
 
@@ -32,26 +32,19 @@ export default class PickupTimeEstimatesTableBuilder {
     );
   }
 
+  getFormattedHeaders() {
+    return List(this.getTableHeaders()
+                    .map(header => Map({
+                      content: header,
+                      hAlign: 'center'
+                    }))
+                );
+  }
+
   buildInitialTable(locationName) {
     let table = new Table();
     table.push(this.getFormattedLocation(locationName).toJS());
-    let formattedHeaders = List(TimeEstimatesTableBuilder.getTableHeaders()
-                              .map(header => Map({ content: header, hAlign: 'center' })));
-    table.push(formattedHeaders.toJS());
+    table.push(this.getFormattedHeaders().toJS());
     return table;
-  }
-
-  groupByTimeEstimate(estimates) {
-    let timeEstimateGroups = Map();
-    estimates.forEach(function(estimate) {
-      if (timeEstimateGroups.has(estimate.estimateSeconds)) {
-        let productNames = timeEstimateGroups.get(estimate.estimateSeconds);
-        productNames = productNames.push(estimate.productName);
-        timeEstimateGroups = timeEstimateGroups.set(estimate.estimateSeconds, productNames);
-      } else {
-        timeEstimateGroups = timeEstimateGroups.set(estimate.estimateSeconds, List.of(estimate.productName));
-      }
-    });
-    return timeEstimateGroups;
   }
 }
