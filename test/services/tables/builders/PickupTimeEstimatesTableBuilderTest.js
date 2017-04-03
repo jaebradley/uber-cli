@@ -11,12 +11,14 @@ import Table from 'cli-table2';
 import { List, Map } from 'immutable';
 import emoji from 'node-emoji';
 
+import PickupTimeEstimatesTableRowsBuilder from '../../../../src/services/tables/PickupTimeEstimatesTableRowsBuilder';
 import PickupTimeEstimatesTableBuilder from '../../../../src/services/tables/builders/PickupTimeEstimatesTableBuilder';
 
 const expect = chai.expect;
 
 describe('Pickup Time Estimates Table Builder', () => {
-  const tableBuilder = new PickupTimeEstimatesTableBuilder();
+  const rowsBuilder = new PickupTimeEstimatesTableRowsBuilder();
+  const tableBuilder = new PickupTimeEstimatesTableBuilder(rowsBuilder);
 
   describe('table headers', () => {
     it('fetch succeeds', () => {
@@ -61,6 +63,7 @@ describe('Pickup Time Estimates Table Builder', () => {
         })
       );
       expect(tableBuilder.getFormattedHeaders()).to.eql(expected);
+
       tableHeadersFetching.restore();
     });
   });
@@ -82,8 +85,22 @@ describe('Pickup Time Estimates Table Builder', () => {
       console.log(`Initial table actually looks like: ${initialTable}`)
 
       expect(initialTable).to.eql(expected);
+
       tableLocationFormatting.restore();
       tableHeadersFetching.restore();
+    });
+  });
+
+  describe('build table', () => {
+    it('succeeds', () => {
+      const initalTableBuilding = sinon.stub(tableBuilder, 'buildInitialTable').returns([]);
+      const rowsBuilding = sinon.stub(rowsBuilder, 'build').returns(List.of(1, 2, 3));
+      const expected = '1,2,3';
+
+      expect(tableBuilder.build({location: {name: 'foobar'}})).to.eql(expected);
+
+      initalTableBuilding.restore();
+      rowsBuilding.restore();
     });
   });
 });

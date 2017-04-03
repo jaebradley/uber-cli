@@ -11,7 +11,7 @@ export default class PickupTimeEstimatesTableBuilder {
 
   build(estimates) {
     let table = this.buildInitialTable(estimates.location.name);
-    this.rowsBuilder(estimates).forEach(row => table.push(row));
+    this.rowsBuilder.build(estimates).forEach(row => table.push(row));
     return table.toString();
   }
 
