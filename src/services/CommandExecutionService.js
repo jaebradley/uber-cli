@@ -10,7 +10,8 @@ import DurationConverter from './DurationConverter';
 import DurationFormatter from './DurationFormatter';
 import TripPriceEstimateRowFormatter from './tables/TripPriceEstimateRowFormatter';
 import TripPriceEstimatesTableBuilder from './tables/builders/TripPriceEstimatesTableBuilder';
-import TimeEstimatesTableBuilder from './tables/builders/TimeEstimatesTableBuilder';
+import PickupTimeEstimatesTableRowsBuilder from './tables/PickupTimeEstimatesTableRowsBuilder';
+import PickupTimeEstimatesTableBuilder from './tables/builders/PickupTimeEstimatesTableBuilder';
 
 export default class CommandExecutionService {
   constructor() {
@@ -20,6 +21,8 @@ export default class CommandExecutionService {
     this.durationFormatter = new DurationFormatter(this.durationConverter);
     this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter);
     this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter);
+    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter);
+    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder);
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
@@ -44,6 +47,7 @@ export default class CommandExecutionService {
       startAddress: startAddress,
       endAddress: endAddress
     });
+
     return this.uberService.getPriceEstimates(query)
                            .then(estimates => this.tripPriceEstimatesTableBuilder.build(estimates, distanceUnit));
   }
@@ -54,6 +58,6 @@ export default class CommandExecutionService {
     }
 
     return this.uberService.getTimeEstimates(address)
-                           .then(estimates => TimeEstimatesTableBuilder.build(estimates));
+                           .then(estimates => this.pickupTimeEstimatesTableBuilder.build(estimates));
   }
 }

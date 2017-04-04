@@ -8,5 +8,5 @@ let defaults = {
   estimatedDuration: new Duration(),
 };
 
-export default class TripDurationEstimate extends Record(defaults){
+export default class PickupTimeEstimate extends Record(defaults){
 };
