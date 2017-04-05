@@ -42,8 +42,8 @@ export default class UberService {
   }
 
   getPriceEstimates(query) {
-    let startLocation = this.geocodeService.getFirstLocation(query.startAddress);
-    let endLocation = this.geocodeService.getFirstLocation(query.endAddress);
+    let startLocation = this.getFirstLocation(query.startAddress);
+    let endLocation = this.getFirstLocation(query.endAddress);
     return Promise.all([ startLocation, endLocation ])
                   .then( ([ start, end ]) => {
                     return this.client

@@ -62,4 +62,25 @@ describe('Uber Service', () => {
       pickupTimeTranslation.restore();
     });
   });
+
+  describe('price estimates', () => {
+    it('succeeds', () => {
+      const firstLocation = sinon.stub(uberService, 'getFirstLocation')
+                                 .returns(Promise.resolve('jaebaebae'));
+      const clientPriceEstimation = sinon.stub(uberService.client, 'getPriceEstimates')
+                                        .returns(Promise.resolve({}));
+      const priceEstimatesTranslation = sinon.stub(uberService.tripPriceEstimatesTranslator, 'translate')
+                                         .returns(Promise.resolve('bae jadley'));
+      const expected = new PriceEstimates({
+        start: 'jaebaebae',
+        end: 'jaebaebae',
+        estimates: 'bae jadley'
+      });
+      expect(uberService.getPriceEstimates({startAddress: 'jae', endAddress: 'baebae'})).to.eventually.eql(expected);
+
+      firstLocation.restore();
+      clientPriceEstimation.restore();
+      priceEstimatesTranslation.restore();
+    });
+  });
 });
