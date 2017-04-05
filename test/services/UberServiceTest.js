@@ -41,4 +41,25 @@ describe('Uber Service', () => {
       geocodeLocations.restore();
     });
   });
+
+  describe('time estimates', () => {
+    it('succeeds', () => {
+      const firstLocation = sinon.stub(uberService, 'getFirstLocation')
+                                 .returns(Promise.resolve('jaebaebae'));
+      const clientTimeEstimation = sinon.stub(uberService.client, 'getTimeEstimates')
+                                        .returns(Promise.resolve({}));
+      const pickupTimeTranslation = sinon.stub(uberService.pickupTimeEstimatesTranslator, 'translate')
+                                         .returns(Promise.resolve('bae jadley'));
+      const expected = new TimeEstimates({
+        location: 'jaebaebae',
+        estimates: 'baejadley'
+      });
+
+      expect(uberService.getTimeEstimates()).to.eventually.eql(expected);
+
+      firstLocation.restore();
+      clientTimeEstimation.restore();
+      pickupTimeTranslation.restore();
+    });
+  });
 });
