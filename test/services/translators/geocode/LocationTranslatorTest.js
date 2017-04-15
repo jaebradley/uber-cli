@@ -53,15 +53,15 @@ describe('Location Translation', function() {
       });
 
       it('invalid due to missing latitude field', () => {
-        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME] = {};
+        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME] = {};
       });
 
       it('invalid due to missing longitude field', () => {
-        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LATITUDE_FIELD_NAME] = 'foo';
+        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME][translator.LATITUDE_FIELD_NAME] = 'foo';
       });
 
       it('invalid due to invalid address type', () => {
-        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LONGITUDE_FIELD_NAME] = 'foo';
+        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME][translator.LONGITUDE_FIELD_NAME] = 'foo';
       });
 
       it('invalid due to invalid latitude type', () => {
@@ -69,7 +69,7 @@ describe('Location Translation', function() {
       });
 
       it('invalid due to invalid longitude type', () => {
-        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME][this.LATITUDE_FIELD_NAME] = 1.234;
+        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME][translator.LATITUDE_FIELD_NAME] = 1.234;
       });
     });
   });
