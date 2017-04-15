@@ -29,6 +29,17 @@ describe('Command Execution Service', () => {
     it('throws for undefined distance unit name', () => {
       expect(() => service.executePriceEstimates('foo', 'bar', 'baz')).to.throw(TypeError);
     });
+
+    it('returns a value', () => {
+      const priceEstimates = new Promise((resolve, reject) => {
+        resolve('foo');
+      });
+      const priceEstimater = sinon.stub(service.uberService, 'getPriceEstimates').returns(priceEstimates);
+      const tableBuilder = sinon.stub(service.tripPriceEstimatesTableBuilder, 'build').returns('jaebaebae');
+      expect(service.executePriceEstimates('foo', 'bar', undefined)).to.eventually.equal('jaebaebae');
+      priceEstimater.restore();
+      tableBuilder.restore();
+    });
   });
 
   describe('Time estimates', () => {
@@ -43,6 +54,8 @@ describe('Command Execution Service', () => {
       const tableBuilder = sinon.stub(service.pickupTimeEstimatesTableBuilder, 'build').returns('baz');
       const timeEstimation = sinon.stub(service.uberService, 'getTimeEstimates').returns(timeEstimates);
       expect(service.executeTimeEstimates('bar')).to.eventually.equal('baz');
+      tableBuilder.restore();
+      timeEstimation.restore();
     });
   });
 });
