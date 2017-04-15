@@ -53,11 +53,10 @@
     "url": "https://github.com/jaebradley/uber-cli/tree/master"
   },
   "scripts": {
-    "build": "babel src --presets babel-preset-es2015 --out-dir build",
-    "compile": "babel --presets es2015,stage-0 -d build/ src/",
-    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha -- --compilers js:babel-register ",
-    "coveralls": "npm run compile && npm run-script coverage && node_modules/.bin/coveralls < coverage/lcov.info",
+    "compile": "./node_modules/.bin/babel --presets es2015,stage-0 -d build/ src/",
+    "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test --  --recursive --compilers js:babel-core/register",
+    "coveralls": "npm run compile && npm run coverage && node_modules/.bin/coveralls < coverage/lcov.info",
     "prepublish": "npm run compile",
-    "test": "npm run build && mocha --compilers js:babel-core/register"
+    "test": "npm run compile && mocha --compilers js:babel-core/register"
   }
 }
