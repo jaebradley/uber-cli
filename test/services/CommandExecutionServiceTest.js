@@ -8,13 +8,30 @@ import sinonChai from 'sinon-chai';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
+import DistanceUnit from '../../src/data/DistanceUnit';
+
 const expect = chai.expect;
 
 import CommandExecutionService from '../../src/services/CommandExecutionService';
 
 describe('Command Execution Service', () => {
   const service = new CommandExecutionService();
-  describe('Test time estimates', () => {
+
+  describe('Price estimates', () => {
+    it('throws for invalid start address type', () => {
+      expect(() => service.executePriceEstimates(1, '', DistanceUnit.MILE)).to.throw(TypeError, 'start address should be a string');
+    });
+
+    it('throws for invalid end address type', () => {
+      expect(() => service.executePriceEstimates('foo', 1, DistanceUnit.MILE)).to.throw(TypeError, 'end address should be a string');
+    });
+
+    it('throws for undefined distance unit name', () => {
+      expect(() => service.executePriceEstimates('foo', 'bar', 'baz')).to.throw(TypeError);
+    });
+  });
+
+  describe('Time estimates', () => {
     it('throws for invalid address type', () => {
       expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'address should be a string');
     });
