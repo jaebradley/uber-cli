@@ -35,7 +35,7 @@ export default class CommandExecutionService {
     }
 
     let distanceUnit = DistanceUnit.MILE;
-    if (typeof distanceUnitName !== 'undefined') {
+    if (typeof distanceUnitName === 'string') {
       distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
     }
 
