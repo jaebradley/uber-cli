@@ -44,7 +44,9 @@ describe('Location Translation', function() {
 
       it('invalid due to missing formatted address field', () => {});
 
-      it('invalid due to missing geometry address field', () => {});
+      it('invalid due to missing geometry address field', () => {
+        test[translator.FORMATTED_ADDRESS_FIELD_NAME] = {};
+      });
 
       it('invalid due to missing location field', () => {
         test[translator.GEOMETRY_ADDRESS_FIELD_NAME] = {};

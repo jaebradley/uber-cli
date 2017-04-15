@@ -94,7 +94,7 @@ describe('Pickup Time Estimates Table Builder', () => {
   describe('build table', () => {
     it('succeeds', () => {
       const initalTableBuilding = sinon.stub(tableBuilder, 'buildInitialTable').returns([]);
-      const rowsBuilding = sinon.stub(rowsBuilder, 'build').returns(List.of(1, 2, 3));
+      const rowsBuilding = sinon.stub(rowsBuilder, 'build').returns(List.of(List.of(1), List.of(2), List.of(3)));
       const expected = '1,2,3';
 
       expect(tableBuilder.build({location: {name: 'foobar'}})).to.eql(expected);
