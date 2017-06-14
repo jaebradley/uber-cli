@@ -10,6 +10,7 @@ import PickupTimeEstimateTranslator from './translators/estimates/PickupTimeEsti
 import PickupTimeEstimatesTranslator from './translators/estimates/PickupTimeEstimatesTranslator';
 import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
 import TripPriceEstimatesTranslator from './translators/estimates/TripPriceEstimatesTranslator';
+import DistanceExceeds100MilesError from '../errors/DistanceExceeds100MilesError';
 
 export default class UberService {
   constructor() {
@@ -52,7 +53,14 @@ export default class UberService {
                         start: start,
                         end: end,
                         estimates: this.tripPriceEstimatesTranslator.translate(response)
-                      }));
+                      })).catch((e) => {
+                        console.log(e);
+                        if (e.message == 'StatusCodeError: 422 - {"fields":{"start_longitude":"Distance between two points exceeds 100 miles","end_longitude":"Distance between two points exceeds 100 miles","start_latitude":"Distance between two points exceeds 100 miles","end_latitude":"Distance between two points exceeds 100 miles"},"message":"Distance between two points exceeds 100 miles","code":"distance_exceeded"}') {
+                          throw new DistanceExceeds100MilesError(`Distance between ${query.startAddress} and ${query.endAddress} exceeds 100 miles`);
+                        }
+
+                        throw e;
+                      });
                   });
   }
 }
