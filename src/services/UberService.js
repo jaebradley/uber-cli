@@ -10,7 +10,6 @@ import PickupTimeEstimateTranslator from './translators/estimates/PickupTimeEsti
 import PickupTimeEstimatesTranslator from './translators/estimates/PickupTimeEstimatesTranslator';
 import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
 import TripPriceEstimatesTranslator from './translators/estimates/TripPriceEstimatesTranslator';
-import DistanceExceeds100MilesError from '../errors/DistanceExceeds100MilesError';
 
 export default class UberService {
   constructor() {

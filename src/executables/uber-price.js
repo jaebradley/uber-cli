@@ -4,7 +4,6 @@ import program from 'commander';
 import emoji from 'node-emoji';
 
 import CommandExecutionService from '../services/CommandExecutionService';
-import DistanceExceeds100MilesError from '../errors/DistanceExceeds100MilesError';
 
 let service = new CommandExecutionService();
 
