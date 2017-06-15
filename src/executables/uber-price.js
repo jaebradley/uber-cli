@@ -30,12 +30,12 @@ try {
 const isUberError = error => {
   return error.name == 'Uber Error' &&
     error.hasOwnProperty('code') &&
-    error.hasOwnProperty('error') &&
-    'code' in error.error;
+    error.hasOwnProperty('error');
 }
 
 const isDistanceExceededError = error => {
   return isUberError(error) &&
     error.code == 422 &&
+    'code' in error.error &&
     error.error['code'] == 'distance_exceeded';
 }
