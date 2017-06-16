@@ -1,10 +1,10 @@
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 export default class TripPriceEstimatesTableBuilder {
-  constructor(rowFormatter) {
+  constructor(rowFormatter, symbolService) {
     this.rowFormatter = rowFormatter;
+    this.symbolService = symbolService;
   }
 
   build(estimates, presentationDistanceUnit) {
@@ -21,11 +21,11 @@ export default class TripPriceEstimatesTableBuilder {
 
   getTableHeaders() {
     return List.of(
-      emoji.get('oncoming_automobile'),
-      emoji.get('money_with_wings'),
-      emoji.get('arrows_clockwise'),
-      emoji.get('hourglass_flowing_sand'),
-      `${emoji.get('boom')} Surge${emoji.get('boom')}`,
+      this.symbolService.getVehicleSymbol(),
+      this.symbolService.getPriceSymbol(),
+      this.symbolService.getTripDistanceSymbol(),
+      this.symbolService.getDurationSymbol(),
+      `${this.symbolService.getSurgeSymbol()} Surge${this.symbolService.getSurgeSymbol()}`,
     );
   }
 
@@ -37,10 +37,7 @@ export default class TripPriceEstimatesTableBuilder {
   }
 
   buildLocationRow(name, isEnd) {
-    let symbol = emoji.get('round_pushpin');
-    if (isEnd) {
-      symbol = emoji.get('end');
-    }
+    const symbol = isEnd ? this.symbolService.getDestinationSymbol() : this.symbolService.getOriginSymbol(); // eslint-disable-line max-len
 
     return List.of(
       Map({
