@@ -2,39 +2,39 @@ export default class TextSymbolService {
   constructor() {}
 
   getVehicleSymbol() {
-    return 'Vehicle ';
+    return 'Vehicle';
   }
 
   getPriceSymbol() {
-    return 'Price ';
+    return 'Price';
   }
 
   getTripDistanceSymbol() {
-    return 'Distance ';
+    return 'Distance';
   }
 
   getDurationSymbol() {
-    return 'Duration ';
+    return 'Duration';
   }
 
   getSurgeSymbol() {
-    return '*';
+    return ' *';
   }
 
   getNotApplicableSymbol() {
-    return 'N/A ';
+    return 'N/A';
   }
 
   getSurgePresentSymbol() {
-    return ':-( ';
+    return ':-(';
   }
 
   getDestinationSymbol() {
-    return 'Destination ';
+    return 'Destination';
   }
 
   getOriginSymbol() {
-    return 'Origin ';
+    return 'Origin';
   }
 
   getMaximumDistanceSymbol() {
