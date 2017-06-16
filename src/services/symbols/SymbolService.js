@@ -5,7 +5,9 @@ import TextSymbolService from './TextSymbolService';
 
 export default class SymbolService {
   constructor() {
-    this.client = SymbolService.areEmojisSupported() ? new EmojiService() : new TextSymbolService();
+    this.client = SymbolService.areEmojisSupported() ?
+                    new EmojiService() :
+                    new TextSymbolService();
   }
 
   static areEmojisSupported() {
