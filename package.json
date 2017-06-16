@@ -16,7 +16,7 @@
     "enumify": "^1.0.4",
     "immutable": "^3.8.1",
     "node-emoji": "^1.4.3",
-    "uber-client": "^0.0.2"
+    "uber-client": "^0.0.4"
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
