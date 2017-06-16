@@ -2,7 +2,6 @@
 
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 export default class PickupTimeEstimatesTableRowsBuilder {
   constructor(durationFormatter) {

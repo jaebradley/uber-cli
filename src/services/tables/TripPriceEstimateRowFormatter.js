@@ -1,13 +1,13 @@
 'use es6';
 
-import emoji from 'node-emoji';
 import CurrencySymbol from 'currency-symbol-map';
 import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../data/DistanceUnit';
+import SymbolService from '../symbols/SymbolService';
 
 export default class TripPriceEstimateRowFormatter {
-  constructor(distanceConverter, durationFormatter) {
+  constructor(distanceConverter, durationFormatter, symbolService) {
     let distanceUnitAbbreviations = {};
     distanceUnitAbbreviations[DistanceUnit.MILE.name] = 'mi';
     distanceUnitAbbreviations[DistanceUnit.KILOMETER.name] = 'km';
@@ -15,6 +15,7 @@ export default class TripPriceEstimateRowFormatter {
     this.distanceUnitAbbreviations = Map(distanceUnitAbbreviations);
     this.distanceConverter = distanceConverter;
     this.durationFormatter = durationFormatter;
+    this.symbolService = symbolService;
   }
 
   format(estimate, rowDistanceUnit, rowDurationUnit) {
@@ -41,10 +42,10 @@ export default class TripPriceEstimateRowFormatter {
 
   formatSurgeMultiplier(surgeMultiplier) {
     if (surgeMultiplier > 1) {
-      return `${surgeMultiplier}x ${emoji.get('grimacing')}`;
+      return `${surgeMultiplier}x ${this.symbolService.getSurgePresentSymbol()}`;
     }
 
-    return emoji.get('no_entry_sign');
+    return this.symbolService.getNotApplicableSymbol();
   }
 
   getDistanceUnitAbbreviation(unit) {

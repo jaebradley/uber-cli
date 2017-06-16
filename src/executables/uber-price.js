@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 import program from 'commander';
-import emoji from 'node-emoji';
 
 import CommandExecutionService from '../services/CommandExecutionService';
+import SymbolService from '../services/symbols/SymbolService';
 
 let service = new CommandExecutionService();
+
+const symbolService = new SymbolService();
 
 program
   .option('-s, --start <start>', 'specify start address')
@@ -18,7 +20,7 @@ try {
          .then(table => console.log(table))
          .catch((e) => {
            if (isDistanceExceededError(e)) {
-             console.log(`Maximum distance of ${emoji.get('100')}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
+             console.log(`Maximum distance of ${symbolService.getMaximumDistanceSymbol()}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
            } else {
              console.error('Could not get price estimates');
            }
