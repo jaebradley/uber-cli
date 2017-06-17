@@ -1,7 +1,3 @@
-'use es6';
-
-import program from 'commander';
-
 import DistanceUnit from '../data/DistanceUnit';
 import PriceEstimateQuery from '../data/PriceEstimateQuery';
 import UberService from './UberService';
@@ -19,10 +15,10 @@ export default class CommandExecutionService {
     this.distanceConverter = new DistanceConverter();
     this.durationConverter = new DurationConverter();
     this.durationFormatter = new DurationFormatter(this.durationConverter);
-    this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter);
-    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter);
-    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter);
-    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder);
+    this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter); // eslint-disable-line max-len
+    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder); // eslint-disable-line max-len
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
@@ -44,12 +40,12 @@ export default class CommandExecutionService {
     }
 
     const query = new PriceEstimateQuery({
-      startAddress: startAddress,
-      endAddress: endAddress
+      ...startAddress,
+      ...endAddress,
     });
 
     return this.uberService.getPriceEstimates(query)
-                           .then(estimates => this.tripPriceEstimatesTableBuilder.build(estimates, distanceUnit));
+      .then(estimates => this.tripPriceEstimatesTableBuilder.build(estimates, distanceUnit));
   }
 
   executeTimeEstimates(address) {
@@ -58,6 +54,6 @@ export default class CommandExecutionService {
     }
 
     return this.uberService.getTimeEstimates(address)
-                           .then(estimates => this.pickupTimeEstimatesTableBuilder.build(estimates));
+      .then(estimates => this.pickupTimeEstimatesTableBuilder.build(estimates));
   }
 }

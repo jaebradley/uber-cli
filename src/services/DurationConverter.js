@@ -1,5 +1,3 @@
-'use es6';
-
 import convert from 'convert-units';
 import { Map } from 'immutable';
 
@@ -8,7 +6,7 @@ import TimeUnit from '../data/TimeUnit';
 
 export default class DurationConverter {
   constructor() {
-    let durationUnitAbbreviations = {};
+    const durationUnitAbbreviations = {};
     durationUnitAbbreviations[TimeUnit.SECOND.name] = 's';
     durationUnitAbbreviations[TimeUnit.MINUTE.name] = 'min';
 
@@ -21,7 +19,7 @@ export default class DurationConverter {
     const convertedLength = convert(duration.length).from(fromUnitIdentifier).to(toUnitIdentifier);
     return new Duration({
       length: convertedLength,
-      unit: toUnit
+      unit: toUnit,
     });
   }
 
