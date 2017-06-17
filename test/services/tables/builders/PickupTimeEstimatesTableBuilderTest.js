@@ -7,10 +7,10 @@ import sinonChai from 'sinon-chai';
 
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 import PickupTimeEstimatesTableRowsBuilder from '../../../../src/services/tables/PickupTimeEstimatesTableRowsBuilder';
 import PickupTimeEstimatesTableBuilder from '../../../../src/services/tables/builders/PickupTimeEstimatesTableBuilder';
+import SymbolService from '../../../../src/services/symbols/SymbolService';
 
 chai.use(chaiImmutable);
 chai.use(sinonChai);
@@ -18,14 +18,30 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 describe('Pickup Time Estimates Table Builder', () => {
+  let sandbox;
+
+  const symbolService = new SymbolService();
   const rowsBuilder = new PickupTimeEstimatesTableRowsBuilder();
-  const tableBuilder = new PickupTimeEstimatesTableBuilder(rowsBuilder);
+  const tableBuilder = new PickupTimeEstimatesTableBuilder(rowsBuilder, symbolService);
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   describe('table headers', () => {
     it('fetch succeeds', () => {
+      const durationSymbol = 'duration symbol';
+      const vehicleSymbol = 'vehicle symbol';
+      sandbox.stub(tableBuilder.symbolService, 'getDurationSymbol').returns(durationSymbol);
+      sandbox.stub(tableBuilder.symbolService, 'getVehicleSymbol').returns(vehicleSymbol);
+
       const expected = List.of(
-        emoji.get('hourglass_flowing_sand'),
-        emoji.get('oncoming_automobile'),
+        durationSymbol,
+        vehicleSymbol,
       );
 
       expect(tableBuilder.getTableHeaders()).to.eql(expected);
@@ -34,11 +50,13 @@ describe('Pickup Time Estimates Table Builder', () => {
 
   describe('formatted location', () => {
     it('fetch succeeds', () => {
+      const originSymbol = 'origin symbol';
+      sandbox.stub(tableBuilder.symbolService, 'getOriginSymbol').returns(originSymbol);
       const locationName = 'jaebaebae';
       const expected = List.of(
         Map({
           colSpan: 2,
-          content: `${emoji.get('round_pushpin')} ${locationName}`,
+          content: `${originSymbol} ${locationName}`,
           hAlign: 'center',
         }),
       );
@@ -78,8 +96,8 @@ describe('Pickup Time Estimates Table Builder', () => {
       expected.push(['jae', 'baebae']);
       const initialTable = tableBuilder.buildInitialTable();
 
-      console.log(`Expect initial table to look like: ${expected}`);
-      console.log(`Initial table actually looks like: ${initialTable}`);
+      console.log(`Expect initial table to look like:\n${expected}`);
+      console.log(`Initial table actually looks like:\n${initialTable}`);
 
       expect(initialTable).to.eql(expected);
 
