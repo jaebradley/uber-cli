@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-mocha": "^4.10.1",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
     "mocha-lcov-reporter": "^1.2.0 ",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0"

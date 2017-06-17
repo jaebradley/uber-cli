@@ -6,16 +6,16 @@ import chaiImmutable from 'chai-immutable';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-chai.use(chaiAsPromised);
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
 import { List } from 'immutable';
 
 import TimeEstimates from '../../src/data/TimeEstimates';
 import PriceEstimates from '../../src/data/PriceEstimates';
 
 import UberService from '../../src/services/UberService';
+
+chai.use(chaiAsPromised);
+chai.use(chaiImmutable);
+chai.use(sinonChai);
 
 const expect = chai.expect;
 
@@ -24,8 +24,7 @@ describe('Uber Service', () => {
 
   describe('first location', () => {
     it('throws', () => {
-      const geocodeLocations = sinon.stub(uberService.geocodeService, 'getLocations')
-                                    .returns(Promise.resolve(List()));
+      const geocodeLocations = sinon.stub(uberService.geocodeService, 'getLocations').returns(Promise.resolve(List()));
 
       expect(uberService.getFirstLocation()).to.be.rejectedWith(RangeError);
 
@@ -33,8 +32,7 @@ describe('Uber Service', () => {
     });
 
     it('succeeds', () => {
-      const geocodeLocations = sinon.stub(uberService.geocodeService, 'getLocations')
-                                    .returns(Promise.resolve(List.of(1, 2, 3)));
+      const geocodeLocations = sinon.stub(uberService.geocodeService, 'getLocations').returns(Promise.resolve(List.of(1, 2, 3)));
 
       expect(uberService.getFirstLocation()).to.eventually.eql(1);
 
@@ -44,15 +42,12 @@ describe('Uber Service', () => {
 
   describe('time estimates', () => {
     it('succeeds', () => {
-      const firstLocation = sinon.stub(uberService, 'getFirstLocation')
-                                 .returns(Promise.resolve('jaebaebae'));
-      const clientTimeEstimation = sinon.stub(uberService.client, 'getTimeEstimates')
-                                        .returns(Promise.resolve({}));
-      const pickupTimeTranslation = sinon.stub(uberService.pickupTimeEstimatesTranslator, 'translate')
-                                         .returns(Promise.resolve('bae jadley'));
+      const firstLocation = sinon.stub(uberService, 'getFirstLocation').returns(Promise.resolve('jaebaebae'));
+      const clientTimeEstimation = sinon.stub(uberService.client, 'getTimeEstimates').returns(Promise.resolve({}));
+      const pickupTimeTranslation = sinon.stub(uberService.pickupTimeEstimatesTranslator, 'translate').returns(Promise.resolve('bae jadley'));
       const expected = new TimeEstimates({
         location: 'jaebaebae',
-        estimates: 'baejadley'
+        estimates: 'baejadley',
       });
 
       expect(uberService.getTimeEstimates()).to.eventually.eql(expected);
@@ -65,18 +60,15 @@ describe('Uber Service', () => {
 
   describe('price estimates', () => {
     it('succeeds', () => {
-      const firstLocation = sinon.stub(uberService, 'getFirstLocation')
-                                 .returns(Promise.resolve('jaebaebae'));
-      const clientPriceEstimation = sinon.stub(uberService.client, 'getPriceEstimates')
-                                        .returns(Promise.resolve({}));
-      const priceEstimatesTranslation = sinon.stub(uberService.tripPriceEstimatesTranslator, 'translate')
-                                         .returns(Promise.resolve('bae jadley'));
+      const firstLocation = sinon.stub(uberService, 'getFirstLocation').returns(Promise.resolve('jaebaebae'));
+      const clientPriceEstimation = sinon.stub(uberService.client, 'getPriceEstimates').returns(Promise.resolve({}));
+      const priceEstimatesTranslation = sinon.stub(uberService.tripPriceEstimatesTranslator, 'translate').returns(Promise.resolve('bae jadley'));
       const expected = new PriceEstimates({
         start: 'jaebaebae',
         end: 'jaebaebae',
-        estimates: 'bae jadley'
+        estimates: 'bae jadley',
       });
-      expect(uberService.getPriceEstimates({startAddress: 'jae', endAddress: 'baebae'})).to.eventually.eql(expected);
+      expect(uberService.getPriceEstimates({ startAddress: 'jae', endAddress: 'baebae' })).to.eventually.eql(expected);
 
       firstLocation.restore();
       clientPriceEstimation.restore();
