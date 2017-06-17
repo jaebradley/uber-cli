@@ -1,5 +1,3 @@
-'use es6';
-
 import { List } from 'immutable';
 
 export default class PickupTimeEstimatesTranslator {
@@ -12,11 +10,9 @@ export default class PickupTimeEstimatesTranslator {
       throw new Error(`Invalid estimates: ${JSON.stringify(estimates)}`);
     }
 
-    const estimatedDurations = estimates[PickupTimeEstimatesTranslator.getEstimatedDurationsFieldName()];
+    const estimatedDurations = estimates[PickupTimeEstimatesTranslator.getEstimatedDurationsFieldName()]; // eslint-disable-line max-len
 
-    return List(estimatedDurations.map(estimatedDuration => {
-      return this.estimateTranslator.translate(estimatedDuration);
-    }));
+    return List(estimatedDurations.map(estimatedDuration => this.estimateTranslator.translate(estimatedDuration))); // eslint-disable-line max-len
   }
 
   isValid(estimates) {
