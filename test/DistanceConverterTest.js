@@ -1,47 +1,42 @@
-'use es6';
-
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
 
 import DistanceConverter from '../src/services/DistanceConverter';
 
-describe('Distance converter', function() {
+const expect = chai.expect;
+
+describe('Distance converter', () => {
   const converter = new DistanceConverter();
 
-  describe('Unit identifier', function() {
-    it('identifies successfully', function() {
+  describe('Unit identifier', () => {
+    it('identifies successfully', () => {
       expect(converter.getUnitConversionIdentifier(DistanceUnit.MILE)).to.equal('mi');
     });
 
-    it('identifies unsuccessfully', function() {
+    it('identifies unsuccessfully', () => {
       expect(() => converter.getUnitConversionIdentifier('foo')).to.throw(TypeError);
     });
   });
 
   const distance = 1.234;
-  const kilometerDistance = 1.9858335873209383;
   const distanceInMiles = new Distance({
     value: distance,
-    unit: DistanceUnit.MILE
+    unit: DistanceUnit.MILE,
   });
   const distanceInKilometers = new Distance({
     value: distance / 1000,
-    unit: DistanceUnit.KILOMETER
+    unit: DistanceUnit.KILOMETER,
   });
 
   describe('converts successfully', () => {
-    before( () => {
+    before(() => {
       this.unitConversionIdentifier = sinon.stub(converter, 'getUnitConversionIdentifier').returns('mi');
     });
 
-    after( () => {
+    after(() => {
       this.unitConversionIdentifier.restore();
     });
 
@@ -50,16 +45,16 @@ describe('Distance converter', function() {
     });
 
     it('converts kilometer', () => {
-      expect(converter.convert(distanceInMiles, DistanceUnit.KILOMETER)).to.eql(distanceInKilometers);
+      expect(converter.convert(distanceInMiles, DistanceUnit.KILOMETER)).to.eql(distanceInKilometers); // eslint-disable-line max-len
     });
   });
 
   describe('converts unsuccessfully', () => {
-    before( () => {
+    before(() => {
       this.unitConversionIdentifier = sinon.stub(converter, 'getUnitConversionIdentifier').returns('mi');
     });
 
-    after( () => {
+    after(() => {
       this.unitConversionIdentifier.restore();
     });
 
