@@ -1,6 +1,3 @@
-'use es6';
-
-import { List } from 'immutable';
 import { UberClient } from 'uber-client';
 
 import GeocodeService from './GeocodeService';
@@ -15,44 +12,41 @@ export default class UberService {
   constructor() {
     this.client = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
     this.geocodeService = new GeocodeService();
-    this.pickupTimeEstimatesTranslator = new PickupTimeEstimatesTranslator(new PickupTimeEstimateTranslator());
-    this.tripPriceEstimatesTranslator = new TripPriceEstimatesTranslator(new TripPriceEstimateTranslator());
+    this.pickupTimeEstimatesTranslator = new PickupTimeEstimatesTranslator(new PickupTimeEstimateTranslator()); // eslint-disable-line max-len
+    this.tripPriceEstimatesTranslator = new TripPriceEstimatesTranslator(new TripPriceEstimateTranslator()); // eslint-disable-line max-len
   }
 
   getFirstLocation(address) {
     return this.geocodeService.getLocations(address)
-               .then(locations => {
-                 if (locations.isEmpty()) {
-                   throw new RangeError(`no locations for address: ${address}`);
-                 }
+      .then((locations) => {
+        if (locations.isEmpty()) {
+          throw new RangeError(`no locations for address: ${address}`);
+        }
 
-                 return locations.first();
-               });
+        return locations.first();
+      });
   }
 
   getTimeEstimates(address) {
     return this.getFirstLocation(address)
-               .then(location => {
-                 return this.client.getTimeEstimates({ start: location.coordinate })
-                                   .then(estimates => new TimeEstimates({
-                                     location: location,
-                                     estimates: this.pickupTimeEstimatesTranslator.translate(estimates)
-                                   }));
-               });
+      .then(location => this.client.getTimeEstimates({ start: location.coordinate })
+        .then(estimates => new TimeEstimates({
+          ...location,
+          estimates: this.pickupTimeEstimatesTranslator.translate(estimates),
+        })));
   }
 
   getPriceEstimates(query) {
-    let startLocation = this.getFirstLocation(query.startAddress);
-    let endLocation = this.getFirstLocation(query.endAddress);
-    return Promise.all([ startLocation, endLocation ])
-                  .then( ([ start, end ]) => {
-                    return this.client
-                      .getPriceEstimates({ start: start.coordinate, end: end.coordinate })
-                      .then(response => new PriceEstimates({
-                        start: start,
-                        end: end,
-                        estimates: this.tripPriceEstimatesTranslator.translate(response)
-                      }));
-                  });
+    const startLocation = this.getFirstLocation(query.startAddress);
+    const endLocation = this.getFirstLocation(query.endAddress);
+    return Promise.all([startLocation, endLocation])
+      .then(([start, end]) =>
+        this.client
+          .getPriceEstimates({ start: start.coordinate, end: end.coordinate })
+          .then(response => new PriceEstimates({
+            ...start,
+            ...end,
+            estimates: this.tripPriceEstimatesTranslator.translate(response),
+          })));
   }
 }
