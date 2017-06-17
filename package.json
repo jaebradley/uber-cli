@@ -61,6 +61,7 @@
     "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test --  --recursive --compilers js:babel-core/register",
     "coveralls": "npm run compile && npm run coverage && node_modules/.bin/coveralls < coverage/lcov.info",
     "prepublish": "npm run compile",
-    "test": "npm run compile && mocha --compilers js:babel-core/register"
+    "lint": "eslint src",
+    "test": "npm run compile && mocha --recursive --compilers js:babel-core/register"
   }
 }
