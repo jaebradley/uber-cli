@@ -33,6 +33,7 @@
     "coveralls": "^2.11.9",
     "eslint": "^4.0.0",
     "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-chai-expect": "^1.1.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-mocha": "^4.10.1",
     "istanbul": "^1.0.0-alpha.2",
