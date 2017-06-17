@@ -37,6 +37,10 @@ describe('EmojiService Test', () => {
     expect(service.getSurgePresentSymbol()).to.eql(emoji.get('grimacing'));
   });
 
+  it('should get destination symbol', () => {
+    expect(service.getDestinationSymbol()).to.eql(emoji.get('end'));
+  });
+
   it('should get origin symbol', () => {
     expect(service.getOriginSymbol()).to.eql(emoji.get('round_pushpin'));
   });
