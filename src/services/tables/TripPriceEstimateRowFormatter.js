@@ -38,11 +38,9 @@ export default class TripPriceEstimateRowFormatter {
   }
 
   formatSurgeMultiplier(surgeMultiplier) {
-    if (surgeMultiplier > 1) {
-      return `${surgeMultiplier}x ${this.symbolService.getSurgePresentSymbol()}`;
-    }
-
-    return this.symbolService.getNotApplicableSymbol();
+    return surgeMultiplier > 1 ?
+      `${surgeMultiplier}x ${this.symbolService.getSurgePresentSymbol()}` :
+      this.symbolService.getNotApplicableSymbol();
   }
 
   getDistanceUnitAbbreviation(unit) {
