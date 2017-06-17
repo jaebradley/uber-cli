@@ -1,13 +1,8 @@
-'use es6';
-
-import { List } from 'immutable';
-
 import Coordinate from '../../../data/Coordinate';
 import Location from '../../../data/Location';
-import Utilities from '../../../Utilities';
+import Utilities from '../../Utilities';
 
 export default class LocationTranslator {
-
   constructor() {
     this.FORMATTED_ADDRESS_FIELD_NAME = 'formatted_address';
     this.GEOMETRY_ADDRESS_FIELD_NAME = 'geometry';
@@ -26,8 +21,8 @@ export default class LocationTranslator {
       name: json[this.FORMATTED_ADDRESS_FIELD_NAME],
       coordinate: new Coordinate({
         latitude: location[this.LATITUDE_FIELD_NAME],
-        longitude: location[this.LONGITUDE_FIELD_NAME]
-      })
+        longitude: location[this.LONGITUDE_FIELD_NAME],
+      }),
     });
   }
 
@@ -40,13 +35,13 @@ export default class LocationTranslator {
       return false;
     }
 
-    let geometry = json[this.GEOMETRY_ADDRESS_FIELD_NAME];
+    const geometry = json[this.GEOMETRY_ADDRESS_FIELD_NAME];
 
     if (!(this.LOCATION_FIELD_NAME in geometry)) {
       return false;
     }
 
-    let location = geometry[this.LOCATION_FIELD_NAME];
+    const location = geometry[this.LOCATION_FIELD_NAME];
 
     if (!(this.LATITUDE_FIELD_NAME in location)) {
       return false;
