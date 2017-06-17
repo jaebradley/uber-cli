@@ -7,10 +7,11 @@ import sinonChai from 'sinon-chai';
 
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 import TripPriceEstimateRowFormatter from '../../../../src/services/tables/TripPriceEstimateRowFormatter';
 import TripPriceEstimatesTableBuilder from '../../../../src/services/tables/builders/TripPriceEstimatesTableBuilder';
+
+import SymbolService from '../../../../src/services/symbols/SymbolService';
 
 chai.use(chaiImmutable);
 chai.use(sinonChai);
@@ -18,17 +19,38 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 describe('Trip Price Estimates Table Builder', () => {
-  const rowFormatter = new TripPriceEstimateRowFormatter();
-  const tableBuilder = new TripPriceEstimatesTableBuilder(rowFormatter);
+  let sandbox;
 
-  describe('table headers', () => {
-    it('fetch succeeds', () => {
+  const rowFormatter = new TripPriceEstimateRowFormatter();
+  const symbolService = new SymbolService();
+  const tableBuilder = new TripPriceEstimatesTableBuilder(rowFormatter, symbolService);
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  describe('#getTableHeaders', () => {
+    it('succeeds', () => {
+      const vehicleSymbol = 'vehicle symbol';
+      const priceSymbol = 'price symbol';
+      const tripDistanceSymbol = 'trip distance symbol';
+      const durationSymbol = 'duration symbol';
+      const surgeSymbol = 'surge symbol';
+      sandbox.stub(tableBuilder.symbolService, 'getVehicleSymbol').returns(vehicleSymbol);
+      sandbox.stub(tableBuilder.symbolService, 'getPriceSymbol').returns(priceSymbol);
+      sandbox.stub(tableBuilder.symbolService, 'getTripDistanceSymbol').returns(tripDistanceSymbol);
+      sandbox.stub(tableBuilder.symbolService, 'getDurationSymbol').returns(durationSymbol);
+      sandbox.stub(tableBuilder.symbolService, 'getSurgeSymbol').returns(surgeSymbol);
       const expected = List.of(
-        emoji.get('oncoming_automobile'),
-        emoji.get('money_with_wings'),
-        emoji.get('arrows_clockwise'),
-        emoji.get('hourglass_flowing_sand'),
-        `${emoji.get('boom')} Surge${emoji.get('boom')}`,
+        vehicleSymbol,
+        priceSymbol,
+        tripDistanceSymbol,
+        durationSymbol,
+        `${surgeSymbol} Surge${surgeSymbol}`,
       );
 
       expect(tableBuilder.getTableHeaders()).to.eql(expected);
@@ -61,11 +83,13 @@ describe('Trip Price Estimates Table Builder', () => {
   describe('location row', () => {
     const name = 'jaebaebae';
 
-    it('builds for end', () => {
+    it('builds', () => {
+      const endSymbol = 'end symbol';
+      sandbox.stub(tableBuilder, 'getEndSymbol').returns(endSymbol);
       const expected = List.of(
         Map({
           colSpan: 1,
-          content: emoji.get('end'),
+          content: endSymbol,
           hAlign: 'center',
         }),
         Map({
@@ -74,21 +98,6 @@ describe('Trip Price Estimates Table Builder', () => {
         }),
       );
       expect(tableBuilder.buildLocationRow(name, true)).to.eql(expected);
-    });
-
-    it('builds for not end', () => {
-      const expected = List.of(
-        Map({
-          colSpan: 1,
-          content: emoji.get('round_pushpin'),
-          hAlign: 'center',
-        }),
-        Map({
-          colSpan: 4,
-          content: name,
-        }),
-      );
-      expect(tableBuilder.buildLocationRow(name, false)).to.eql(expected);
     });
   });
 
@@ -133,6 +142,20 @@ describe('Trip Price Estimates Table Builder', () => {
       rowFormatting.restore();
       initialTableBuilding.restore();
       locationRowBuilding.restore();
+    });
+  });
+
+  describe('#getEndSymbol', () => {
+    it('should return destination symbol', () => {
+      const destinationSymbol = 'destination symbol';
+      sandbox.stub(tableBuilder.symbolService, 'getDestinationSymbol').returns(destinationSymbol);
+      expect(tableBuilder.getEndSymbol(true)).to.eql(destinationSymbol);
+    });
+
+    it('should return origin symbol', () => {
+      const originSymbol = 'origin symbol';
+      sandbox.stub(tableBuilder.symbolService, 'getOriginSymbol').returns(originSymbol);
+      expect(tableBuilder.getEndSymbol(false)).to.eql(originSymbol);
     });
   });
 });

@@ -37,12 +37,10 @@ export default class TripPriceEstimatesTableBuilder {
   }
 
   buildLocationRow(name, isEnd) {
-    const symbol = isEnd ? this.symbolService.getDestinationSymbol() : this.symbolService.getOriginSymbol(); // eslint-disable-line max-len
-
     return List.of(
       Map({
         colSpan: 1,
-        content: symbol,
+        content: this.getEndSymbol(isEnd),
         hAlign: 'center',
       }),
       Map({
@@ -50,5 +48,11 @@ export default class TripPriceEstimatesTableBuilder {
         content: name,
       }),
     );
+  }
+
+  getEndSymbol(isEnd) {
+    return isEnd ?
+      this.symbolService.getDestinationSymbol() :
+      this.symbolService.getOriginSymbol();
   }
 }
