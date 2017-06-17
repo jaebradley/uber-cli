@@ -1,13 +1,10 @@
-'use es6';
-
-import {List, Record} from 'immutable';
+import { List, Record } from 'immutable';
 
 import Location from './Location';
 
-let defaults = {
+const defaults = {
   location: new Location(),
-  estimates: List()
+  estimates: List(),
 };
 
-export default class TimeEstimates extends Record(defaults) {
-}
+export default class TimeEstimates extends Record(defaults) {}

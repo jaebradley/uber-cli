@@ -1,12 +1,9 @@
-'use es6';
+import { Record } from 'immutable';
 
-import {Record} from 'immutable';
-
-let defaults = {
+const defaults = {
   low: 0,
   high: 0,
-  currencyCode: 'USD'
+  currencyCode: 'USD',
 };
 
-export default class PriceRange extends Record(defaults){
-};
+export default class PriceRange extends Record(defaults) {}
