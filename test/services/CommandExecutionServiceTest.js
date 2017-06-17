@@ -5,14 +5,13 @@ import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
+import CommandExecutionService from '../../src/services/CommandExecutionService';
+import DistanceUnit from '../../src/data/DistanceUnit';
+
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-import DistanceUnit from '../../src/data/DistanceUnit';
-
 const expect = chai.expect;
-
-import CommandExecutionService from '../../src/services/CommandExecutionService';
 
 describe('Command Execution Service', () => {
   const service = new CommandExecutionService();
@@ -31,9 +30,7 @@ describe('Command Execution Service', () => {
     });
 
     it('returns a value', () => {
-      const priceEstimates = new Promise((resolve, reject) => {
-        resolve('foo');
-      });
+      const priceEstimates = new Promise((resolve, reject) => resolve('foo')); // eslint-disable-line no-unused-vars
       const priceEstimater = sinon.stub(service.uberService, 'getPriceEstimates').returns(priceEstimates);
       const tableBuilder = sinon.stub(service.tripPriceEstimatesTableBuilder, 'build').returns('jaebaebae');
       expect(service.executePriceEstimates('foo', 'bar', undefined)).to.eventually.equal('jaebaebae');
@@ -48,9 +45,7 @@ describe('Command Execution Service', () => {
     });
 
     it('returns a value', () => {
-      const timeEstimates = new Promise((resolve, reject) => {
-        resolve('foo');
-      });
+      const timeEstimates = new Promise((resolve, reject) => resolve('foo')); // eslint-disable-line no-unused-vars
       const tableBuilder = sinon.stub(service.pickupTimeEstimatesTableBuilder, 'build').returns('baz');
       const timeEstimation = sinon.stub(service.uberService, 'getTimeEstimates').returns(timeEstimates);
       expect(service.executeTimeEstimates('bar')).to.eventually.equal('baz');
