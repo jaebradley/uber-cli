@@ -1,8 +1,4 @@
-'use es6'
-
-import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 export default class PickupTimeEstimatesTableRowsBuilder {
   constructor(durationFormatter) {
@@ -11,18 +7,16 @@ export default class PickupTimeEstimatesTableRowsBuilder {
 
   build(estimates) {
     const estimatesGroupedByTime = this.groupByTime(estimates);
-    return List(estimatesGroupedByTime.entrySeq().map((entry) => {
-      return List.of(entry[0], entry[1].join(', '));
-    }));
+    return List(estimatesGroupedByTime.entrySeq().map(entry => List.of(entry[0], entry[1].join(', '))));
   }
 
-  groupByTime(estimates){
+  groupByTime(estimates) {
     let rows = Map();
     estimates.forEach((estimate) => {
       const formattedDuration = this.durationFormatter.format(estimate.estimatedDuration);
 
       if (rows.has(formattedDuration)) {
-        let productNames = rows.get(formattedDuration);
+        const productNames = rows.get(formattedDuration);
         productNames.push(estimate.productName);
         rows = rows.set(formattedDuration, productNames);
       } else {
