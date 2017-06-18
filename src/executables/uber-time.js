@@ -13,10 +13,6 @@ program.parse(process.argv);
 const address = program.address.trim();
 
 try {
-  if (!address.length) {
-    throw new TypeError('Address is required');
-  }
-
   service.executeTimeEstimates(address)
     .then(table => console.log(table))
     .catch((e) => {

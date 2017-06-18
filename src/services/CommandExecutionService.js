@@ -23,11 +23,11 @@ export default class CommandExecutionService {
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
     if (typeof startAddress !== 'string' || !startAddress.trim().length) {
-      throw new TypeError('A start address is required');
+      throw new TypeError('A valid start address is required');
     }
 
     if (typeof endAddress !== 'string' || !endAddress.trim().length) {
-      throw new TypeError('An end address is required');
+      throw new TypeError('A valid end address is required');
     }
 
     let distanceUnit = DistanceUnit.MILE;
@@ -49,8 +49,8 @@ export default class CommandExecutionService {
   }
 
   executeTimeEstimates(address) {
-    if (typeof address !== 'string') {
-      throw new TypeError('address should be a string');
+    if (typeof address !== 'string' || !address.trim().length) {
+      throw new TypeError('A valid address is required');
     }
 
     return this.uberService.getTimeEstimates(address)
