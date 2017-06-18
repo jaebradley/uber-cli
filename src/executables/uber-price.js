@@ -33,9 +33,9 @@ try {
       if (isDistanceExceededError(e)) {
         console.log(`Maximum distance of ${emoji.get('100')}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
       } else {
-        console.error('Could not get price estimates:\n', e);
+        console.error('Could not get price estimates:\n', e.message);
       }
     });
 } catch (e) {
-  console.error('Could not get price estimates:\n', e);
+  console.error('Could not get price estimates:\n', e.message);
 }
