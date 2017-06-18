@@ -4,8 +4,6 @@ import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(chaiImmutable);
-chai.use(sinonChai);
 
 import { List, Map } from 'immutable';
 import emoji from 'node-emoji';
@@ -17,6 +15,9 @@ import DurationConverter from '../../../src/services/DurationConverter';
 import DurationFormatter from '../../../src/services/DurationFormatter';
 import TripPriceEstimateRowFormatter from '../../../src/services/tables/TripPriceEstimateRowFormatter';
 
+chai.use(chaiImmutable);
+chai.use(sinonChai);
+
 const expect = chai.expect;
 
 describe('Trip Price Estimate Row Formatter', () => {
@@ -26,7 +27,7 @@ describe('Trip Price Estimate Row Formatter', () => {
   const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationFormatter);
 
   it('construction', () => {
-    let abbreviations = {};
+    const abbreviations = {};
     abbreviations[DistanceUnit.MILE.name] = 'mi';
     abbreviations[DistanceUnit.KILOMETER.name] = 'km';
     const expected = Map(abbreviations);
@@ -34,20 +35,16 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('fetches distance unit abbreviation', () => {
-    it('succeeds', () => {
-      expect(rowFormatter.getDistanceUnitAbbreviation(DistanceUnit.MILE)).to.eql('mi');
-    });
+    it('succeeds', () => expect(rowFormatter.getDistanceUnitAbbreviation(DistanceUnit.MILE)).to.eql('mi'));
 
-    it('throws exception', () => {
-      expect(() => rowFormatter.getDistanceUnitAbbreviation('foo')).to.throw(TypeError);
-    });
+    it('throws exception', () => expect(() => rowFormatter.getDistanceUnitAbbreviation('foo')).to.throw(TypeError));
   });
 
   describe('format range', () => {
     const range = {
       currencyCode: 'USD',
       low: 'foo',
-      high: 'bar'
+      high: 'bar',
     };
 
     it('successfully', () => {
@@ -70,9 +67,7 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('format surge multiplier', () => {
-    it('for no surge multiplier', () => {
-      expect(rowFormatter.formatSurgeMultiplier(1)).to.eql(emoji.get('no_entry_sign'));
-    });
+    it('for no surge multiplier', () => expect(rowFormatter.formatSurgeMultiplier(1)).to.eql(emoji.get('no_entry_sign')));
 
     it('for surge multiplier', () => {
       const expected = `1.1x ${emoji.get('grimacing')}`;
@@ -82,14 +77,9 @@ describe('Trip Price Estimate Row Formatter', () => {
 
   describe('format', () => {
     it('succeeds', () => {
-      const rangeFormatting = sinon.stub(rowFormatter, 'formatRange').returns('foo');
-      const distanceFormatting = sinon.stub(rowFormatter, 'formatDistance').returns('bar');
-      const durationFormatting = sinon.stub(durationFormatter, 'format').returns('baz');
-      const surgeMultiplierFormatting = sinon.stub(rowFormatter, 'formatSurgeMultiplier').returns('jaebaebae');
-
       const expected = List.of('productName', 'foo', 'bar', 'baz', 'jaebaebae');
 
-      expect(rowFormatter.format({productName: 'productName'}, {}, {})).to.eql(expected);
+      expect(rowFormatter.format({ productName: 'productName' }, {}, {})).to.eql(expected);
     });
   });
 });
