@@ -1,5 +1,3 @@
-'use es6';
-
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
@@ -16,17 +14,28 @@ const expect = chai.expect;
 describe('Command Execution Service', () => {
   const service = new CommandExecutionService();
 
-  describe('Price estimates', () => {
+  describe('#executePriceEstimates', () => {
+    const validAddress = 'foo';
+    const emptyAddress = '  ';
+
     it('throws for invalid start address type', () => {
-      expect(() => service.executePriceEstimates(1, '', DistanceUnit.MILE)).to.throw(TypeError, 'start address should be a string');
+      expect(() => service.executePriceEstimates(1, validAddress, DistanceUnit.MILE)).to.throw(TypeError, 'A valid start address is required');
+    });
+
+    it('throws for empty start address', () => {
+      expect(() => service.executePriceEstimates(emptyAddress, validAddress, DistanceUnit.MILE)).to.throw(TypeError, 'A valid start address is required');
     });
 
     it('throws for invalid end address type', () => {
-      expect(() => service.executePriceEstimates('foo', 1, DistanceUnit.MILE)).to.throw(TypeError, 'end address should be a string');
+      expect(() => service.executePriceEstimates(validAddress, 1, DistanceUnit.MILE)).to.throw(TypeError, 'A valid end address is required');
+    });
+
+    it('throws for empty end address', () => {
+      expect(() => service.executePriceEstimates(validAddress, emptyAddress, DistanceUnit.MILE)).to.throw(TypeError, 'A valid end address is required');
     });
 
     it('throws for undefined distance unit name', () => {
-      expect(() => service.executePriceEstimates('foo', 'bar', 'baz')).to.throw(TypeError);
+      expect(() => service.executePriceEstimates('foo', 'bar', 'baz')).to.throw(TypeError, 'Unknown distance unit: baz');
     });
 
     it('returns a value', () => {
@@ -39,9 +48,13 @@ describe('Command Execution Service', () => {
     });
   });
 
-  describe('Time estimates', () => {
+  describe('#executeTimeEstimates', () => {
     it('throws for invalid address type', () => {
-      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'address should be a string');
+      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'A valid address is required');
+    });
+
+    it('throws for empty address', () => {
+      expect(() => service.executeTimeEstimates('   ').to.throw(TypeError, 'A valid address is required'));
     });
 
     it('returns a value', () => {
