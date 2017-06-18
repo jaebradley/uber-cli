@@ -22,12 +22,12 @@ export default class CommandExecutionService {
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
-    if (typeof startAddress !== 'string') {
-      throw new TypeError('start address should be a string');
+    if (typeof startAddress !== 'string' || !startAddress.trim().length) {
+      throw new TypeError('A start address is required');
     }
 
-    if (typeof endAddress !== 'string') {
-      throw new TypeError('end address should be a string');
+    if (typeof endAddress !== 'string' || !endAddress.trim().length) {
+      throw new TypeError('An end address is required');
     }
 
     let distanceUnit = DistanceUnit.MILE;
