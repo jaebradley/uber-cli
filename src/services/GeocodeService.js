@@ -13,14 +13,13 @@ export default class GeocodeService {
 
   getData(address) {
     return new Promise((resolve, reject) => {
-      this.googleMapsClient.geocode({ ...address },
-        (err, data) => {
-          if (err !== null) {
-            return reject(err);
-          }
+      this.googleMapsClient.geocode({ address }, (err, data) => {
+        if (err !== null) {
+          return reject(err);
+        }
 
-          return resolve(data.json);
-        });
+        return resolve(data.json);
+      });
     });
   }
 

@@ -31,7 +31,7 @@ export default class UberService {
     return this.getFirstLocation(address)
       .then(location => this.client.getTimeEstimates({ start: location.coordinate })
         .then(estimates => new TimeEstimates({
-          ...location,
+          location,
           estimates: this.pickupTimeEstimatesTranslator.translate(estimates),
         })));
   }
@@ -44,8 +44,8 @@ export default class UberService {
         this.client
           .getPriceEstimates({ start: start.coordinate, end: end.coordinate })
           .then(response => new PriceEstimates({
-            ...start,
-            ...end,
+            start,
+            end,
             estimates: this.tripPriceEstimatesTranslator.translate(response),
           })));
   }

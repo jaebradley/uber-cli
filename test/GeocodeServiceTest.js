@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiImmutable from 'chai-immutable';
+
 import { List } from 'immutable';
 
 import Coordinate from '../src/data/Coordinate';

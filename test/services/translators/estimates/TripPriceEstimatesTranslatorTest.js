@@ -12,9 +12,19 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 describe('Trip Price Estimates Translation', () => {
+  let sandbox;
+
   const estimateTranslator = new TripPriceEstimateTranslator();
   const translator = new TripPriceEstimatesTranslator(estimateTranslator);
   const valid = { prices: [] };
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   describe('JSON Validation', () => {
     describe('Valid', () => {
@@ -35,36 +45,19 @@ describe('Trip Price Estimates Translation', () => {
   });
 
   describe('Translate Estimates', () => {
-    const estimates = {
-      prices: [1, 2, 3],
-    };
+    const estimates = { prices: [1, 2, 3] };
 
     describe('Invalid', () => {
-      before(() => {
-        this.isValid = sinon.stub(translator, 'isValid').returns(false);
-      });
-
-      after(() => {
-        this.isValid.restore();
-      });
-
       it('throws for invalid estimate', () => {
+        sandbox.stub(translator, 'isValid').returns(false);
         expect(() => translator.translate({})).to.throw(Error);
       });
     });
 
     describe('Valid', () => {
-      before(() => {
-        this.isValid = sinon.stub(translator, 'isValid').returns(true);
-        this.translateEstimate = sinon.stub(estimateTranslator, 'translate').callsFake(() => 'bar');
-      });
-
-      after(() => {
-        this.isValid.restore();
-        this.translateEstimate.restore();
-      });
-
       it('translates valid estimates', () => {
+        sandbox.stub(translator, 'isValid').returns(true);
+        sandbox.stub(estimateTranslator, 'translate').callsFake(() => 'bar');
         const expected = List.of('bar', 'bar', 'bar');
         expect(translator.translate(estimates)).to.eql(expected);
       });

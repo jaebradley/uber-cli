@@ -33,9 +33,9 @@ export default class TripPriceEstimateTranslator {
 
     let args = Map({
       productName: estimate[TripPriceEstimateTranslator.getProductNameFieldName()],
-      ...distance,
-      ...duration,
-      ...range,
+      distance,
+      duration,
+      range,
     });
 
     if (TripPriceEstimateTranslator.getSurgeMultiplierFieldName() in estimate) {

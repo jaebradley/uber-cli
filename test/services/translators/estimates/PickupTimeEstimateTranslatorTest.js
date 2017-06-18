@@ -54,7 +54,7 @@ describe('Pickup Time Estimate Translation', () => {
 
     it('translates valid json', () => {
       const expected = new PickupTimeEstimate({
-        ...productName,
+        productName,
         estimatedDuration: new Duration({
           length: estimateSeconds,
           unit: TimeUnit.SECOND,

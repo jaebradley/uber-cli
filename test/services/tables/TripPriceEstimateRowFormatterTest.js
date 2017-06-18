@@ -21,10 +21,20 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 describe('Trip Price Estimate Row Formatter', () => {
+  let sandbox;
+
   const distanceConverter = new DistanceConverter();
   const durationConverter = new DurationConverter();
   const durationFormatter = new DurationFormatter(durationConverter);
   const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationFormatter);
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   it('construction', () => {
     const abbreviations = {};
@@ -77,9 +87,17 @@ describe('Trip Price Estimate Row Formatter', () => {
 
   describe('format', () => {
     it('succeeds', () => {
-      const expected = List.of('productName', 'foo', 'bar', 'baz', 'jaebaebae');
+      const formattedRange = 'formatted range';
+      const formattedDistance = 'formatted distance';
+      const formattedDuration = 'formatted duration';
+      const formattedSurgeMultiplier = 'formatted surge multiplier';
+      sandbox.stub(rowFormatter, 'formatRange').returns(formattedRange);
+      sandbox.stub(rowFormatter, 'formatDistance').returns(formattedDistance);
+      sandbox.stub(rowFormatter.durationFormatter, 'format').returns(formattedDuration);
+      sandbox.stub(rowFormatter, 'formatSurgeMultiplier').returns(formattedSurgeMultiplier);
+      const expected = List.of('productName', formattedRange, formattedDistance, formattedDuration, formattedSurgeMultiplier);
 
-      expect(rowFormatter.format({ productName: 'productName' }, {}, {})).to.eql(expected);
+      expect(rowFormatter.format({ productName: 'productName' }, {})).to.eql(expected);
     });
   });
 });

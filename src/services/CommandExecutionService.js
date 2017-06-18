@@ -40,8 +40,8 @@ export default class CommandExecutionService {
     }
 
     const query = new PriceEstimateQuery({
-      ...startAddress,
-      ...endAddress,
+      startAddress,
+      endAddress,
     });
 
     return this.uberService.getPriceEstimates(query)

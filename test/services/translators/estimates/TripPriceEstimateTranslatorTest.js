@@ -18,6 +18,8 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 describe('Trip Price Estimate Translation', () => {
+  let sandbox;
+
   const productName = 'foo';
   const distance = 1.234;
   const duration = 2;
@@ -43,6 +45,14 @@ describe('Trip Price Estimate Translation', () => {
   estimateWithSurgeMultiplier[TripPriceEstimateTranslator.getLowEstimateFieldName()] = lowEstimate;
   estimateWithSurgeMultiplier[TripPriceEstimateTranslator.getCurrencyCodeFieldName()] = currencyCode; // eslint-disable-line max-len
   estimateWithSurgeMultiplier[TripPriceEstimateTranslator.getSurgeMultiplierFieldName()] = surgeMultiplier; // eslint-disable-line max-len
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   describe('JSON Validation', () => {
     describe('Valid', () => {
@@ -122,7 +132,7 @@ describe('Trip Price Estimate Translation', () => {
 
   describe('Translate Estimate', () => {
     const args = Map({
-      ...productName,
+      productName,
       distance: new Distance({
         value: distance,
         unit: DistanceUnit.MILE,
@@ -134,40 +144,27 @@ describe('Trip Price Estimate Translation', () => {
       range: new PriceRange({
         high: highEstimate,
         low: lowEstimate,
-        ...currencyCode,
+        currencyCode,
       }),
     });
     const argsWithSurgeMultiplier = args.set('surgeMultiplier', surgeMultiplier);
 
     describe('Invalid', () => {
-      before(() => {
-        this.isValid = sinon.stub(translator, 'isValid').returns(false);
-      });
-
-      after(() => {
-        this.isValid.restore();
-      });
-
       it('throws for invalid estimate', () => {
+        sandbox.stub(translator, 'isValid').returns(false);
         expect(() => translator.translate({})).to.throw(Error);
       });
     });
 
     describe('Valid', () => {
-      before(() => {
-        this.isValid = sinon.stub(translator, 'isValid').returns(true);
-      });
-
-      after(() => {
-        this.isValid.restore();
-      });
-
       it('translates valid estimate without surge multiplier', () => {
+        sandbox.stub(translator, 'isValid').returns(true);
         const expected = new TripPriceEstimate(args);
         expect(translator.translate(estimateWithoutSurgeMultiplier)).to.eql(expected);
       });
 
       it('translates valid estimate with surge multiplier', () => {
+        sandbox.stub(translator, 'isValid').returns(true);
         const expected = new TripPriceEstimate(argsWithSurgeMultiplier);
         expect(translator.translate(estimateWithSurgeMultiplier)).to.eql(expected);
       });

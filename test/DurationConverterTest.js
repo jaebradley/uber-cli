@@ -16,7 +16,7 @@ describe('Duration converter', () => {
   const converter = new DurationConverter();
   const length = 60;
   const durationInSeconds = new Duration({
-    ...length,
+    length,
     unit: TimeUnit.SECOND,
   });
 
