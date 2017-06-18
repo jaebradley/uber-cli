@@ -1,15 +1,27 @@
 import chai from 'chai';
 import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 
 import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
 
 import DistanceConverter from '../src/services/DistanceConverter';
 
+chai.use(sinonChai);
+
 const expect = chai.expect;
 
 describe('Distance converter', () => {
+  let sandbox;
   const converter = new DistanceConverter();
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   describe('Unit identifier', () => {
     it('identifies successfully', () => {
@@ -32,33 +44,20 @@ describe('Distance converter', () => {
   });
 
   describe('converts successfully', () => {
-    before(() => {
-      this.unitConversionIdentifier = sinon.stub(converter, 'getUnitConversionIdentifier').returns('mi');
-    });
-
-    after(() => {
-      this.unitConversionIdentifier.restore();
-    });
-
     it('converts miles', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
       expect(converter.convert(distanceInMiles, DistanceUnit.MILE)).to.eql(distanceInMiles);
     });
 
     it('converts kilometer', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
       expect(converter.convert(distanceInMiles, DistanceUnit.KILOMETER)).to.eql(distanceInKilometers); // eslint-disable-line max-len
     });
   });
 
   describe('converts unsuccessfully', () => {
-    before(() => {
-      this.unitConversionIdentifier = sinon.stub(converter, 'getUnitConversionIdentifier').returns('mi');
-    });
-
-    after(() => {
-      this.unitConversionIdentifier.restore();
-    });
-
     it('converts unsuccessfully', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
       expect(() => converter.convert(distanceInMiles, 'foo')).to.throw(TypeError);
     });
   });
