@@ -1,5 +1,3 @@
-'use es6';
-
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
 import emoji from 'node-emoji';
@@ -10,8 +8,8 @@ export default class TripPriceEstimatesTableBuilder {
   }
 
   build(estimates, presentationDistanceUnit) {
-    let table = this.buildInitialTable();
-    estimates.estimates.forEach(estimate => {
+    const table = this.buildInitialTable();
+    estimates.estimates.forEach((estimate) => {
       if (estimate.productName !== 'TAXI') {
         table.push(this.rowFormatter.format(estimate, presentationDistanceUnit).toJS());
       }
@@ -27,15 +25,13 @@ export default class TripPriceEstimatesTableBuilder {
       emoji.get('money_with_wings'),
       emoji.get('arrows_clockwise'),
       emoji.get('hourglass_flowing_sand'),
-      `${emoji.get('boom')} Surge${emoji.get('boom')}`
+      `${emoji.get('boom')} Surge${emoji.get('boom')}`,
     );
   }
 
   buildInitialTable() {
-    let table = new Table();
-    let formattedHeaders = List(this.getTableHeaders().map(header => Map({
-      content: header, hAlign: 'center'
-    })));
+    const table = new Table();
+    const formattedHeaders = List(this.getTableHeaders().map(header => Map({ content: header, hAlign: 'center' })));
     table.push(formattedHeaders.toJS());
     return table;
   }
@@ -50,12 +46,12 @@ export default class TripPriceEstimatesTableBuilder {
       Map({
         colSpan: 1,
         content: symbol,
-        hAlign: 'center'
+        hAlign: 'center',
       }),
       Map({
         colSpan: 4,
-        content: name
-      })
+        content: name,
+      }),
     );
   }
 }

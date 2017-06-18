@@ -1,15 +1,12 @@
-'use es6';
-
 import { Map } from 'immutable';
 
 import Distance from '../../../data/Distance';
 import DistanceUnit from '../../../data/DistanceUnit';
 import Duration from '../../../data/Duration';
-import PriceEstimate from '../../../data/PriceEstimate';
 import PriceRange from '../../../data/PriceRange';
 import TimeUnit from '../../../data/TimeUnit';
 import TripPriceEstimate from '../../../data/TripPriceEstimate';
-import Utilities from '../../../Utilities';
+import Utilities from '../../Utilities';
 
 export default class TripPriceEstimateTranslator {
   translate(estimate) {
@@ -19,26 +16,26 @@ export default class TripPriceEstimateTranslator {
 
     const distance = new Distance({
       value: estimate[TripPriceEstimateTranslator.getDistanceFieldName()],
-      unit: DistanceUnit.MILE
+      unit: DistanceUnit.MILE,
     });
 
     // Uber returns duration in seconds
     const duration = new Duration({
       length: estimate[TripPriceEstimateTranslator.getDurationFieldName()],
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
 
     const range = new PriceRange({
       high: estimate[TripPriceEstimateTranslator.getHighEstimateFieldName()],
       low: estimate[TripPriceEstimateTranslator.getLowEstimateFieldName()],
-      currencyCode: estimate[TripPriceEstimateTranslator.getCurrencyCodeFieldName()]
+      currencyCode: estimate[TripPriceEstimateTranslator.getCurrencyCodeFieldName()],
     });
 
     let args = Map({
       productName: estimate[TripPriceEstimateTranslator.getProductNameFieldName()],
-      distance: distance,
-      duration: duration,
-      range: range
+      distance,
+      duration,
+      range,
     });
 
     if (TripPriceEstimateTranslator.getSurgeMultiplierFieldName() in estimate) {

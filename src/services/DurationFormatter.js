@@ -1,9 +1,6 @@
-'use es6';
-
 import TimeUnit from '../data/TimeUnit';
 
 export default class DurationFormatter {
-
   constructor(durationConverter) {
     this.durationConverter = durationConverter;
   }
@@ -20,13 +17,13 @@ export default class DurationFormatter {
       return '0 sec.';
     }
 
-    let days = Math.floor(seconds / 86400);
+    const days = Math.floor(seconds / 86400);
     seconds %= 86400;
 
-    let hours = Math.floor(seconds / 3600);
+    const hours = Math.floor(seconds / 3600);
     seconds %= 3600;
 
-    let minutes = Math.floor(seconds / 60);
+    const minutes = Math.floor(seconds / 60);
     seconds %= 60;
 
     let formattedTime = '';

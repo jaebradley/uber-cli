@@ -1,19 +1,16 @@
-'use es6';
-
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-import { Map } from 'immutable';
 
 import TimeUnit from '../../src/data/TimeUnit';
 import Duration from '../../src/data/Duration';
 
 import DurationConverter from '../../src/services/DurationConverter';
 import DurationFormatter from '../../src/services/DurationFormatter';
+
+chai.use(chaiImmutable);
+chai.use(sinonChai);
 
 const expect = chai.expect;
 
@@ -24,7 +21,7 @@ describe('Duration Formatter', () => {
   describe('throws exception', () => {
     const negativeDuration = new Duration({
       length: -1,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
 
     it('throws exception', () => {
@@ -37,7 +34,7 @@ describe('Duration Formatter', () => {
   describe('0 seconds', () => {
     const zeroSeconds = new Duration({
       length: 0,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
 
     it('returns 0 sec.', () => {
@@ -50,7 +47,7 @@ describe('Duration Formatter', () => {
   describe('formats', () => {
     const underAMinute = new Duration({
       length: 59,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('under a minute', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(underAMinute);
@@ -60,7 +57,7 @@ describe('Duration Formatter', () => {
 
     const aMinute = new Duration({
       length: 60,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('a minute', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(aMinute);
@@ -70,7 +67,7 @@ describe('Duration Formatter', () => {
 
     const overAMinute = new Duration({
       length: 61,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('over a minute', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(overAMinute);
@@ -80,7 +77,7 @@ describe('Duration Formatter', () => {
 
     const underAnHour = new Duration({
       length: 3599,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('under an hour', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(underAnHour);
@@ -90,7 +87,7 @@ describe('Duration Formatter', () => {
 
     const anHour = new Duration({
       length: 3600,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('an hour', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(anHour);
@@ -100,7 +97,7 @@ describe('Duration Formatter', () => {
 
     const underADay = new Duration({
       length: 86399,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('under a day', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(underADay);
@@ -110,7 +107,7 @@ describe('Duration Formatter', () => {
 
     const aDay = new Duration({
       length: 86400,
-      unit: TimeUnit.SECOND
+      unit: TimeUnit.SECOND,
     });
     it('a day', () => {
       const durationConversion = sinon.stub(converter, 'convert').returns(aDay);

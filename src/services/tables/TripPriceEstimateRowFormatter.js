@@ -1,5 +1,3 @@
-'use es6';
-
 import emoji from 'node-emoji';
 import CurrencySymbol from 'currency-symbol-map';
 import { List, Map } from 'immutable';
@@ -8,7 +6,7 @@ import DistanceUnit from '../../data/DistanceUnit';
 
 export default class TripPriceEstimateRowFormatter {
   constructor(distanceConverter, durationFormatter) {
-    let distanceUnitAbbreviations = {};
+    const distanceUnitAbbreviations = {};
     distanceUnitAbbreviations[DistanceUnit.MILE.name] = 'mi';
     distanceUnitAbbreviations[DistanceUnit.KILOMETER.name] = 'km';
 
@@ -17,13 +15,13 @@ export default class TripPriceEstimateRowFormatter {
     this.durationFormatter = durationFormatter;
   }
 
-  format(estimate, rowDistanceUnit, rowDurationUnit) {
+  format(estimate, rowDistanceUnit) {
     return List.of(
       estimate.productName,
       this.formatRange(estimate.range),
       this.formatDistance(estimate.distance, rowDistanceUnit),
       this.durationFormatter.format(estimate.duration),
-      this.formatSurgeMultiplier(estimate.surgeMultiplier)
+      this.formatSurgeMultiplier(estimate.surgeMultiplier),
     );
   }
 
@@ -50,7 +48,7 @@ export default class TripPriceEstimateRowFormatter {
   getDistanceUnitAbbreviation(unit) {
     const abbreviation = this.distanceUnitAbbreviations.get(unit.name);
     if (abbreviation == null) {
-      throw new TypeError(`Unknown unit: ${unit}`)
+      throw new TypeError(`Unknown unit: ${unit}`);
     }
 
     return abbreviation;

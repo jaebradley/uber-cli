@@ -31,8 +31,13 @@
     "chai-as-promised": "^6.0.0",
     "chai-immutable": "^1.6.0",
     "coveralls": "^2.11.9",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-mocha": "^4.10.1",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
     "mocha-lcov-reporter": "^1.2.0 ",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0"
@@ -57,6 +62,8 @@
     "coverage": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test --  --recursive --compilers js:babel-core/register",
     "coveralls": "npm run compile && npm run coverage && node_modules/.bin/coveralls < coverage/lcov.info",
     "prepublish": "npm run compile",
-    "test": "npm run compile && mocha --compilers js:babel-core/register"
+    "lint": "eslint src && eslint test",
+    "test": "npm run compile && mocha --recursive --compilers js:babel-core/register",
+    "build": "npm run lint && npm run coveralls"
   }
 }

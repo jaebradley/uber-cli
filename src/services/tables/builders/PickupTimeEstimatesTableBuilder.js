@@ -1,5 +1,3 @@
-'use es6'
-
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
 import emoji from 'node-emoji';
@@ -10,7 +8,7 @@ export default class PickupTimeEstimatesTableBuilder {
   }
 
   build(estimates) {
-    let table = this.buildInitialTable(estimates.location.name);
+    const table = this.buildInitialTable(estimates.location.name);
     this.rowsBuilder.build(estimates.estimates).forEach(row => table.push(row.toJS()));
     return table.toString();
   }
@@ -18,7 +16,7 @@ export default class PickupTimeEstimatesTableBuilder {
   getTableHeaders() {
     return List.of(
       emoji.get('hourglass_flowing_sand'),
-      emoji.get('oncoming_automobile')
+      emoji.get('oncoming_automobile'),
     );
   }
 
@@ -27,22 +25,21 @@ export default class PickupTimeEstimatesTableBuilder {
       Map({
         colSpan: 2,
         content: `${emoji.get('round_pushpin')} ${locationName}`,
-        hAlign: 'center'
-      })
+        hAlign: 'center',
+      }),
     );
   }
 
   getFormattedHeaders() {
     return List(this.getTableHeaders()
-                    .map(header => Map({
-                      content: header,
-                      hAlign: 'center'
-                    }))
-                );
+      .map(header => Map({
+        content: header,
+        hAlign: 'center',
+      })));
   }
 
   buildInitialTable(locationName) {
-    let table = new Table();
+    const table = new Table();
     table.push(this.getFormattedLocation(locationName).toJS());
     table.push(this.getFormattedHeaders().toJS());
     return table;

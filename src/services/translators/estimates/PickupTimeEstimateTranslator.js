@@ -1,5 +1,3 @@
-'use es6';
-
 import Duration from '../../../data/Duration';
 import TimeUnit from '../../../data/TimeUnit';
 import PickupTimeEstimate from '../../../data/PickupTimeEstimate';
@@ -14,8 +12,8 @@ export default class PickupTimeEstimateTranslator {
       productName: estimate[PickupTimeEstimateTranslator.getProductNameFieldName()],
       estimatedDuration: new Duration({
         length: estimate[PickupTimeEstimateTranslator.getEstimateFieldName()],
-        unit: TimeUnit.SECOND
-      })
+        unit: TimeUnit.SECOND,
+      }),
     });
   }
 
@@ -33,7 +31,7 @@ export default class PickupTimeEstimateTranslator {
       return false;
     }
 
-    let estimateSeconds = estimate[PickupTimeEstimateTranslator.getEstimateFieldName()];
+    const estimateSeconds = estimate[PickupTimeEstimateTranslator.getEstimateFieldName()];
     if (!Number.isInteger(estimateSeconds)) {
       return false;
     }

@@ -3,44 +3,38 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
-
-import { List } from 'immutable';
 
 import Coordinate from '../../../../src/data/Coordinate';
 import Location from '../../../../src/data/Location';
 
 import LocationTranslator from '../../../../src/services/translators/geocode/LocationTranslator';
 
+chai.use(sinonChai);
+
 const expect = chai.expect;
 
-describe('Location Translation', function() {
+describe('Location Translation', () => {
   const translator = new LocationTranslator();
-  let location = {};
+  const location = {};
   location[translator.LATITUDE_FIELD_NAME] = 1.234;
   location[translator.LONGITUDE_FIELD_NAME] = 5.678;
 
-  let address = {};
+  const address = {};
   address[translator.LOCATION_FIELD_NAME] = location;
 
-  let json = {};
+  const json = {};
   json[translator.FORMATTED_ADDRESS_FIELD_NAME] = 'foo';
   json[translator.GEOMETRY_ADDRESS_FIELD_NAME] = address;
 
   describe('JSON Validation', () => {
-
     describe('Valid', () => {
-      it('should be valid', () => {
-        expect(translator.isValid(json)).to.be.true;
-      });
+      it('should be valid', () => expect(translator.isValid(json)).to.be.true);
     });
 
     describe('Invalid', () => {
-      let test = {};
+      const test = {};
 
-      afterEach(function() {
-        expect(translator.isValid(test)).to.be.false;
-      });
+      afterEach(() => expect(translator.isValid(test)).to.be.false);
 
       it('invalid due to missing formatted address field', () => {});
 
@@ -69,13 +63,12 @@ describe('Location Translation', function() {
       });
 
       it('invalid due to invalid longitude type', () => {
-        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME][translator.LATITUDE_FIELD_NAME] = 1.234;
+        test[translator.GEOMETRY_ADDRESS_FIELD_NAME][translator.LOCATION_FIELD_NAME][translator.LATITUDE_FIELD_NAME] = 1.234; // eslint-disable-line max-len
       });
     });
   });
 
   describe('Invalid', () => {
-
     it('throws for invalid json', () => {
       const isValid = sinon.stub(translator, 'isValid').returns(false);
       expect(() => translator.translate({})).to.throw(Error);
@@ -87,8 +80,8 @@ describe('Location Translation', function() {
         name: 'foo',
         coordinate: new Coordinate({
           latitude: 1.234,
-          longitude: 5.678
-        })
+          longitude: 5.678,
+        }),
       });
       const isValid = sinon.stub(translator, 'isValid').returns(true);
       expect(translator.translate(json)).to.eql(expected);
