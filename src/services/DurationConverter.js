@@ -1,34 +1,34 @@
-'use es6';
-
 import convert from 'convert-units';
+import { Map } from 'immutable';
 
 import Duration from '../data/Duration';
 import TimeUnit from '../data/TimeUnit';
 
 export default class DurationConverter {
-  static convert(duration, toUnit) {
-    const fromUnitIdentifier = DurationConverter.getUnitConversionIdentifier(duration.unit);
-    const toUnitIdentifier = DurationConverter.getUnitConversionIdentifier(toUnit);
+  constructor() {
+    const durationUnitAbbreviations = {};
+    durationUnitAbbreviations[TimeUnit.SECOND.name] = 's';
+    durationUnitAbbreviations[TimeUnit.MINUTE.name] = 'min';
+
+    this.durationUnitAbbreviations = Map(durationUnitAbbreviations);
+  }
+
+  convert(duration, toUnit) {
+    const fromUnitIdentifier = this.getUnitConversionIdentifier(duration.unit);
+    const toUnitIdentifier = this.getUnitConversionIdentifier(toUnit);
     const convertedLength = convert(duration.length).from(fromUnitIdentifier).to(toUnitIdentifier);
     return new Duration({
       length: convertedLength,
-      unit: toUnit
+      unit: toUnit,
     });
   }
 
-  static getUnitConversionIdentifier(unit) {
-    switch (unit) {
-      case TimeUnit.SECOND: {
-        return 's';
-      }
-
-      case TimeUnit.MINUTE: {
-        return 'min';
-      }
-
-      default: {
-        throw new TypeError('Unknown unit');
-      }
+  getUnitConversionIdentifier(unit) {
+    const durationUnitAbbreviation = this.durationUnitAbbreviations.get(unit.name);
+    if (typeof durationUnitAbbreviation === 'undefined') {
+      throw new TypeError(`Unknown unit: ${unit}`);
     }
+
+    return durationUnitAbbreviation;
   }
 }

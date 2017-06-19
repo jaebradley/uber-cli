@@ -13,4 +13,4 @@ const defaults = {
   surgeMultiplier: 1,
 };
 
-export default class PriceEstimate extends Record(defaults) {}
+export default class TripPriceEstimate extends Record(defaults) {}

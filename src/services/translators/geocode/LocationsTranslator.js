@@ -1,5 +1,3 @@
-'use es6';
-
 import { List } from 'immutable';
 
 export default class LocationsTranslator {
@@ -33,7 +31,7 @@ export default class LocationsTranslator {
       return false;
     }
 
-    let results = json[this.RESULTS_FIELD_NAME];
+    const results = json[this.RESULTS_FIELD_NAME];
     if (!Array.isArray(results)) {
       return false;
     }

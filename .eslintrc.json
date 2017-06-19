@@ -1,0 +1,10 @@
+{
+    "extends": "airbnb-base",
+    "plugins": [
+        "import",
+        "chai-expect"
+    ],
+    "rules": {
+      "class-methods-use-this": "off"
+    }
+}

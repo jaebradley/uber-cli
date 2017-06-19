@@ -1,36 +1,64 @@
-'use es6';
-
 import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 
 import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
 
 import DistanceConverter from '../src/services/DistanceConverter';
 
-chai.use(chaiImmutable);
+chai.use(sinonChai);
 
-let expect = chai.expect;
+const expect = chai.expect;
 
-describe('Distance converter test', function() {
-  describe('Unit identifier test', function() {
-    expect(DistanceConverter.getUnitConversionIdentifier(DistanceUnit.MILE)).to.equal('mi');
-    expect(DistanceConverter.getUnitConversionIdentifier(DistanceUnit.KILOMETER)).to.equal('m');
+describe('Distance converter', () => {
+  let sandbox;
+  const converter = new DistanceConverter();
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  describe('Unit identifier', () => {
+    it('identifies successfully', () => {
+      expect(converter.getUnitConversionIdentifier(DistanceUnit.MILE)).to.equal('mi');
+    });
+
+    it('identifies unsuccessfully', () => {
+      expect(() => converter.getUnitConversionIdentifier('foo')).to.throw(TypeError);
+    });
   });
 
   const distance = 1.234;
-  const kilometerDistance = 1.9858335873209383;
   const distanceInMiles = new Distance({
     value: distance,
-    unit: DistanceUnit.MILE
+    unit: DistanceUnit.MILE,
   });
   const distanceInKilometers = new Distance({
-    value: kilometerDistance,
-    unit: DistanceUnit.KILOMETER
+    value: distance / 1000,
+    unit: DistanceUnit.KILOMETER,
   });
 
-  describe('Distance conversion test', function() {
-    expect(DistanceConverter.convert(distanceInMiles, DistanceUnit.MILE)).to.eql(distanceInMiles);
-    expect(DistanceConverter.convert(distanceInMiles, DistanceUnit.KILOMETER)).to.eql(distanceInKilometers);
+  describe('converts successfully', () => {
+    it('converts miles', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
+      expect(converter.convert(distanceInMiles, DistanceUnit.MILE)).to.eql(distanceInMiles);
+    });
+
+    it('converts kilometer', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
+      expect(converter.convert(distanceInMiles, DistanceUnit.KILOMETER)).to.eql(distanceInKilometers); // eslint-disable-line max-len
+    });
+  });
+
+  describe('converts unsuccessfully', () => {
+    it('converts unsuccessfully', () => {
+      sandbox.stub(converter, 'getUnitConversionIdentifier').returns('mi');
+      expect(() => converter.convert(distanceInMiles, 'foo')).to.throw(TypeError);
+    });
   });
 });

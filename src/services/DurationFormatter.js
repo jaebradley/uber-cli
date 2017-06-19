@@ -1,11 +1,14 @@
-'use es6';
+import TimeUnit from '../data/TimeUnit';
 
-export default class Utilities {
-  static isFloat(n) {
-    return n === +n && n !== (n|0);
+export default class DurationFormatter {
+  constructor(durationConverter) {
+    this.durationConverter = durationConverter;
   }
 
-  static generateFormattedTime(seconds) {
+  format(duration) {
+    const convertedDuration = this.durationConverter.convert(duration, TimeUnit.SECOND);
+    let seconds = convertedDuration.length;
+
     if (seconds < 0) {
       throw new RangeError('Cannot generate formatted time for negative seconds');
     }
@@ -14,13 +17,13 @@ export default class Utilities {
       return '0 sec.';
     }
 
-    let days = Math.floor(seconds / 86400);
+    const days = Math.floor(seconds / 86400);
     seconds %= 86400;
 
-    let hours = Math.floor(seconds / 3600);
+    const hours = Math.floor(seconds / 3600);
     seconds %= 3600;
 
-    let minutes = Math.floor(seconds / 60);
+    const minutes = Math.floor(seconds / 60);
     seconds %= 60;
 
     let formattedTime = '';

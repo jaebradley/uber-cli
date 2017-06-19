@@ -1,16 +1,24 @@
-'use es6';
-
-import program from 'commander';
-
 import DistanceUnit from '../data/DistanceUnit';
 import PriceEstimateQuery from '../data/PriceEstimateQuery';
 import UberService from './UberService';
-import PriceEstimatesTableBuilder from './tables/builders/PriceEstimatesTableBuilder';
-import TimeEstimatesTableBuilder from './tables/builders/TimeEstimatesTableBuilder';
+import DistanceConverter from './DistanceConverter';
+import DurationConverter from './DurationConverter';
+import DurationFormatter from './DurationFormatter';
+import TripPriceEstimateRowFormatter from './tables/TripPriceEstimateRowFormatter';
+import TripPriceEstimatesTableBuilder from './tables/builders/TripPriceEstimatesTableBuilder';
+import PickupTimeEstimatesTableRowsBuilder from './tables/PickupTimeEstimatesTableRowsBuilder';
+import PickupTimeEstimatesTableBuilder from './tables/builders/PickupTimeEstimatesTableBuilder';
 
 export default class CommandExecutionService {
   constructor() {
     this.uberService = new UberService();
+    this.distanceConverter = new DistanceConverter();
+    this.durationConverter = new DurationConverter();
+    this.durationFormatter = new DurationFormatter(this.durationConverter);
+    this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter); // eslint-disable-line max-len
+    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder); // eslint-disable-line max-len
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {
@@ -22,9 +30,22 @@ export default class CommandExecutionService {
       );
     }
 
-    const query = PriceEstimateQuery.from(startAddress, endAddress, distanceUnitName);
+    let distanceUnit = DistanceUnit.MILE;
+    if (typeof distanceUnitName === 'string') {
+      distanceUnit = DistanceUnit.enumValueOf(distanceUnitName.toUpperCase());
+    }
+
+    if (typeof distanceUnit === 'undefined') {
+      throw new TypeError(`Unknown distance unit: ${distanceUnitName}`);
+    }
+
+    const query = new PriceEstimateQuery({
+      startAddress,
+      endAddress,
+    });
+
     return this.uberService.getPriceEstimates(query)
-                           .then(estimates => PriceEstimatesTableBuilder.build(estimates));
+      .then(estimates => this.tripPriceEstimatesTableBuilder.build(estimates, distanceUnit));
   }
 
   executeTimeEstimates(address) {
@@ -33,6 +54,6 @@ export default class CommandExecutionService {
     }
 
     return this.uberService.getTimeEstimates(address)
-                           .then(estimates => TimeEstimatesTableBuilder.build(estimates));
+      .then(estimates => this.pickupTimeEstimatesTableBuilder.build(estimates));
   }
 }
