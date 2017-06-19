@@ -12,9 +12,6 @@ const address = program.args[0].trim().toString();
 program
   .arguments('<address>')
   .action((address) => {
-    if (!address.length) {
-        throw new TypeError('Address is required');
-      }
     try {
       service.executeTimeEstimates(address)
         .then(table => console.log(table))
