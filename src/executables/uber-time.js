@@ -14,13 +14,15 @@ program
   .action((address) => {
     if (!address.length) {
         throw new TypeError('Address is required');
+      }
     try {
-      service.executeTimeEstimates(address).then(table => console.log(table));
-    } catch (Error) {
-      console.error('Could not get time estimates');
+      service.executeTimeEstimates(address)
+        .then(table => console.log(table))
+        .catch((e) => {
+          console.log('Could not get time estimates:\n', e.message);
+        });
+    } catch (e) {
+      console.error('Could not get time estimates:\n', e.message);
     }
-    service.executeTimeEstimates(address)
-        .then(table => console.log(table));
-} catch (Error) {
-    console.error('Could not get time estimates:\n', Error.message);
-}
+  })
+.parse(process.argv);
