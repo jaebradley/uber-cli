@@ -1,7 +1,9 @@
 import emoji from 'node-emoji';
 
+import BaseSymbolService from './BaseSymbolService';
 
-export default class EmojiService {
+
+export default class EmojiService extends BaseSymbolService {
   getVehicleSymbol() {
     return emoji.get('oncoming_automobile');
   }

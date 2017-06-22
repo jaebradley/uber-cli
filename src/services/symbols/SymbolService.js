@@ -1,10 +1,12 @@
 import { List } from 'immutable';
 
+import BaseSymbolService from './BaseSymbolService';
 import EmojiService from './EmojiService';
 import TextSymbolService from './TextSymbolService';
 
-export default class SymbolService {
+export default class SymbolService extends BaseSymbolService {
   constructor() {
+    super();
     this.client = SymbolService.areEmojisSupported() ?
                     new EmojiService() :
                     new TextSymbolService();

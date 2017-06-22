@@ -1,4 +1,6 @@
-export default class TextSymbolService {
+import BaseSymbolService from './BaseSymbolService';
+
+export default class TextSymbolService extends BaseSymbolService {
   getVehicleSymbol() {
     return 'Vehicle';
   }
