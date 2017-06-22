@@ -1,6 +1,4 @@
 export default class TextSymbolService {
-  constructor() {}
-
   getVehicleSymbol() {
     return 'Vehicle';
   }

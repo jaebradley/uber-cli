@@ -3,19 +3,22 @@ import chaiImmutable from 'chai-immutable';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
 import { List } from 'immutable';
 
 import EmojiService from '../../../src/services/symbols/EmojiService';
 import TextSymbolService from '../../../src/services/symbols/TextSymbolService';
 import SymbolService from '../../../src/services/symbols/SymbolService';
 
+chai.use(chaiImmutable);
+chai.use(sinonChai);
+
 const expect = chai.expect;
 
 describe('SymbolService Test', () => {
-  const service = new SymbolService();
+  let originalPlatform;
+  let sandbox;
+
+  let service = new SymbolService();
 
   describe('#getEmojiSupportedOperatingSystems', () => {
     it('should return operated systems that support emojis', () => {
@@ -24,16 +27,16 @@ describe('SymbolService Test', () => {
   });
 
   describe('#areEmojisSupported', () => {
-    before(function() {
-      this.originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform');
+    before(() => {
+      originalPlatform = Object.getOwnPropertyDescriptor(process, 'platform');
 
       Object.defineProperty(process, 'platform', {
-        value: 'any-platform'
+        value: 'any-platform',
       });
     });
 
-    after(function() {
-      Object.defineProperty(process, 'platform', this.originalPlatform);
+    after(() => {
+      Object.defineProperty(process, 'platform', originalPlatform);
     });
 
     it('should return if emojis are supported', () => {
@@ -42,7 +45,6 @@ describe('SymbolService Test', () => {
   });
 
   describe('#constructor', () => {
-    let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
     });
@@ -54,16 +56,16 @@ describe('SymbolService Test', () => {
     describe('when emojis are supported', () => {
       it('client should be emoji service', () => {
         sandbox.stub(SymbolService, 'areEmojisSupported').returns(true);
-        const service = new SymbolService();
-        expect(service.client instanceof EmojiService).to.be.true
+        service = new SymbolService();
+        return expect(service.client instanceof EmojiService).to.be.true;
       });
     });
 
     describe('when emojis are not supported', () => {
       it('client should be text service', () => {
         sandbox.stub(SymbolService, 'areEmojisSupported').returns(false);
-        const service = new SymbolService();
-        expect(service.client instanceof TextSymbolService).to.be.true;
+        service = new SymbolService();
+        return expect(service.client instanceof TextSymbolService).to.be.true;
       });
     });
   });
@@ -72,7 +74,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getVehicleSymbol');
       service.getVehicleSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -80,7 +82,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getPriceSymbol');
       service.getPriceSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -88,7 +90,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getTripDistanceSymbol');
       service.getTripDistanceSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -96,7 +98,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getDurationSymbol');
       service.getDurationSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -104,7 +106,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getSurgeSymbol');
       service.getSurgeSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -112,7 +114,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getNotApplicableSymbol');
       service.getNotApplicableSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -120,7 +122,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getDestinationSymbol');
       service.getDestinationSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -128,7 +130,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getOriginSymbol');
       service.getOriginSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 
@@ -136,7 +138,7 @@ describe('SymbolService Test', () => {
     it('should forward to client method', () => {
       const clientSpy = sinon.spy(service.client, 'getMaximumDistanceSymbol');
       service.getMaximumDistanceSymbol();
-      expect(clientSpy.calledOnce).to.be.true;
+      return expect(clientSpy.calledOnce).to.be.true;
     });
   });
 });

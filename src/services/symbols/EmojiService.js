@@ -2,8 +2,6 @@ import emoji from 'node-emoji';
 
 
 export default class EmojiService {
-  constructor() {}
-
   getVehicleSymbol() {
     return emoji.get('oncoming_automobile');
   }
