@@ -1,4 +1,5 @@
 import CurrencySymbol from 'currency-symbol-map';
+
 import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../data/DistanceUnit';
@@ -26,8 +27,15 @@ export default class TripPriceEstimateRowFormatter {
   }
 
   formatRange(range) {
-    const currencySymbol = CurrencySymbol(range.currencyCode);
-    return `${currencySymbol}${range.low}-${currencySymbol}${range.high}`;
+    return `${this.formatCurrencyValue(range.low, range.currencyCode)}-${this.formatCurrencyValue(range.high, range.currencyCode)}`;
+  }
+
+  formatCurrencyValue(value, currencyCode) {
+    return Intl.NumberFormat('en-US', {
+      style: 'currency',
+      maximumFractionDigits: 0,
+      currency: currencyCode,
+    }).format(value);
   }
 
   formatDistance(distance, rowDistanceUnit) {
