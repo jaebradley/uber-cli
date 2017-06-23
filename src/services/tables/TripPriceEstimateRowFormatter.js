@@ -1,5 +1,3 @@
-import CurrencySymbol from 'currency-symbol-map';
-
 import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../data/DistanceUnit';
