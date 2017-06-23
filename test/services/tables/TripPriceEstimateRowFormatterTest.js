@@ -4,7 +4,6 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 import DistanceUnit from '../../../src/data/DistanceUnit';
 
@@ -12,6 +11,7 @@ import DistanceConverter from '../../../src/services/DistanceConverter';
 import DurationConverter from '../../../src/services/DurationConverter';
 import DurationFormatter from '../../../src/services/DurationFormatter';
 import TripPriceEstimateRowFormatter from '../../../src/services/tables/TripPriceEstimateRowFormatter';
+import SymbolService from '../../../src/services/symbols/SymbolService';
 
 chai.use(chaiImmutable);
 chai.use(sinonChai);
@@ -24,7 +24,8 @@ describe('Trip Price Estimate Row Formatter', () => {
   const distanceConverter = new DistanceConverter();
   const durationConverter = new DurationConverter();
   const durationFormatter = new DurationFormatter(durationConverter);
-  const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationFormatter);
+  const symbolService = new SymbolService();
+  const rowFormatter = new TripPriceEstimateRowFormatter(distanceConverter, durationFormatter, symbolService); // eslint-disable-line max-len
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -82,10 +83,24 @@ describe('Trip Price Estimate Row Formatter', () => {
   });
 
   describe('format surge multiplier', () => {
-    it('for no surge multiplier', () => expect(rowFormatter.formatSurgeMultiplier(1)).to.eql(emoji.get('no_entry_sign')));
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('for no surge multiplier', () => {
+      const notApplicableSymbol = 'not applicable symbol';
+      sandbox.stub(rowFormatter.symbolService, 'getNotApplicableSymbol').returns(notApplicableSymbol);
+      expect(rowFormatter.formatSurgeMultiplier(1)).to.eql(notApplicableSymbol);
+    });
 
     it('for surge multiplier', () => {
-      const expected = `1.1x ${emoji.get('grimacing')}`;
+      const surgePresentSymbol = 'surge present symbol';
+      sandbox.stub(rowFormatter.symbolService, 'getSurgePresentSymbol').returns(surgePresentSymbol);
+      const expected = `1.1x ${surgePresentSymbol}`;
       expect(rowFormatter.formatSurgeMultiplier(1.1)).to.eql(expected);
     });
   });

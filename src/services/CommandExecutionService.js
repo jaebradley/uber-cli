@@ -8,17 +8,19 @@ import TripPriceEstimateRowFormatter from './tables/TripPriceEstimateRowFormatte
 import TripPriceEstimatesTableBuilder from './tables/builders/TripPriceEstimatesTableBuilder';
 import PickupTimeEstimatesTableRowsBuilder from './tables/PickupTimeEstimatesTableRowsBuilder';
 import PickupTimeEstimatesTableBuilder from './tables/builders/PickupTimeEstimatesTableBuilder';
+import SymbolService from './symbols/SymbolService';
 
 export default class CommandExecutionService {
   constructor() {
     this.uberService = new UberService();
     this.distanceConverter = new DistanceConverter();
     this.durationConverter = new DurationConverter();
+    this.symbolService = new SymbolService();
     this.durationFormatter = new DurationFormatter(this.durationConverter);
-    this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter); // eslint-disable-line max-len
-    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter); // eslint-disable-line max-len
-    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter); // eslint-disable-line max-len
-    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder); // eslint-disable-line max-len
+    this.tripPriceEstimateRowFormatter = new TripPriceEstimateRowFormatter(this.distanceConverter, this.durationFormatter, this.symbolService); // eslint-disable-line max-len
+    this.tripPriceEstimatesTableBuilder = new TripPriceEstimatesTableBuilder(this.tripPriceEstimateRowFormatter, this.symbolService); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableRowsBuilder = new PickupTimeEstimatesTableRowsBuilder(this.durationFormatter, this.symbolService); // eslint-disable-line max-len
+    this.pickupTimeEstimatesTableBuilder = new PickupTimeEstimatesTableBuilder(this.pickupTimeEstimatesTableRowsBuilder, this.symbolService); // eslint-disable-line max-len
   }
 
   executePriceEstimates(startAddress, endAddress, distanceUnitName) {

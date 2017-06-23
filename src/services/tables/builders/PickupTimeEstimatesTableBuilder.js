@@ -1,10 +1,10 @@
 import Table from 'cli-table2';
 import { List, Map } from 'immutable';
-import emoji from 'node-emoji';
 
 export default class PickupTimeEstimatesTableBuilder {
-  constructor(rowsBuilder) {
+  constructor(rowsBuilder, symbolService) {
     this.rowsBuilder = rowsBuilder;
+    this.symbolService = symbolService;
   }
 
   build(estimates) {
@@ -15,8 +15,8 @@ export default class PickupTimeEstimatesTableBuilder {
 
   getTableHeaders() {
     return List.of(
-      emoji.get('hourglass_flowing_sand'),
-      emoji.get('oncoming_automobile'),
+      this.symbolService.getDurationSymbol(),
+      this.symbolService.getVehicleSymbol(),
     );
   }
 
@@ -24,7 +24,7 @@ export default class PickupTimeEstimatesTableBuilder {
     return List.of(
       Map({
         colSpan: 2,
-        content: `${emoji.get('round_pushpin')} ${locationName}`,
+        content: `${this.symbolService.getOriginSymbol()} ${locationName}`,
         hAlign: 'center',
       }),
     );
