@@ -1,5 +1,3 @@
-'use es6';
-
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
 import sinon from 'sinon';
@@ -50,7 +48,7 @@ describe('Trip Price Estimate Row Formatter', () => {
     it('throws exception', () => expect(() => rowFormatter.getDistanceUnitAbbreviation('foo')).to.throw(TypeError));
   });
 
-  describe('format range', () => {
+  describe('#formatRange', () => {
     const range = {
       currencyCode: 'USD',
       low: 'foo',
@@ -58,8 +56,15 @@ describe('Trip Price Estimate Row Formatter', () => {
     };
 
     it('successfully', () => {
-      const expected = '$foo-$bar';
+      sandbox.stub(rowFormatter, 'formatCurrencyValue').callsFake((value, currencyCode) => `${value}-${currencyCode}`);
+      const expected = 'foo-USD-bar-USD';
       expect(rowFormatter.formatRange(range)).to.eql(expected);
+    });
+  });
+
+  describe('#formatCurrencyValue', () => {
+    it('succeeds', () => {
+      expect(rowFormatter.formatCurrencyValue(1234.567, 'USD')).to.eql('$1,235');
     });
   });
 
