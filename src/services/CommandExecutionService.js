@@ -26,7 +26,7 @@ export default class CommandExecutionService {
     // interpolate arguments into strings.
     if (typeof startAddress !== 'string' || typeof endAddress !== 'string') {
       throw new TypeError(
-        'Start and End addresses (-s \'<address>\' -e \'<address>\') are required.'
+        'Start and End addresses (-s \'<address>\' -e \'<address>\') are required.',
       );
     }
 

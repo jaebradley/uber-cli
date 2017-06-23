@@ -21,8 +21,8 @@ const isDistanceExceededError = error =>
 const service = new CommandExecutionService();
 
 program
-  .option('-s, --start <start>', 'specify start address')
-  .option('-e, --end <end>', 'specify end address')
+  .option('-s, --start', 'specify start address')
+  .option('-e, --end', 'specify end address')
   .option('-u, --unit [unit]', 'specify distance unit')
   .parse(process.argv);
 
