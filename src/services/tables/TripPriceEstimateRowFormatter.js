@@ -1,11 +1,9 @@
-import emoji from 'node-emoji';
-import CurrencySymbol from 'currency-symbol-map';
 import { List, Map } from 'immutable';
 
 import DistanceUnit from '../../data/DistanceUnit';
 
 export default class TripPriceEstimateRowFormatter {
-  constructor(distanceConverter, durationFormatter) {
+  constructor(distanceConverter, durationFormatter, symbolService) {
     const distanceUnitAbbreviations = {};
     distanceUnitAbbreviations[DistanceUnit.MILE.name] = 'mi';
     distanceUnitAbbreviations[DistanceUnit.KILOMETER.name] = 'km';
@@ -13,6 +11,7 @@ export default class TripPriceEstimateRowFormatter {
     this.distanceUnitAbbreviations = Map(distanceUnitAbbreviations);
     this.distanceConverter = distanceConverter;
     this.durationFormatter = durationFormatter;
+    this.symbolService = symbolService;
   }
 
   format(estimate, rowDistanceUnit) {
@@ -26,8 +25,15 @@ export default class TripPriceEstimateRowFormatter {
   }
 
   formatRange(range) {
-    const currencySymbol = CurrencySymbol(range.currencyCode);
-    return `${currencySymbol}${range.low}-${currencySymbol}${range.high}`;
+    return `${this.formatCurrencyValue(range.low, range.currencyCode)}-${this.formatCurrencyValue(range.high, range.currencyCode)}`;
+  }
+
+  formatCurrencyValue(value, currencyCode) {
+    return Intl.NumberFormat('en-US', {
+      style: 'currency',
+      maximumFractionDigits: 0,
+      currency: currencyCode,
+    }).format(value);
   }
 
   formatDistance(distance, rowDistanceUnit) {
@@ -38,11 +44,9 @@ export default class TripPriceEstimateRowFormatter {
   }
 
   formatSurgeMultiplier(surgeMultiplier) {
-    if (surgeMultiplier > 1) {
-      return `${surgeMultiplier}x ${emoji.get('grimacing')}`;
-    }
-
-    return emoji.get('no_entry_sign');
+    return surgeMultiplier > 1 ?
+      `${surgeMultiplier}x ${this.symbolService.getSurgePresentSymbol()}` :
+      this.symbolService.getNotApplicableSymbol();
   }
 
   getDistanceUnitAbbreviation(unit) {

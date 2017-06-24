@@ -3,9 +3,9 @@
 /* eslint-disable no-console */
 
 import program from 'commander';
-import emoji from 'node-emoji';
 
 import CommandExecutionService from '../services/CommandExecutionService';
+import SymbolService from '../services/symbols/SymbolService';
 
 const isUberError = error =>
   error.name === 'Uber Error' &&
@@ -20,11 +20,14 @@ const isDistanceExceededError = error =>
 
 const service = new CommandExecutionService();
 
+const symbolService = new SymbolService();
+
 program
   .option('-s, --start <start>', 'specify start address')
   .option('-e, --end <end>', 'specify end address')
   .option('-u, --unit [unit]', 'specify distance unit')
   .parse(process.argv);
+
 
 if (typeof program.start !== 'string' && typeof program.end !== 'string') {
   // Output help if there are no arguments or flags.
