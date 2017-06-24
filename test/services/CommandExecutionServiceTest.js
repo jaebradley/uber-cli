@@ -41,7 +41,7 @@ describe('Command Execution Service', () => {
 
   describe('Time estimates', () => {
     it('throws for invalid address type', () => {
-      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'address should be a string');
+      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'Address should be a string');
     });
 
     it('returns a value', () => {

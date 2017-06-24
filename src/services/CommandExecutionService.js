@@ -50,7 +50,7 @@ export default class CommandExecutionService {
 
   executeTimeEstimates(address) {
     if (typeof address !== 'string') {
-      throw new TypeError('address should be a string');
+      throw new TypeError('Address should be a string');
     }
 
     return this.uberService.getTimeEstimates(address)

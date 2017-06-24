@@ -21,22 +21,26 @@ const isDistanceExceededError = error =>
 const service = new CommandExecutionService();
 
 program
-  .option('-s, --start', 'specify start address')
-  .option('-e, --end', 'specify end address')
+  .option('-s, --start <start>', 'specify start address')
+  .option('-e, --end <end>', 'specify end address')
   .option('-u, --unit [unit]', 'specify distance unit')
   .parse(process.argv);
 
-
-try {
-  service.executePriceEstimates(program.start, program.end, program.unit)
-    .then(table => console.log(table))
-    .catch((e) => {
-      if (isDistanceExceededError(e)) {
-        console.log(`Maximum distance of ${emoji.get('100')}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
-      } else {
-        console.error('Could not get price estimates:\n', e.message);
-      }
-    });
-} catch (e) {
-  console.error('Could not get price estimates:\n', e.message);
+if (typeof program.start !== 'string' && typeof program.end !== 'string') {
+  // Output help if there are no arguments or flags.
+  program.outputHelp();
+} else {
+  try {
+    service.executePriceEstimates(program.start, program.end, program.unit)
+      .then(table => console.log(table))
+      .catch((e) => {
+        if (isDistanceExceededError(e)) {
+          console.log(`Maximum distance of ${emoji.get('100')}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
+        } else {
+          console.error('Could not get price estimates:\n', e.message);
+        }
+      });
+  } catch (e) {
+    console.error('Could not get price estimates:\n', e.message);
+  }
 }
