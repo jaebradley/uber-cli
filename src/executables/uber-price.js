@@ -38,7 +38,7 @@ if (typeof program.start !== 'string' && typeof program.end !== 'string') {
       .then(table => console.log(table))
       .catch((e) => {
         if (isDistanceExceededError(e)) {
-          console.log(`Maximum distance of ${emoji.get('100')}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
+          console.log(`Maximum distance of ${symbolService.getMaximumDistanceSymbol()}  miles exceeded between start address: ${program.start} and end address: ${program.end}`);
         } else {
           console.error('Could not get price estimates:\n', e.message);
         }
