@@ -17,12 +17,12 @@ describe('Command Execution Service', () => {
   const service = new CommandExecutionService();
 
   describe('Price estimates', () => {
-    it('throws for invalid start address type', () => {
-      expect(() => service.executePriceEstimates(1, '', DistanceUnit.MILE)).to.throw(TypeError, 'start address should be a string');
+    it('throws for empty start address type', () => {
+      expect(() => service.executePriceEstimates(1, '', DistanceUnit.MILE)).to.throw(TypeError, 'Start and End addresses (-s \'<address>\' -e \'<address>\') are required.');
     });
 
-    it('throws for invalid end address type', () => {
-      expect(() => service.executePriceEstimates('foo', 1, DistanceUnit.MILE)).to.throw(TypeError, 'end address should be a string');
+    it('throws for empty end address type', () => {
+      expect(() => service.executePriceEstimates('foo', null, DistanceUnit.MILE)).to.throw(TypeError, 'Start and End addresses (-s \'<address>\' -e \'<address>\') are required.');
     });
 
     it('throws for undefined distance unit name', () => {
@@ -41,7 +41,7 @@ describe('Command Execution Service', () => {
 
   describe('Time estimates', () => {
     it('throws for invalid address type', () => {
-      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'address should be a string');
+      expect(() => service.executeTimeEstimates(1)).to.throw(TypeError, 'Address should be a string');
     });
 
     it('returns a value', () => {
