@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/jaebradley/uber-cli.svg?branch=master)](https://travis-ci.org/jaebradley/uber-cli)
 [![npm version](https://badge.fury.io/js/uber-cli.svg)](https://badge.fury.io/js/uber-cli)
 
+[![NPM](https://nodei.co/npm/uber-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/uber-cli/)
+
 ## Introduction
 Clearly, I'm a lazy person (just look at what this tool does - it helps me
 figure out if I should order *a car to pick me up and drive me to where I want to go*).
