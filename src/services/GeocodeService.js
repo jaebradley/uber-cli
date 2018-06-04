@@ -1,6 +1,6 @@
 import GoogleMapsClient from '@google/maps';
 
-export default class GeocodeService {
+class GeocodeService {
   constructor() {
     this.googleMapsClient = GoogleMapsClient.createClient({
       key: 'AIzaSyBfyXZ3kDp03V_o7_mak0wxVU4B2Zcl0Ak',
@@ -19,15 +19,16 @@ export default class GeocodeService {
     });
   }
 
-  getLocations(address) {
-    return this.getData(address)
-      .then(response => response.results.map(result => ({
-        name: result['formatted_address'],
-        coordinate: {
-          latitude: result.geometry.location.lat,
-          longitude: result.geometry.location.lng,
-        },
-      }))
-    );
+  async getLocations(address) {
+    const { results } = await this.getData(address);
+    return results.map(result => ({
+      name: result['formatted_address'],
+      coordinate: {
+        latitude: result.geometry.location.lat,
+        longitude: result.geometry.location.lng,
+      },
+    }));
   }
 }
+
+export default GeocodeService;
