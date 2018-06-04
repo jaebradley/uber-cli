@@ -2,7 +2,6 @@ import { Map } from 'immutable';
 
 import DistanceUnit from '../../../data/DistanceUnit';
 import Duration from '../../../data/Duration';
-import PriceRange from '../../../data/PriceRange';
 import TimeUnit from '../../../data/TimeUnit';
 import TripPriceEstimate from '../../../data/TripPriceEstimate';
 import Utilities from '../../Utilities';
@@ -24,11 +23,11 @@ export default class TripPriceEstimateTranslator {
       unit: TimeUnit.SECOND,
     });
 
-    const range = new PriceRange({
+    const range = {
       high: estimate[TripPriceEstimateTranslator.getHighEstimateFieldName()],
       low: estimate[TripPriceEstimateTranslator.getLowEstimateFieldName()],
       currencyCode: estimate[TripPriceEstimateTranslator.getCurrencyCodeFieldName()],
-    });
+    };
 
     let args = Map({
       productName: estimate[TripPriceEstimateTranslator.getProductNameFieldName()],

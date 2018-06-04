@@ -6,7 +6,6 @@ import { Map } from 'immutable';
 
 import DistanceUnit from '../../../../src/data/DistanceUnit';
 import Duration from '../../../../src/data/Duration';
-import PriceRange from '../../../../src/data/PriceRange';
 import TimeUnit from '../../../../src/data/TimeUnit';
 import TripPriceEstimate from '../../../../src/data/TripPriceEstimate';
 
@@ -140,11 +139,11 @@ describe('Trip Price Estimate Translation', () => {
         length: duration,
         unit: TimeUnit.SECOND,
       }),
-      range: new PriceRange({
+      range: {
         high: highEstimate,
         low: lowEstimate,
         currencyCode,
-      }),
+      },
     });
     const argsWithSurgeMultiplier = args.set('surgeMultiplier', surgeMultiplier);
 
