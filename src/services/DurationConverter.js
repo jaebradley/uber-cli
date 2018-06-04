@@ -1,7 +1,6 @@
 import convert from 'convert-units';
 import { Map } from 'immutable';
 
-import Duration from '../data/Duration';
 import TimeUnit from '../data/TimeUnit';
 
 export default class DurationConverter {
@@ -17,10 +16,10 @@ export default class DurationConverter {
     const fromUnitIdentifier = this.getUnitConversionIdentifier(duration.unit);
     const toUnitIdentifier = this.getUnitConversionIdentifier(toUnit);
     const convertedLength = convert(duration.length).from(fromUnitIdentifier).to(toUnitIdentifier);
-    return new Duration({
+    return {
       length: convertedLength,
       unit: toUnit,
-    });
+    };
   }
 
   getUnitConversionIdentifier(unit) {

@@ -1,4 +1,3 @@
-import Duration from '../../../data/Duration';
 import TimeUnit from '../../../data/TimeUnit';
 import PickupTimeEstimate from '../../../data/PickupTimeEstimate';
 
@@ -10,10 +9,10 @@ export default class PickupTimeEstimateTranslator {
 
     return new PickupTimeEstimate({
       productName: estimate[PickupTimeEstimateTranslator.getProductNameFieldName()],
-      estimatedDuration: new Duration({
+      estimatedDuration: {
         length: estimate[PickupTimeEstimateTranslator.getEstimateFieldName()],
         unit: TimeUnit.SECOND,
-      }),
+      },
     });
   }
 
