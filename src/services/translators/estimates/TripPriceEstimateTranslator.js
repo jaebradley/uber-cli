@@ -2,7 +2,6 @@ import { Map } from 'immutable';
 
 import DistanceUnit from '../../../data/DistanceUnit';
 import TimeUnit from '../../../data/TimeUnit';
-import TripPriceEstimate from '../../../data/TripPriceEstimate';
 import Utilities from '../../Utilities';
 
 export default class TripPriceEstimateTranslator {
@@ -39,7 +38,7 @@ export default class TripPriceEstimateTranslator {
       args = args.set('surgeMultiplier', estimate[TripPriceEstimateTranslator.getSurgeMultiplierFieldName()]);
     }
 
-    return new TripPriceEstimate(args);
+    return args;
   }
 
   isValid(estimate) {

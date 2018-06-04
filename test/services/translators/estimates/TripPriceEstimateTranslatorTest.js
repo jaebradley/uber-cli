@@ -6,7 +6,6 @@ import { Map } from 'immutable';
 
 import DistanceUnit from '../../../../src/data/DistanceUnit';
 import TimeUnit from '../../../../src/data/TimeUnit';
-import TripPriceEstimate from '../../../../src/data/TripPriceEstimate';
 
 import TripPriceEstimateTranslator from '../../../../src/services/translators/estimates/TripPriceEstimateTranslator';
 
@@ -156,13 +155,13 @@ describe('Trip Price Estimate Translation', () => {
     describe('Valid', () => {
       it('translates valid estimate without surge multiplier', () => {
         sandbox.stub(translator, 'isValid').returns(true);
-        const expected = new TripPriceEstimate(args);
+        const expected = args;
         expect(translator.translate(estimateWithoutSurgeMultiplier)).to.eql(expected);
       });
 
       it('translates valid estimate with surge multiplier', () => {
         sandbox.stub(translator, 'isValid').returns(true);
-        const expected = new TripPriceEstimate(argsWithSurgeMultiplier);
+        const expected = argsWithSurgeMultiplier;
         expect(translator.translate(estimateWithSurgeMultiplier)).to.eql(expected);
       });
     });
