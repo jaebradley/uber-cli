@@ -1,10 +1,13 @@
 import { Record } from 'immutable';
 
-import Duration from './Duration';
+import TimeUnit from './TimeUnit';
 
 const defaults = {
   productName: '',
-  estimatedDuration: new Duration(),
+  estimatedDuration: {
+    length: 0,
+    unit: TimeUnit.SECOND,
+  },
 };
 
 export default class PickupTimeEstimate extends Record(defaults) {}

@@ -5,7 +5,6 @@ import sinonChai from 'sinon-chai';
 import { Map } from 'immutable';
 
 import DistanceUnit from '../../../../src/data/DistanceUnit';
-import Duration from '../../../../src/data/Duration';
 import TimeUnit from '../../../../src/data/TimeUnit';
 import TripPriceEstimate from '../../../../src/data/TripPriceEstimate';
 
@@ -135,10 +134,10 @@ describe('Trip Price Estimate Translation', () => {
         value: distance,
         unit: DistanceUnit.MILE,
       },
-      duration: new Duration({
+      duration: {
         length: duration,
         unit: TimeUnit.SECOND,
-      }),
+      },
       range: {
         high: highEstimate,
         low: lowEstimate,

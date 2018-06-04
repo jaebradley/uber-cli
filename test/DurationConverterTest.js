@@ -3,7 +3,6 @@ import chaiImmutable from 'chai-immutable';
 
 import { Map } from 'immutable';
 
-import Duration from '../src/data/Duration';
 import TimeUnit from '../src/data/TimeUnit';
 
 import DurationConverter from '../src/services/DurationConverter';
@@ -15,10 +14,10 @@ const expect = chai.expect;
 describe('Duration converter', () => {
   const converter = new DurationConverter();
   const length = 60;
-  const durationInSeconds = new Duration({
+  const durationInSeconds = {
     length,
     unit: TimeUnit.SECOND,
-  });
+  };
 
   it('validates construction', () => {
     const expected = {};

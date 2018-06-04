@@ -1,7 +1,7 @@
 import { Record } from 'immutable';
 
 import DistanceUnit from './DistanceUnit';
-import Duration from './Duration';
+import TimeUnit from './TimeUnit';
 
 const defaults = {
   productName: '',
@@ -14,7 +14,10 @@ const defaults = {
     high: 0,
     currencyCode: 'USD',
   },
-  duration: new Duration(),
+  duration: {
+    length: 0,
+    unit: TimeUnit.SECOND,
+  },
   // wont show up unless > 1
   surgeMultiplier: 1,
 };

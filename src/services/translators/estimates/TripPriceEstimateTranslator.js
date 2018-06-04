@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 
 import DistanceUnit from '../../../data/DistanceUnit';
-import Duration from '../../../data/Duration';
 import TimeUnit from '../../../data/TimeUnit';
 import TripPriceEstimate from '../../../data/TripPriceEstimate';
 import Utilities from '../../Utilities';
@@ -18,10 +17,10 @@ export default class TripPriceEstimateTranslator {
     };
 
     // Uber returns duration in seconds
-    const duration = new Duration({
+    const duration = {
       length: estimate[TripPriceEstimateTranslator.getDurationFieldName()],
       unit: TimeUnit.SECOND,
-    });
+    };
 
     const range = {
       high: estimate[TripPriceEstimateTranslator.getHighEstimateFieldName()],
