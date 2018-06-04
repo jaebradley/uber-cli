@@ -1,5 +1,3 @@
-import { List, Map } from 'immutable';
-
 export default class PickupTimeEstimatesTableRowsBuilder {
   constructor(durationFormatter) {
     this.durationFormatter = durationFormatter;
@@ -7,11 +5,11 @@ export default class PickupTimeEstimatesTableRowsBuilder {
 
   build(estimates) {
     const estimatesGroupedByTime = this.groupByTime(estimates);
-    return List(estimatesGroupedByTime.entrySeq().map(entry => List.of(entry[0], entry[1].join(', '))));
+    return estimatesGroupedByTime.entrySeq().map(entry => [entry[0], entry[1]].join(', '));
   }
 
   groupByTime(estimates) {
-    let rows = Map();
+    let rows = {};
     estimates.forEach((estimate) => {
       const formattedDuration = this.durationFormatter.format(estimate.estimatedDuration);
 

@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import BaseSymbolService from './BaseSymbolService';
 import EmojiService from './EmojiService';
 import TextSymbolService from './TextSymbolService';
@@ -17,7 +15,7 @@ export default class SymbolService extends BaseSymbolService {
   }
 
   static getEmojiSupportedOperatingSystems() {
-    return List.of('darwin');
+    return ['darwin'];
   }
 
   getVehicleSymbol() {

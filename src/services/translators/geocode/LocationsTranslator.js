@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 export default class LocationsTranslator {
   constructor(locationTranslator) {
     this.STATUS_FIELD_NAME = 'status';
@@ -15,7 +13,7 @@ export default class LocationsTranslator {
 
     const results = json[this.RESULTS_FIELD_NAME];
 
-    return List(results.map(result => this.locationTranslator.translate(result)));
+    return results.map(result => this.locationTranslator.translate(result));
   }
 
   isValid(json) {

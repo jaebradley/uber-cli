@@ -1,5 +1,4 @@
 import convert from 'convert-units';
-import { Map } from 'immutable';
 
 import DistanceUnit from '../data/DistanceUnit';
 
@@ -9,7 +8,7 @@ export default class DistanceConverter {
     unitConversionIdentifier[DistanceUnit.MILE.name] = 'mi';
     unitConversionIdentifier[DistanceUnit.KILOMETER.name] = 'm';
 
-    this.unitConversionIdentifier = Map(unitConversionIdentifier);
+    this.unitConversionIdentifier = unitConversionIdentifier;
   }
 
   convert(distance, toUnit) {

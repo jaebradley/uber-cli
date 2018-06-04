@@ -1,15 +1,7 @@
 /* eslint-disable no-console */
 
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chaiImmutable from 'chai-immutable';
-
 import UberService from '../src/services/UberService';
 import DistanceUnit from '../src/data/DistanceUnit';
-
-chai.use(chaiAsPromised);
-chai.use(chaiImmutable);
-chai.should();
 
 describe('Test Uber Service', () => {
   const service = new UberService();

@@ -1,15 +1,5 @@
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-
-import { Map } from 'immutable';
-
 import TimeUnit from '../src/data/TimeUnit';
-
 import DurationConverter from '../src/services/DurationConverter';
-
-chai.use(chaiImmutable);
-
-const expect = chai.expect;
 
 describe('Duration converter', () => {
   const converter = new DurationConverter();

@@ -1,15 +1,5 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List } from 'immutable';
-
 import TripPriceEstimateTranslator from '../../../../src/services/translators/estimates/TripPriceEstimateTranslator';
 import TripPriceEstimatesTranslator from '../../../../src/services/translators/estimates/TripPriceEstimatesTranslator';
-
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Trip Price Estimates Translation', () => {
   let sandbox;

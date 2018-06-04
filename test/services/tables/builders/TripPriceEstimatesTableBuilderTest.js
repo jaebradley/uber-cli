@@ -1,22 +1,11 @@
 /* eslint-disable no-console */
 
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
 import Table from 'cli-table2';
-import { List, Map } from 'immutable';
 
 import TripPriceEstimateRowFormatter from '../../../../src/services/tables/TripPriceEstimateRowFormatter';
 import TripPriceEstimatesTableBuilder from '../../../../src/services/tables/builders/TripPriceEstimatesTableBuilder';
 
 import SymbolService from '../../../../src/services/symbols/SymbolService';
-
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Trip Price Estimates Table Builder', () => {
   let sandbox;

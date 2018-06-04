@@ -1,15 +1,6 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List } from 'immutable';
-
 import PickupTimeEstimateTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimateTranslator';
 import PickupTimeEstimatesTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimatesTranslator';
 
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Trip Duration Estimats Translation', () => {
   const testValue = 'jaebaebae';

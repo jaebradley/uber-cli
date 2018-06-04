@@ -1,18 +1,7 @@
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List } from 'immutable';
-
 import EmojiService from '../../../src/services/symbols/EmojiService';
 import TextSymbolService from '../../../src/services/symbols/TextSymbolService';
 import SymbolService from '../../../src/services/symbols/SymbolService';
 
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('SymbolService Test', () => {
   let originalPlatform;

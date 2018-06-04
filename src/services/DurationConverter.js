@@ -1,5 +1,4 @@
 import convert from 'convert-units';
-import { Map } from 'immutable';
 
 import TimeUnit from '../data/TimeUnit';
 
@@ -9,7 +8,7 @@ export default class DurationConverter {
     durationUnitAbbreviations[TimeUnit.SECOND.name] = 's';
     durationUnitAbbreviations[TimeUnit.MINUTE.name] = 'min';
 
-    this.durationUnitAbbreviations = Map(durationUnitAbbreviations);
+    this.durationUnitAbbreviations = durationUnitAbbreviations;
   }
 
   convert(duration, toUnit) {

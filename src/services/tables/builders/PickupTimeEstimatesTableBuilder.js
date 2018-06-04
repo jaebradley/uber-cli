@@ -1,5 +1,4 @@
 import Table from 'cli-table2';
-import { List, Map } from 'immutable';
 
 export default class PickupTimeEstimatesTableBuilder {
   constructor(rowsBuilder, symbolService) {
@@ -9,39 +8,39 @@ export default class PickupTimeEstimatesTableBuilder {
 
   build(estimates) {
     const table = this.buildInitialTable(estimates.location.name);
-    this.rowsBuilder.build(estimates.estimates).forEach(row => table.push(row.toJS()));
+    this.rowsBuilder.build(estimates.estimates).forEach(row => table.push(row));
     return table.toString();
   }
 
   getTableHeaders() {
-    return List.of(
+    return [
       this.symbolService.getDurationSymbol(),
       this.symbolService.getVehicleSymbol(),
-    );
+    ];
   }
 
   getFormattedLocation(locationName) {
-    return List.of(
-      Map({
+    return [
+      {
         colSpan: 2,
         content: `${this.symbolService.getOriginSymbol()} ${locationName}`,
         hAlign: 'center',
-      }),
-    );
+      },
+    ];
   }
 
   getFormattedHeaders() {
-    return List(this.getTableHeaders()
-      .map(header => Map({
+    return this.getTableHeaders()
+      .map(header => ({
         content: header,
         hAlign: 'center',
-      })));
+      }));
   }
 
   buildInitialTable(locationName) {
     const table = new Table();
-    table.push(this.getFormattedLocation(locationName).toJS());
-    table.push(this.getFormattedHeaders().toJS());
+    table.push(this.getFormattedLocation(locationName));
+    table.push(this.getFormattedHeaders());
     return table;
   }
 }

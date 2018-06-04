@@ -1,10 +1,3 @@
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List, Map } from 'immutable';
-
 import DistanceUnit from '../../../src/data/DistanceUnit';
 
 import DistanceConverter from '../../../src/services/DistanceConverter';
@@ -12,11 +5,6 @@ import DurationConverter from '../../../src/services/DurationConverter';
 import DurationFormatter from '../../../src/services/DurationFormatter';
 import TripPriceEstimateRowFormatter from '../../../src/services/tables/TripPriceEstimateRowFormatter';
 import SymbolService from '../../../src/services/symbols/SymbolService';
-
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Trip Price Estimate Row Formatter', () => {
   let sandbox;
