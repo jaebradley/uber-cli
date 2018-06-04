@@ -2,7 +2,6 @@ import { Record } from 'immutable';
 
 import DistanceUnit from './DistanceUnit';
 import Duration from './Duration';
-import PriceRange from './PriceRange';
 
 const defaults = {
   productName: '',
@@ -10,7 +9,11 @@ const defaults = {
     value: 0,
     unit: DistanceUnit.MILE,
   },
-  range: new PriceRange(),
+  range: {
+    low: 0,
+    high: 0,
+    currencyCode: 'USD',
+  },
   duration: new Duration(),
   // wont show up unless > 1
   surgeMultiplier: 1,
