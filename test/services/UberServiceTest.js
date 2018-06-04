@@ -9,7 +9,6 @@ import sinonChai from 'sinon-chai';
 import { List } from 'immutable';
 
 import TimeEstimates from '../../src/data/TimeEstimates';
-import PriceEstimates from '../../src/data/PriceEstimates';
 
 import UberService from '../../src/services/UberService';
 
@@ -63,11 +62,11 @@ describe('Uber Service', () => {
       const firstLocation = sinon.stub(uberService, 'getFirstLocation').returns(Promise.resolve('jaebaebae'));
       const clientPriceEstimation = sinon.stub(uberService.client, 'getPriceEstimates').returns(Promise.resolve({}));
       const priceEstimatesTranslation = sinon.stub(uberService.tripPriceEstimatesTranslator, 'translate').returns(Promise.resolve('bae jadley'));
-      const expected = new PriceEstimates({
+      const expected = {
         start: 'jaebaebae',
         end: 'jaebaebae',
         estimates: 'bae jadley',
-      });
+      };
       expect(uberService.getPriceEstimates({ startAddress: 'jae', endAddress: 'baebae' })).to.eventually.eql(expected);
 
       firstLocation.restore();
