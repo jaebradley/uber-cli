@@ -1,5 +1,4 @@
 import DistanceUnit from '../data/DistanceUnit';
-import PriceEstimateQuery from '../data/PriceEstimateQuery';
 import UberService from './UberService';
 import DistanceConverter from './DistanceConverter';
 import DurationConverter from './DurationConverter';
@@ -41,10 +40,10 @@ export default class CommandExecutionService {
       throw new TypeError(`Unknown distance unit: ${distanceUnitName}`);
     }
 
-    const query = new PriceEstimateQuery({
+    const query = {
       startAddress,
       endAddress,
-    });
+    };
 
     return this.uberService.getPriceEstimates(query)
       .then(estimates => this.tripPriceEstimatesTableBuilder.build(estimates, distanceUnit));
