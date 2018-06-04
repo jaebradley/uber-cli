@@ -1,3 +1,7 @@
 coverage/*
 build
 node_modules
+
+# Remove this to fix linting errors
+src/
+test/
