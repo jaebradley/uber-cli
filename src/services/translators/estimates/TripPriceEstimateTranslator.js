@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 
-import Distance from '../../../data/Distance';
 import DistanceUnit from '../../../data/DistanceUnit';
 import Duration from '../../../data/Duration';
 import PriceRange from '../../../data/PriceRange';
@@ -14,10 +13,10 @@ export default class TripPriceEstimateTranslator {
       throw new Error(`invalid estimate: ${estimate}`);
     }
 
-    const distance = new Distance({
+    const distance = {
       value: estimate[TripPriceEstimateTranslator.getDistanceFieldName()],
       unit: DistanceUnit.MILE,
-    });
+    };
 
     // Uber returns duration in seconds
     const duration = new Duration({

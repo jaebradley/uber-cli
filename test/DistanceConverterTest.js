@@ -2,7 +2,6 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import Distance from '../src/data/Distance';
 import DistanceUnit from '../src/data/DistanceUnit';
 
 import DistanceConverter from '../src/services/DistanceConverter';
@@ -34,14 +33,14 @@ describe('Distance converter', () => {
   });
 
   const distance = 1.234;
-  const distanceInMiles = new Distance({
+  const distanceInMiles = {
     value: distance,
     unit: DistanceUnit.MILE,
-  });
-  const distanceInKilometers = new Distance({
+  };
+  const distanceInKilometers = {
     value: distance / 1000,
     unit: DistanceUnit.KILOMETER,
-  });
+  };
 
   describe('converts successfully', () => {
     it('converts miles', () => {
