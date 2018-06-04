@@ -1,17 +1,7 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { Map } from 'immutable';
-
 import DistanceUnit from '../../../../src/data/DistanceUnit';
 import TimeUnit from '../../../../src/data/TimeUnit';
 
 import TripPriceEstimateTranslator from '../../../../src/services/translators/estimates/TripPriceEstimateTranslator';
-
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Trip Price Estimate Translation', () => {
   let sandbox;

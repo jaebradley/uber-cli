@@ -1,18 +1,6 @@
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List, Map } from 'immutable';
-
 import DurationConverter from '../../../src/services/DurationConverter';
 import DurationFormatter from '../../../src/services/DurationFormatter';
 import PickupTimeEstimatesTableRowsBuilder from '../../../src/services/tables/PickupTimeEstimatesTableRowsBuilder';
-
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Pickup Time Estimates Table Rows Builder', () => {
   const durationConverter = new DurationConverter();

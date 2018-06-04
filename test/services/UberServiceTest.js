@@ -1,20 +1,4 @@
-'use es6';
-
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
-import { List } from 'immutable';
-
 import UberService from '../../src/services/UberService';
-
-chai.use(chaiAsPromised);
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Uber Service', () => {
   const uberService = new UberService();

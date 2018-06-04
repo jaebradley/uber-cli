@@ -1,5 +1,3 @@
-import { List, Map } from 'immutable';
-
 import DistanceUnit from '../../data/DistanceUnit';
 
 export default class TripPriceEstimateRowFormatter {
@@ -8,20 +6,20 @@ export default class TripPriceEstimateRowFormatter {
     distanceUnitAbbreviations[DistanceUnit.MILE.name] = 'mi';
     distanceUnitAbbreviations[DistanceUnit.KILOMETER.name] = 'km';
 
-    this.distanceUnitAbbreviations = Map(distanceUnitAbbreviations);
+    this.distanceUnitAbbreviations = distanceUnitAbbreviations;
     this.distanceConverter = distanceConverter;
     this.durationFormatter = durationFormatter;
     this.symbolService = symbolService;
   }
 
   format(estimate, rowDistanceUnit) {
-    return List.of(
+    return [
       estimate.productName,
       this.formatRange(estimate.range),
       this.formatDistance(estimate.distance, rowDistanceUnit),
       this.durationFormatter.format(estimate.duration),
       this.formatSurgeMultiplier(estimate.surgeMultiplier),
-    );
+    ];
   }
 
   formatRange(range) {

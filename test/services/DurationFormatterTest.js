@@ -1,17 +1,7 @@
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
 import TimeUnit from '../../src/data/TimeUnit';
 
 import DurationConverter from '../../src/services/DurationConverter';
 import DurationFormatter from '../../src/services/DurationFormatter';
-
-chai.use(chaiImmutable);
-chai.use(sinonChai);
-
-const expect = chai.expect;
 
 describe('Duration Formatter', () => {
   const converter = new DurationConverter();

@@ -1,12 +1,6 @@
 /* eslint-disable no-console */
 
-import chai from 'chai';
-import chaiImmutable from 'chai-immutable';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-
 import Table from 'cli-table2';
-import { List, Map } from 'immutable';
 
 import PickupTimeEstimatesTableRowsBuilder from '../../../../src/services/tables/PickupTimeEstimatesTableRowsBuilder';
 import PickupTimeEstimatesTableBuilder from '../../../../src/services/tables/builders/PickupTimeEstimatesTableBuilder';

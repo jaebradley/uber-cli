@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 export default class PickupTimeEstimatesTranslator {
   constructor(estimateTranslator) {
     this.estimateTranslator = estimateTranslator;
@@ -12,7 +10,7 @@ export default class PickupTimeEstimatesTranslator {
 
     const estimatedDurations = estimates[PickupTimeEstimatesTranslator.getEstimatedDurationsFieldName()]; // eslint-disable-line max-len
 
-    return List(estimatedDurations.map(estimatedDuration => this.estimateTranslator.translate(estimatedDuration))); // eslint-disable-line max-len
+    return estimatedDurations.map(estimatedDuration => this.estimateTranslator.translate(estimatedDuration)); // eslint-disable-line max-len
   }
 
   isValid(estimates) {

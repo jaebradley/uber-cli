@@ -1,5 +1,4 @@
 import Table from 'cli-table2';
-import { List, Map } from 'immutable';
 
 export default class TripPriceEstimatesTableBuilder {
   constructor(rowFormatter, symbolService) {
@@ -11,11 +10,11 @@ export default class TripPriceEstimatesTableBuilder {
     const table = this.buildInitialTable();
     estimates.estimates.forEach((estimate) => {
       if (estimate.productName !== 'TAXI') {
-        table.push(this.rowFormatter.format(estimate, presentationDistanceUnit).toJS());
+        table.push(this.rowFormatter.format(estimate, presentationDistanceUnit));
       }
     });
-    table.push(this.buildLocationRow(estimates.start.name, false).toJS());
-    table.push(this.buildLocationRow(estimates.end.name, true).toJS());
+    table.push(this.buildLocationRow(estimates.start.name, false));
+    table.push(this.buildLocationRow(estimates.end.name, true));
     return table.toString();
   }
 
@@ -31,23 +30,23 @@ export default class TripPriceEstimatesTableBuilder {
 
   buildInitialTable() {
     const table = new Table();
-    const formattedHeaders = List(this.getTableHeaders().map(header => Map({ content: header, hAlign: 'center' })));
-    table.push(formattedHeaders.toJS());
+    const formattedHeaders = this.getTableHeaders().map(header => ({ content: header, hAlign: 'center' }));
+    table.push(formattedHeaders);
     return table;
   }
 
   buildLocationRow(name, isEnd) {
-    return List.of(
-      Map({
+    return [
+      {
         colSpan: 1,
         content: this.getEndSymbol(isEnd),
         hAlign: 'center',
-      }),
-      Map({
+      },
+      {
         colSpan: 4,
         content: name,
-      }),
-    );
+      },
+    ];
   }
 
   getEndSymbol(isEnd) {

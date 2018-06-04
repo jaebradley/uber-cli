@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 export default class TripPriceEstimatesTranslator {
   constructor(tripPriceEstimateTranslator) {
     this.tripPriceEstimateTranslator = tripPriceEstimateTranslator;
@@ -12,7 +10,7 @@ export default class TripPriceEstimatesTranslator {
 
     const priceEstimates = estimates[TripPriceEstimatesTranslator.getPricesFieldName()];
 
-    return List(priceEstimates.map(priceEstimate => this.tripPriceEstimateTranslator.translate(priceEstimate))); // eslint-disable-line max-len
+    return priceEstimates.map(priceEstimate => this.tripPriceEstimateTranslator.translate(priceEstimate)); // eslint-disable-line max-len
   }
 
   isValid(estimates) {

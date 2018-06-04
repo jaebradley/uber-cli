@@ -1,16 +1,5 @@
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chaiImmutable from 'chai-immutable';
-
-import { List } from 'immutable';
-
 import GeocodeService from '../src/services/GeocodeService';
-
 import geocodeFile from './files/geocode.json';
-
-chai.use(chaiAsPromised);
-chai.use(chaiImmutable);
-chai.should();
 
 describe('Test Geocode Service', () => {
   const service = new GeocodeService();

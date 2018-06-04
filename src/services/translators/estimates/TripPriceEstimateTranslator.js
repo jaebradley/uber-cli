@@ -1,5 +1,3 @@
-import { Map } from 'immutable';
-
 import DistanceUnit from '../../../data/DistanceUnit';
 import TimeUnit from '../../../data/TimeUnit';
 import Utilities from '../../Utilities';
@@ -27,12 +25,12 @@ export default class TripPriceEstimateTranslator {
       currencyCode: estimate[TripPriceEstimateTranslator.getCurrencyCodeFieldName()],
     };
 
-    let args = Map({
+    let args = {
       productName: estimate[TripPriceEstimateTranslator.getProductNameFieldName()],
       distance,
       duration,
       range,
-    });
+    };
 
     if (TripPriceEstimateTranslator.getSurgeMultiplierFieldName() in estimate) {
       args = args.set('surgeMultiplier', estimate[TripPriceEstimateTranslator.getSurgeMultiplierFieldName()]);
