@@ -4,7 +4,6 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiImmutable from 'chai-immutable';
 
-import PriceEstimateQuery from '../src/data/PriceEstimateQuery';
 import UberService from '../src/services/UberService';
 import DistanceUnit from '../src/data/DistanceUnit';
 
@@ -16,11 +15,11 @@ describe('Test Uber Service', () => {
   const service = new UberService();
   const address = '25 first street cambridge ma';
   const address2 = '114 line street somerville ma';
-  const priceEstimateQuery = new PriceEstimateQuery({
+  const priceEstimateQuery = {
     startAddress: address,
     endAddress: address2,
     distanceUnit: DistanceUnit.MILE,
-  });
+  };
 
   it('tests time estimates fulfillment', () => service.getTimeEstimates(address).should.be.fulfilled);
 
