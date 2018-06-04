@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import TimeUnit from '../../../../src/data/TimeUnit';
-import PickupTimeEstimate from '../../../../src/data/PickupTimeEstimate';
 
 import PickupTimeEstimateTranslator from '../../../../src/services/translators/estimates/PickupTimeEstimateTranslator';
 
@@ -52,13 +51,13 @@ describe('Pickup Time Estimate Translation', () => {
     });
 
     it('translates valid json', () => {
-      const expected = new PickupTimeEstimate({
+      const expected = {
         productName,
         estimatedDuration: {
           length: estimateSeconds,
           unit: TimeUnit.SECOND,
         },
-      });
+      };
       const isValid = sinon.stub(translator, 'isValid').returns(true);
       expect(translator.translate(estimate)).to.eql(expected);
       isValid.restore();

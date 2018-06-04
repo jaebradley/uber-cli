@@ -1,5 +1,4 @@
 import TimeUnit from '../../../data/TimeUnit';
-import PickupTimeEstimate from '../../../data/PickupTimeEstimate';
 
 export default class PickupTimeEstimateTranslator {
   translate(estimate) {
@@ -7,13 +6,13 @@ export default class PickupTimeEstimateTranslator {
       throw new Error(`Invalid estimate: ${JSON.stringify(estimate)}`);
     }
 
-    return new PickupTimeEstimate({
+    return {
       productName: estimate[PickupTimeEstimateTranslator.getProductNameFieldName()],
       estimatedDuration: {
         length: estimate[PickupTimeEstimateTranslator.getEstimateFieldName()],
         unit: TimeUnit.SECOND,
       },
-    });
+    };
   }
 
   isValid(estimate) {
