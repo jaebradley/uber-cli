@@ -4,7 +4,6 @@ import sinonChai from 'sinon-chai';
 
 import { Map } from 'immutable';
 
-import Distance from '../../../../src/data/Distance';
 import DistanceUnit from '../../../../src/data/DistanceUnit';
 import Duration from '../../../../src/data/Duration';
 import PriceRange from '../../../../src/data/PriceRange';
@@ -133,10 +132,10 @@ describe('Trip Price Estimate Translation', () => {
   describe('Translate Estimate', () => {
     const args = Map({
       productName,
-      distance: new Distance({
+      distance: {
         value: distance,
         unit: DistanceUnit.MILE,
-      }),
+      },
       duration: new Duration({
         length: duration,
         unit: TimeUnit.SECOND,

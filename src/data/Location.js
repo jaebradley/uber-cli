@@ -1,10 +1,11 @@
 import { Record } from 'immutable';
 
-import Coordinate from './Coordinate';
-
 const defaults = {
   name: '',
-  coordinate: new Coordinate(),
+  coordinate: {
+    latitude: 0,
+    longitude: 0,
+  },
 };
 
 export default class Location extends Record(defaults) {

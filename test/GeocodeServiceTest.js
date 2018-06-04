@@ -4,7 +4,6 @@ import chaiImmutable from 'chai-immutable';
 
 import { List } from 'immutable';
 
-import Coordinate from '../src/data/Coordinate';
 import GeocodeService from '../src/services/GeocodeService';
 import Location from '../src/data/Location';
 
@@ -19,10 +18,10 @@ describe('Test Geocode Service', () => {
   const address = '25 first street cambridge ma';
   const location = new Location({
     name: '25 First St, Cambridge, MA 02141, USA',
-    coordinate: new Coordinate({
+    coordinate: {
       latitude: 42.369695,
       longitude: -71.07800569999999,
-    }),
+    },
   });
   const locations = List.of(location);
 
