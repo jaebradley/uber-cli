@@ -1,4 +1,3 @@
-import Location from '../../../data/Location';
 import Utilities from '../../Utilities';
 
 export default class LocationTranslator {
@@ -16,13 +15,13 @@ export default class LocationTranslator {
     }
 
     const location = json[this.GEOMETRY_ADDRESS_FIELD_NAME][this.LOCATION_FIELD_NAME];
-    return new Location({
+    return {
       name: json[this.FORMATTED_ADDRESS_FIELD_NAME],
       coordinate: {
         latitude: location[this.LATITUDE_FIELD_NAME],
         longitude: location[this.LONGITUDE_FIELD_NAME],
       },
-    });
+    };
   }
 
   isValid(json) {

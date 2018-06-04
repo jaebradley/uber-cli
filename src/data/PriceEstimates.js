@@ -1,10 +1,20 @@
 import { List, Record } from 'immutable';
 
-import Location from './Location';
-
 const defaults = {
-  start: new Location(),
-  end: new Location(),
+  start: {
+    name: '',
+    coordinate: {
+      latitude: 0,
+      longitude: 0,
+    },
+  },
+  end: {
+    name: '',
+    coordinate: {
+      latitude: 0,
+      longitude: 0,
+    },
+  },
   estimates: List(),
 };
 
