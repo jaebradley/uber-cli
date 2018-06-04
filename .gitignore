@@ -58,3 +58,5 @@ typings/
 .env
 
 build/
+
+.DS_Store

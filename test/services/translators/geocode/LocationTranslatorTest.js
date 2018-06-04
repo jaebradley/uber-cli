@@ -4,7 +4,6 @@ import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import Coordinate from '../../../../src/data/Coordinate';
 import Location from '../../../../src/data/Location';
 
 import LocationTranslator from '../../../../src/services/translators/geocode/LocationTranslator';
@@ -78,10 +77,10 @@ describe('Location Translation', () => {
     it('translates valid json', () => {
       const expected = new Location({
         name: 'foo',
-        coordinate: new Coordinate({
+        coordinate: {
           latitude: 1.234,
           longitude: 5.678,
-        }),
+        },
       });
       const isValid = sinon.stub(translator, 'isValid').returns(true);
       expect(translator.translate(json)).to.eql(expected);
