@@ -1,7 +1,6 @@
 import convert from 'convert-units';
 import { Map } from 'immutable';
 
-import Distance from '../data/Distance';
 import DistanceUnit from '../data/DistanceUnit';
 
 export default class DistanceConverter {
@@ -21,17 +20,17 @@ export default class DistanceConverter {
     switch (toUnit) {
       case DistanceUnit.KILOMETER: {
         // Note divided by 1000 because convert library does not have kilometers, so using meters
-        return new Distance({
+        return {
           value: convertedValue / 1000,
           unit: DistanceUnit.KILOMETER,
-        });
+        };
       }
 
       case DistanceUnit.MILE: {
-        return new Distance({
+        return {
           value: convertedValue,
           unit: DistanceUnit.MILE,
-        });
+        };
       }
 
       default: {

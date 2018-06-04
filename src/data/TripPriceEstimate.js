@@ -1,12 +1,15 @@
 import { Record } from 'immutable';
 
-import Distance from './Distance';
+import DistanceUnit from './DistanceUnit';
 import Duration from './Duration';
 import PriceRange from './PriceRange';
 
 const defaults = {
   productName: '',
-  distance: new Distance(),
+  distance: {
+    value: 0,
+    unit: DistanceUnit.MILE,
+  },
   range: new PriceRange(),
   duration: new Duration(),
   // wont show up unless > 1
