@@ -1,5 +1,6 @@
-import { Enum } from 'enumify';
+const DistanceUnit = Object.freeze({
+  MILE: 'MILE',
+  KILOMETER: 'KILOMETER',
+});
 
-export default class DistanceUnit extends Enum {}
-
-DistanceUnit.initEnum(['MILE', 'KILOMETER']);
+export default DistanceUnit;

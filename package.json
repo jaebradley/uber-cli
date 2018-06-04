@@ -13,7 +13,6 @@
     "colors": "^1.1.2 ",
     "commander": "^2.9.0",
     "convert-units": "^2.0.1",
-    "enumify": "^1.0.4",
     "node-emoji": "^1.4.3",
     "uber-client": "^0.0.4"
   },
