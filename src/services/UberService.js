@@ -1,7 +1,6 @@
 import { UberClient } from 'uber-client';
 
 import GeocodeService from './GeocodeService';
-import TimeEstimates from '../data/TimeEstimates';
 import PickupTimeEstimateTranslator from './translators/estimates/PickupTimeEstimateTranslator';
 import PickupTimeEstimatesTranslator from './translators/estimates/PickupTimeEstimatesTranslator';
 import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
@@ -29,7 +28,7 @@ export default class UberService {
   getTimeEstimates(address) {
     return this.getFirstLocation(address)
       .then(location => this.client.getTimeEstimates({ start: location.coordinate })
-        .then(estimates => new TimeEstimates({
+        .then(estimates => ({
           location,
           estimates: this.pickupTimeEstimatesTranslator.translate(estimates),
         })));
