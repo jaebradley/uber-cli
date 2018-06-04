@@ -4,14 +4,13 @@ import GeocodeService from './GeocodeService';
 import PickupTimeEstimateTranslator from './translators/estimates/PickupTimeEstimateTranslator';
 import PickupTimeEstimatesTranslator from './translators/estimates/PickupTimeEstimatesTranslator';
 import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
-import TripPriceEstimatesTranslator from './translators/estimates/TripPriceEstimatesTranslator';
+import translateTripPriceEstimate from './translators/estimates/translateTripPriceEstimate';
 
 export default class UberService {
   constructor() {
     this.client = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
     this.geocodeService = new GeocodeService();
     this.pickupTimeEstimatesTranslator = new PickupTimeEstimatesTranslator(new PickupTimeEstimateTranslator()); // eslint-disable-line max-len
-    this.tripPriceEstimatesTranslator = new TripPriceEstimatesTranslator(new TripPriceEstimateTranslator()); // eslint-disable-line max-len
   }
 
   getFirstLocation(address) {
@@ -44,7 +43,7 @@ export default class UberService {
           .then(response => ({
             start,
             end,
-            estimates: this.tripPriceEstimatesTranslator.translate(response),
+            estimates: response.prices.map(estimate => translateTripPriceEstimate(estimate)),
           })));
   }
 }
