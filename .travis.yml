@@ -13,7 +13,7 @@ jobs:
   include:
     - stage: test
       script:
-        - npm run compile
+        - npm run build
         - npm run lint
         - npm run test
       before_script: greenkeeper-lockfile-update

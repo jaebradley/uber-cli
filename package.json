@@ -22,6 +22,10 @@
     "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.49",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
+    "@commitlint/cli": "^6.0.2",
+    "@commitlint/config-angular": "^6.0.2",
+    "@commitlint/prompt": "^6.0.2",
+    "@commitlint/prompt-cli": "^6.0.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
     "babel-preset-minify": "^0.4.2",
@@ -52,12 +56,12 @@
   "scripts": {
     "codecov": "codecov",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "compile": "babel src/ -d build/ --delete-dir-on-start",
-    "compile:prod": "BABEL_ENV=production npm run compile",
+    "build": "babel src/ -d build/ --delete-dir-on-start",
+    "build:prod": "BABEL_ENV=production npm run compile",
     "lint": "eslint --ext .js .",
     "test": "jest",
     "prepublishOnly": "npm run compile:prod",
-    "semantic-commit": "commit",
+    "gc": "commit",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   }

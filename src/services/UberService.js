@@ -29,7 +29,7 @@ export default class UberService {
   }
 
   async getPriceEstimates({ startAddress, endAddress }) {
-    const [ start, end ] = await Promise.all(this.getFirstLocation(startAddress), this.getFirstLocation(endAddress));
+    const [ start, end ] = await Promise.all([this.getFirstLocation(startAddress), this.getFirstLocation(endAddress)]);
     const estimates = await this.uberClient.getPriceEstimates({ start: start.coordinate, end: end.coordinate });
     return {
       start,
