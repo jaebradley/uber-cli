@@ -4,8 +4,8 @@ import {
   convertDistance,
   convertDuration,
 } from './services/converters';
-import buildTripPriceEstimatesTable from './services/tables/builders/buildTripPriceEstimatesTable';
-import buildPickupTimeEstimatesTable from './services/tables/builders/buildPickupTimeEstimatesTable';
+import { default as buildPriceEstimatesTable } from './services/tables/price/build';
+import { default as buildTimeEstimatesTable } from './services/tables/time/build';
 import symbols from './services/symbols';
 
 const buildPriceEstimates = async ({ startAddress, endAddress, distanceUnitName }) => {
@@ -18,7 +18,7 @@ const buildPriceEstimates = async ({ startAddress, endAddress, distanceUnitName 
   const distanceUnit = distanceUnitName ? DistanceUnit[distanceUnitName.toUpperCase()] : DistanceUnit.MILE;
   const uberService = new UberService();
   const estimates = await uberService.getPriceEstimates({ startAddress, endAddress });
-  console.log(buildTripPriceEstimatesTable({ estimates, presentationUnits: distanceUnit }));
+  console.log(buildPriceEstimatesTable({ estimates, presentationUnits: distanceUnit }));
 }
 
 const buildTimeEstimates = async (address) => {
@@ -28,7 +28,7 @@ const buildTimeEstimates = async (address) => {
 
   const uberService = new UberService();
   const estimates = await uberService.getTimeEstimates(address);
-  console.log(buildPickupTimeEstimatesTable({ estimates: estimates.estimates, location: estimates.location }));
+  console.log(buildTimeEstimatesTable({ estimates: estimates.estimates, location: estimates.location }));
 }
 
 export {
