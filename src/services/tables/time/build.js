@@ -1,6 +1,6 @@
 import Table from 'cli-table2';
 
-import formatDuration from '../../formatDuration';
+import { formatDuration } from '../../formatters';
 import symbols from '../../symbols';
 
 const headers = [ symbols.DURATION, symbols.VEHICLE ]

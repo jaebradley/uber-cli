@@ -5,8 +5,8 @@ import {
   formatSurgeMultiplier,
   formatDistance,
   formatPriceRange,
+  formatDuration,
 } from '../../formatters';
-import formatDuration from '../../formatDuration';
 
 const headers = [
   symbols.VEHICLE,
