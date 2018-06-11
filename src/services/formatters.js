@@ -1,9 +1,4 @@
-import TimeUnit from '../data/TimeUnit';
-import {
-  DISTANCE_UNIT_ABBREVIATIONS,
-  convertDuration,
-  convertDistance,
-} from './converters';
+import { DISTANCE_UNIT_ABBREVIATIONS } from './converters';
 import symbols from './symbols';
 
 const formatSurgeMultiplier = surgeMultiplier => (
@@ -12,11 +7,10 @@ const formatSurgeMultiplier = surgeMultiplier => (
     symbols.NOT_APPLICABLE
 );
 
-const formatDistance = ({ distance, presentationUnits }) => {
+const formatDistance = ({ value, unit }) => {
   // 2 decimal places
-  const convertedDistance = convertDistance({ distance, toUnit: presentationUnits });
-  const roundedDistanceValue = Math.round(convertedDistance.value * 100) / 100;
-  return `${roundedDistanceValue} ${DISTANCE_UNIT_ABBREVIATIONS[convertedDistance.unit]}.`;
+  const roundedDistanceValue = Math.round(value * 100) / 100;
+  return `${roundedDistanceValue} ${DISTANCE_UNIT_ABBREVIATIONS[unit]}.`;
 };
 
 const formatPrice = ({ price, currencyCode }) => (
@@ -30,26 +24,25 @@ const formatPrice = ({ price, currencyCode }) => (
 
 const formatPriceRange = ({ low, high, currencyCode }) => `${formatPrice({ price: low, currencyCode })}-${formatPrice({ price: high, currencyCode })}`;
 
-const formatDuration = (duration) => {
-  const convertedDuration = convertDuration({ duration, toUnit: TimeUnit.SECOND });
-  let seconds = convertedDuration.length;
+const formatSeconds = (seconds) => {
+  let value = seconds;
 
-  if (seconds < 0) {
+  if (value < 0) {
     throw new RangeError('Cannot generate formatted time for negative seconds');
   }
 
-  if (seconds === 0) {
+  if (value === 0) {
     return '0 sec.';
   }
 
-  const days = Math.floor(seconds / 86400);
-  seconds %= 86400;
+  const days = Math.floor(value / 86400);
+  value %= 86400;
 
-  const hours = Math.floor(seconds / 3600);
-  seconds %= 3600;
+  const hours = Math.floor(value / 3600);
+  value %= 3600;
 
-  const minutes = Math.floor(seconds / 60);
-  seconds %= 60;
+  const minutes = Math.floor(value / 60);
+  value %= 60;
 
   let formattedTime = '';
   if (days !== 0) {
@@ -64,8 +57,8 @@ const formatDuration = (duration) => {
     formattedTime += ` ${minutes} min.`;
   }
 
-  if (seconds !== 0) {
-    formattedTime += ` ${seconds} sec.`;
+  if (value !== 0) {
+    formattedTime += ` ${value} sec.`;
   }
 
   // GAWD THIS IS SO FUCKING HACKY I HATE EVERYTHING
@@ -76,5 +69,5 @@ export {
   formatSurgeMultiplier,
   formatDistance,
   formatPriceRange,
-  formatDuration,
+  formatSeconds,
 };

@@ -1,6 +1,8 @@
 import Table from 'cli-table2';
 
-import { formatDuration } from '../../formatters';
+import TimeUnit from '../../../data/TimeUnit';
+import { formatSeconds } from '../../formatters';
+import { convertDuration } from '../../converters';
 import symbols from '../../symbols';
 
 const headers = [symbols.DURATION, symbols.VEHICLE]
@@ -13,7 +15,12 @@ const groupEstimatesByTime = (estimates) => {
   const rows = {};
 
   estimates.forEach(({ estimatedDuration, productName }) => {
-    const formattedDuration = formatDuration(estimatedDuration);
+    const durationInSeconds = convertDuration({
+      duration: estimatedDuration,
+      toUnit: TimeUnit.SECOND,
+    });
+    const seconds = durationInSeconds.length;
+    const formattedDuration = formatSeconds(seconds);
     let productsWithSameDuration = rows[formattedDuration];
 
     if (!productsWithSameDuration) {

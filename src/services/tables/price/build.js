@@ -1,12 +1,18 @@
 import Table from 'cli-table2';
 
+import TimeUnit from '../../../data/TimeUnit';
 import symbols from '../../symbols';
 import {
   formatSurgeMultiplier,
   formatDistance,
   formatPriceRange,
-  formatDuration,
+  formatSeconds,
 } from '../../formatters';
+
+import {
+  convertDuration,
+  convertDistance,
+} from '../../converters';
 
 const headers = [
   symbols.VEHICLE,
@@ -25,11 +31,14 @@ const buildRow = ({ estimate, presentationUnits }) => {
     surgeMultiplier,
   } = estimate;
 
+  const { length: seconds } = convertDuration({ duration, toUnit: TimeUnit.SECOND });
+  const convertedDistance = convertDistance({ distance, toUnit: presentationUnits });
+
   return [
     productName,
     formatPriceRange(range),
-    formatDistance({ distance, presentationUnits }),
-    formatDuration(duration),
+    formatDistance(convertedDistance),
+    formatSeconds(seconds),
     formatSurgeMultiplier(surgeMultiplier),
   ];
 };
