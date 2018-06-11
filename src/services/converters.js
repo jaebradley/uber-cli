@@ -29,10 +29,10 @@ const convertDistance = ({ distance, toUnit }) => ({
     .from(DISTANCE_UNIT_ABBREVIATIONS[distance.unit])
     .to(DISTANCE_UNIT_ABBREVIATIONS[toUnit])) * DISTANCE_UNIT_MULTIPLIER[toUnit],
   unit: toUnit,
-})
+});
 
 export {
   convertDuration,
   convertDistance,
   DISTANCE_UNIT_ABBREVIATIONS,
-}
+};

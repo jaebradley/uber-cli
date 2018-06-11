@@ -3,19 +3,13 @@ import Table from 'cli-table2';
 import { formatDuration } from '../../formatters';
 import symbols from '../../symbols';
 
-const headers = [ symbols.DURATION, symbols.VEHICLE ]
+const headers = [symbols.DURATION, symbols.VEHICLE]
   .map(symbol => ({
     content: symbol,
     hAlign: 'center',
   }));
 
-const buildRows = estimates => {
-  estimates.sort((firstEstimate, secondEstimate) => (firstEstimate.estimatedDuration.length - secondEstimate.estimatedDuration.length));
-  const groupedEstimates = groupEstimatesByTime(estimates);
-  return Object.keys(groupedEstimates).map(key => [ key, groupedEstimates[key].join(', ') ]);
-};
-
-const groupEstimatesByTime = estimates => {
+const groupEstimatesByTime = (estimates) => {
   const rows = {};
 
   estimates.forEach(({ estimatedDuration, productName }) => {
@@ -31,6 +25,15 @@ const groupEstimatesByTime = estimates => {
   });
 
   return rows;
+};
+
+const buildRows = (estimates) => {
+  estimates.sort((
+    firstEstimate,
+    secondEstimate,
+  ) => (firstEstimate.estimatedDuration.length - secondEstimate.estimatedDuration.length));
+  const groupedEstimates = groupEstimatesByTime(estimates);
+  return Object.keys(groupedEstimates).map(key => [key, groupedEstimates[key].join(', ')]);
 };
 
 const build = ({ estimates, location }) => {

@@ -25,7 +25,7 @@ export default class UberService {
     return {
       location,
       estimates: timeEstimates.times.map(estimate => ({
-        productName: estimate['localized_display_name'],
+        productName: estimate.localized_display_name,
         estimatedDuration: {
           length: estimate.estimate,
           unit: TimeUnit.SECOND,
@@ -35,13 +35,20 @@ export default class UberService {
   }
 
   async getPriceEstimates({ startAddress, endAddress }) {
-    const [ start, end ] = await Promise.all([ this.getFirstLocation(startAddress), this.getFirstLocation(endAddress) ]);
-    const estimates = await this.uberClient.getPriceEstimates({ start: start.coordinate, end: end.coordinate });
+    const [start, end] = await Promise.all([
+      this.getFirstLocation(startAddress),
+      this.getFirstLocation(endAddress),
+    ]);
+    const estimates = await this.uberClient.getPriceEstimates({
+      start: start.coordinate,
+      end: end.coordinate,
+    });
+
     return {
       start,
       end,
       estimates: estimates.prices.map(estimate => ({
-        productName: estimate['localized_display_name'],
+        productName: estimate.localized_display_name,
         distance: {
           value: estimate.distance,
           unit: DistanceUnit.MILE,
@@ -51,9 +58,9 @@ export default class UberService {
           unit: TimeUnit.SECOND,
         },
         range: {
-          high: estimate['high_estimate'],
-          low: estimate['low_estimate'],
-          currencyCode: estimate['currency_code'],
+          high: estimate.high_estimate,
+          low: estimate.low_estimate,
+          currencyCode: estimate.currency_code,
         },
         surgeMultiplier: estimate.surgeMultiplier ? estimate.surgeMultiplier : null,
       })),

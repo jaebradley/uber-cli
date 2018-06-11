@@ -22,7 +22,7 @@ class GeocodeService {
   async getLocations(address) {
     const { results } = await this.getData(address);
     return results.map(result => ({
-      name: result['formatted_address'],
+      name: result.formatted_address,
       coordinate: {
         latitude: result.geometry.location.lat,
         longitude: result.geometry.location.lng,

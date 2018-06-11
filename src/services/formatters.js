@@ -1,4 +1,3 @@
-import DistanceUnit from '../data/DistanceUnit';
 import TimeUnit from '../data/TimeUnit';
 import {
   DISTANCE_UNIT_ABBREVIATIONS,
@@ -7,7 +6,7 @@ import {
 } from './converters';
 import symbols from './symbols';
 
-const formatSurgeMultiplier = (surgeMultiplier) => (
+const formatSurgeMultiplier = surgeMultiplier => (
   surgeMultiplier > 1 ?
     `${surgeMultiplier}x ${symbols.SURGE_EXISTS}` :
     symbols.NOT_APPLICABLE
@@ -18,7 +17,7 @@ const formatDistance = ({ distance, presentationUnits }) => {
   const convertedDistance = convertDistance({ distance, toUnit: presentationUnits });
   const roundedDistanceValue = Math.round(convertedDistance.value * 100) / 100;
   return `${roundedDistanceValue} ${DISTANCE_UNIT_ABBREVIATIONS[convertedDistance.unit]}.`;
-}
+};
 
 const formatPrice = ({ price, currencyCode }) => (
   Intl.NumberFormat('en-US', {
@@ -27,11 +26,11 @@ const formatPrice = ({ price, currencyCode }) => (
     minimumFractionDigits: 0,
     currency: currencyCode,
   }).format(price)
-)
+);
 
 const formatPriceRange = ({ low, high, currencyCode }) => `${formatPrice({ price: low, currencyCode })}-${formatPrice({ price: high, currencyCode })}`;
 
-const formatDuration = duration => {
+const formatDuration = (duration) => {
   const convertedDuration = convertDuration({ duration, toUnit: TimeUnit.SECOND });
   let seconds = convertedDuration.length;
 

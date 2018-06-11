@@ -35,7 +35,10 @@ const buildRow = ({ estimate, presentationUnits }) => {
 };
 
 const build = ({ estimates, presentationUnits }) => {
-  estimates.estimates.sort((firstEstimate, secondEstimate) => (firstEstimate.range.low - secondEstimate.range.low));
+  estimates.estimates.sort((
+    firstEstimate,
+    secondEstimate,
+  ) => (firstEstimate.range.low - secondEstimate.range.low));
 
   const {
     estimates: priceEstimates,
