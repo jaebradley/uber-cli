@@ -39,7 +39,7 @@ describe('converters', () => {
       expect(convert).toHaveBeenCalledWith(1);
       expect(from).toHaveBeenCalledWith('mi');
       expect(to).toHaveBeenCalledWith('km');
-      expect(value).toEqual(0.12340000000000001);
+      expect(value).toEqual(1234);
       expect(unit).toEqual(DistanceUnit.KILOMETER);
     });
   });
