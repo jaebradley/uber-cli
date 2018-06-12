@@ -6,6 +6,7 @@ notifications:
   email: true
 node_js:
   - '8'
+install: npm install
 before_install:
   - npm install -g npm@5
   - npm install -g greenkeeper-lockfile@1
