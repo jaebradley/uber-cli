@@ -24,6 +24,6 @@ const TEXT = Object.freeze({
   MAXIMUM_DISTANCE: '100',
 });
 
-const symbols = ['darwin'].indexOf(process.platform) >= 0 ? EMOJIS : TEXT;
+const symbols = ['darwin', 'linux'].indexOf(process.platform) >= 0 ? EMOJIS : TEXT;
 
 export default symbols;
