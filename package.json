@@ -1,7 +1,7 @@
 {
   "name": "uber-cli",
-  "description": "Uber CLI",
-  "version": "0.0.3",
+  "description": "CLI for Uber price and time estimates",
+  "version": "0.0.0-development",
   "author": "Jae Bradley",
   "bin": {
     "uber": "build/executables/uber.js"
@@ -40,7 +40,10 @@
   },
   "homepage": "https://github.com/jaebradley/uber-cli",
   "keywords": [
-    "uber"
+    "uber",
+    "uber cli",
+    "uber price",
+    "uber time"
   ],
   "jest": {
     "testEnvironment": "node",
@@ -61,10 +64,10 @@
     "codecov": "codecov",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "build": "babel src/ -d build/ --delete-dir-on-start",
-    "build:prod": "BABEL_ENV=production npm run compile",
+    "build:prod": "BABEL_ENV=production npm run build",
     "lint": "eslint --ext .js .",
     "test": "jest",
-    "prepublishOnly": "npm run compile:prod",
+    "prepublishOnly": "npm run build:prod",
     "gc": "commit",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
