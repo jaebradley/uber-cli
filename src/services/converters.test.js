@@ -7,6 +7,8 @@ import {
   convertDistance,
 } from './converters';
 
+jest.mock('convert-units');
+
 describe('converters', () => {
   describe('#convertDuration', () => {
     it('converts from seconds to minutes', () => {
