@@ -1,4 +1,4 @@
-const getExpectedTimeOfArrival = jest.fn(() => ({
+const getArrivalTimes = jest.fn(() => ({
   times: [
     {
       localized_display_name: 'first localized display name',
@@ -35,7 +35,7 @@ const getPrices = jest.fn(() => ({
 }));
 
 const constructor = jest.fn(() => ({
-  getExpectedTimeOfArrival,
+  getArrivalTimes,
   getPrices,
 }));
 
@@ -43,6 +43,6 @@ const UberEstimatesClient = constructor;
 
 export default UberEstimatesClient;
 export {
-  getExpectedTimeOfArrival,
+  getArrivalTimes,
   getPrices,
 };
