@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/jaebradley/uber-cli.svg?branch=master)](https://travis-ci.org/jaebradley/uber-cli)
 [![npm version](https://badge.fury.io/js/uber-cli.svg)](https://badge.fury.io/js/uber-cli)
 
-[![NPM](https://nodei.co/npm/uber-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/uber-cli/)
+[![NPM](https://nodei.co/npm/uber-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/uber-cli/) [![Greenkeeper badge](https://badges.greenkeeper.io/jaebradley/uber-cli.svg)](https://greenkeeper.io/)
 
 ## Introduction
 Clearly, I'm a lazy person (just look at what this tool does - it helps me
