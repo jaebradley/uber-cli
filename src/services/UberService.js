@@ -1,52 +1,62 @@
-import { UberClient } from 'uber-client';
+import UberEstimatesClient from 'uber-estimates-client';
 
-import GeocodeService from './GeocodeService';
-import PriceEstimates from '../data/PriceEstimates';
-import TimeEstimates from '../data/TimeEstimates';
-import PickupTimeEstimateTranslator from './translators/estimates/PickupTimeEstimateTranslator';
-import PickupTimeEstimatesTranslator from './translators/estimates/PickupTimeEstimatesTranslator';
-import TripPriceEstimateTranslator from './translators/estimates/TripPriceEstimateTranslator';
-import TripPriceEstimatesTranslator from './translators/estimates/TripPriceEstimatesTranslator';
+import AddressLocator from './AddressLocator';
+import TimeUnit from '../data/TimeUnit';
+import DistanceUnit from '../data/DistanceUnit';
 
 export default class UberService {
   constructor() {
-    this.client = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
-    this.geocodeService = new GeocodeService();
-    this.pickupTimeEstimatesTranslator = new PickupTimeEstimatesTranslator(new PickupTimeEstimateTranslator()); // eslint-disable-line max-len
-    this.tripPriceEstimatesTranslator = new TripPriceEstimatesTranslator(new TripPriceEstimateTranslator()); // eslint-disable-line max-len
+    this.uberEstimatesClient = new UberEstimatesClient({ serverToken: 'We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh' });
+    this.addressLocator = new AddressLocator();
   }
 
-  getFirstLocation(address) {
-    return this.geocodeService.getLocations(address)
-      .then((locations) => {
-        if (locations.isEmpty()) {
-          throw new RangeError(`no locations for address: ${address}`);
-        }
-
-        return locations.first();
-      });
+  async getTimeEstimates(address) {
+    const location = await this.addressLocator.getFirstLocation(address);
+    const timeEstimates = await this.uberEstimatesClient.getExpectedTimeOfArrival({
+      start: location.coordinate,
+    });
+    return {
+      location,
+      estimates: timeEstimates.times.map(estimate => ({
+        productName: estimate.localized_display_name,
+        estimatedDuration: {
+          length: estimate.estimate,
+          unit: TimeUnit.SECOND,
+        },
+      })),
+    };
   }
 
-  getTimeEstimates(address) {
-    return this.getFirstLocation(address)
-      .then(location => this.client.getTimeEstimates({ start: location.coordinate })
-        .then(estimates => new TimeEstimates({
-          location,
-          estimates: this.pickupTimeEstimatesTranslator.translate(estimates),
-        })));
-  }
+  async getPriceEstimates({ startAddress, endAddress }) {
+    const [start, end] = await Promise.all([
+      this.addressLocator.getFirstLocation(startAddress),
+      this.addressLocator.getFirstLocation(endAddress),
+    ]);
+    const estimates = await this.uberEstimatesClient.getPrices({
+      start: start.coordinate,
+      end: end.coordinate,
+    });
 
-  getPriceEstimates(query) {
-    const startLocation = this.getFirstLocation(query.startAddress);
-    const endLocation = this.getFirstLocation(query.endAddress);
-    return Promise.all([startLocation, endLocation])
-      .then(([start, end]) =>
-        this.client
-          .getPriceEstimates({ start: start.coordinate, end: end.coordinate })
-          .then(response => new PriceEstimates({
-            start,
-            end,
-            estimates: this.tripPriceEstimatesTranslator.translate(response),
-          })));
+    return {
+      start,
+      end,
+      estimates: estimates.prices.map(estimate => ({
+        productName: estimate.localized_display_name,
+        distance: {
+          value: estimate.distance,
+          unit: DistanceUnit.MILE,
+        },
+        duration: {
+          length: estimate.duration,
+          unit: TimeUnit.SECOND,
+        },
+        range: {
+          high: estimate.high_estimate,
+          low: estimate.low_estimate,
+          currencyCode: estimate.currency_code,
+        },
+        surgeMultiplier: estimate.surgeMultiplier ? estimate.surgeMultiplier : null,
+      })),
+    };
   }
 }

@@ -1,5 +1,6 @@
-import { Enum } from 'enumify';
+const TimeUnit = Object.freeze({
+  SECOND: 'SECOND',
+  MINUTE: 'MINUTE',
+});
 
-export default class TimeUnit extends Enum {}
-
-TimeUnit.initEnum(['SECOND', 'MINUTE']);
+export default TimeUnit;
