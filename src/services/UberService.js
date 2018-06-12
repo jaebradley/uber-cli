@@ -1,4 +1,4 @@
-import { UberClient } from 'uber-client';
+import UberEstimatesClient from 'uber-estimates-client';
 
 import AddressLocator from './AddressLocator';
 import TimeUnit from '../data/TimeUnit';
@@ -6,13 +6,13 @@ import DistanceUnit from '../data/DistanceUnit';
 
 export default class UberService {
   constructor() {
-    this.uberClient = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
+    this.uberClient = new UberEstimatesClient({ serverToken: 'We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh' });
     this.addressLocator = new AddressLocator();
   }
 
   async getTimeEstimates(address) {
     const location = await this.addressLocator.getFirstLocation(address);
-    const timeEstimates = await this.uberClient.getTimeEstimates({ start: location.coordinate });
+    const timeEstimates = await this.uberClient.getExpectedTimeOfArrival({ start: location.coordinate });
     return {
       location,
       estimates: timeEstimates.times.map(estimate => ({
@@ -30,7 +30,7 @@ export default class UberService {
       this.addressLocator.getFirstLocation(startAddress),
       this.addressLocator.getFirstLocation(endAddress),
     ]);
-    const estimates = await this.uberClient.getPriceEstimates({
+    const estimates = await this.uberClient.getPrices({
       start: start.coordinate,
       end: end.coordinate,
     });
