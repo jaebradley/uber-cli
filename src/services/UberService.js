@@ -12,7 +12,7 @@ export default class UberService {
 
   async getTimeEstimates(address) {
     const location = await this.addressLocator.getFirstLocation(address);
-    const timeEstimates = await this.uberEstimatesClient.getExpectedTimeOfArrival({
+    const timeEstimates = await this.uberEstimatesClient.getArrivalTimes({
       start: location.coordinate,
     });
     return {

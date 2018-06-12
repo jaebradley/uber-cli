@@ -12,7 +12,7 @@
     "cli-table2": "^0.2.0",
     "commander": "^2.9.0",
     "convert-units": "^2.0.1",
-    "uber-estimates-client": "^1.0.0"
+    "uber-estimates-client": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
@@ -20,10 +20,10 @@
     "@babel/plugin-transform-async-to-generator": "^7.0.0-beta.49",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
-    "@commitlint/cli": "^6.0.2",
-    "@commitlint/config-angular": "^6.0.2",
-    "@commitlint/prompt": "^6.0.2",
-    "@commitlint/prompt-cli": "^6.0.2",
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-angular": "^7.0.1",
+    "@commitlint/prompt": "^7.0.0",
+    "@commitlint/prompt-cli": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
     "babel-preset-minify": "^0.4.2",
@@ -32,7 +32,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "^0.14.3",
-    "jest": "^22.1.1",
+    "jest": "^23.1.0",
     "semantic-release": "^15.0.0",
     "travis-deploy-once": "^5.0.0"
   },
