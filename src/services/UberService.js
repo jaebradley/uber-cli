@@ -1,26 +1,17 @@
 import { UberClient } from 'uber-client';
 
-import GeocodeService from './GeocodeService';
+import AddressLocator from './AddressLocator';
 import TimeUnit from '../data/TimeUnit';
 import DistanceUnit from '../data/DistanceUnit';
 
 export default class UberService {
   constructor() {
     this.uberClient = new UberClient('We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh');
-    this.geocodeService = new GeocodeService();
-  }
-
-  async getFirstLocation(address) {
-    const locations = await this.geocodeService.getLocations(address);
-    if (locations.length > 0) {
-      return locations[0];
-    }
-
-    throw new RangeError(`No locations for address: ${address}`);
+    this.addressLocator = new AddressLocator();
   }
 
   async getTimeEstimates(address) {
-    const location = await this.getFirstLocation(address);
+    const location = await this.addressLocator.getFirstLocation(address);
     const timeEstimates = await this.uberClient.getTimeEstimates({ start: location.coordinate });
     return {
       location,
@@ -36,8 +27,8 @@ export default class UberService {
 
   async getPriceEstimates({ startAddress, endAddress }) {
     const [start, end] = await Promise.all([
-      this.getFirstLocation(startAddress),
-      this.getFirstLocation(endAddress),
+      this.addressLocator.getFirstLocation(startAddress),
+      this.addressLocator.getFirstLocation(endAddress),
     ]);
     const estimates = await this.uberClient.getPriceEstimates({
       start: start.coordinate,
