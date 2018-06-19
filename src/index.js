@@ -7,10 +7,9 @@ import {
   promptGoogleMapsAPIToken,
 } from './services/tokenPrompts';
 import {
-  getUberAPIToken,
-  getGoogleMapsAPIToken,
   setUberAPIToken,
   setGoogleMapsAPIToken,
+  getTokens,
 } from './services/tokenStore';
 
 
@@ -39,23 +38,7 @@ const setupTokens = async () => {
   await setupGoogleMapsAPIToken();
 };
 
-const hasTokens = async () => {
-  const [
-    uberAPIToken,
-    googleMapsAPIToken,
-  ] = await Promise.all([
-    getUberAPIToken(),
-    getGoogleMapsAPIToken(),
-  ]);
-
-  return uberAPIToken && googleMapsAPIToken;
-};
-
 const buildPriceEstimates = async ({ startAddress, endAddress, distanceUnitName }) => {
-  if (!await hasTokens()) {
-    await setupTokens();
-  }
-
   if (typeof startAddress !== 'string' || typeof endAddress !== 'string') {
     throw new TypeError('Start and End addresses (-s \'<address>\' -e \'<address>\') are required.');
   }
@@ -63,21 +46,56 @@ const buildPriceEstimates = async ({ startAddress, endAddress, distanceUnitName 
   const distanceUnit = distanceUnitName
     ? DistanceUnit[distanceUnitName.toUpperCase()]
     : DistanceUnit.MILE;
-  const uberService = new UberService();
+
+  let [
+    uberAPIToken,
+    googleMapsAPIToken,
+  ] = await getTokens();
+
+  if (!uberAPIToken) {
+    await setupUberAPIToken();
+  }
+
+  if (!googleMapsAPIToken) {
+    await setupGoogleMapsAPIToken();
+  }
+
+  [
+    uberAPIToken,
+    googleMapsAPIToken,
+  ] = await getTokens();
+
+  const uberService = new UberService({ uberAPIToken, googleMapsAPIToken });
+
   const estimates = await uberService.getPriceEstimates({ startAddress, endAddress });
   console.log(buildPriceEstimatesTable({ estimates, presentationUnits: distanceUnit }));
 };
 
 const buildTimeEstimates = async (address) => {
-  if (!await hasTokens()) {
-    await setupTokens();
-  }
-
   if (typeof address !== 'string') {
     throw new TypeError('Address should be a string');
   }
 
-  const uberService = new UberService();
+  let [
+    uberAPIToken,
+    googleMapsAPIToken,
+  ] = await getTokens();
+
+  if (!uberAPIToken) {
+    await setupUberAPIToken();
+  }
+
+  if (!googleMapsAPIToken) {
+    await setupGoogleMapsAPIToken();
+  }
+
+  [
+    uberAPIToken,
+    googleMapsAPIToken,
+  ] = await getTokens();
+
+  const uberService = new UberService({ uberAPIToken, googleMapsAPIToken });
+
   const estimates = await uberService.getTimeEstimates(address);
   console.log(buildTimeEstimatesTable({
     estimates: estimates.estimates,

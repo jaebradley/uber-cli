@@ -5,9 +5,9 @@ import TimeUnit from '../data/TimeUnit';
 import DistanceUnit from '../data/DistanceUnit';
 
 export default class UberService {
-  constructor() {
-    this.uberEstimatesClient = new UberEstimatesClient({ serverToken: 'We0MNCaIpx00F_TUopt4jgL9BzW3bWWt16aYM4mh' });
-    this.addressLocator = new AddressLocator();
+  constructor({ uberAPIToken, googleMapsAPIToken }) {
+    this.uberEstimatesClient = new UberEstimatesClient({ serverToken: uberAPIToken });
+    this.addressLocator = new AddressLocator(googleMapsAPIToken);
   }
 
   async getTimeEstimates(address) {

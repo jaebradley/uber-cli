@@ -1,9 +1,9 @@
 import GoogleMapsClient from '@google/maps';
 
 class AddressLocator {
-  constructor() {
+  constructor(apiKey) {
     this.googleMapsClient = GoogleMapsClient.createClient({
-      key: 'AIzaSyBfyXZ3kDp03V_o7_mak0wxVU4B2Zcl0Ak',
+      key: apiKey,
       Promise,
     });
   }

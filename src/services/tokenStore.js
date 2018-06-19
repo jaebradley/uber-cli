@@ -11,9 +11,15 @@ const getGoogleMapsAPIToken = () => getPassword('uber-cli', 'Google Maps API Tok
 
 const setGoogleMapsAPIToken = token => replacePassword('uber-cli', 'Google Maps API Token', token);
 
+const getTokens = () => Promise.all([
+  getUberAPIToken(),
+  getGoogleMapsAPIToken(),
+]);
+
 export {
   getUberAPIToken,
   setUberAPIToken,
   getGoogleMapsAPIToken,
   setGoogleMapsAPIToken,
+  getTokens,
 };
