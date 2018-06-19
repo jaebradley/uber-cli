@@ -12,6 +12,8 @@
     "cli-table2": "^0.2.0",
     "commander": "^2.9.0",
     "convert-units": "^2.0.1",
+    "inquirer": "^6.0.0",
+    "keytar": "^4.2.1",
     "uber-estimates-client": "^2.0.0"
   },
   "devDependencies": {
