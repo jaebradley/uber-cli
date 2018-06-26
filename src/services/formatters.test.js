@@ -1,4 +1,6 @@
-import { formatSeconds, formatSurgeMultiplier, formatDistance, formatPriceRange } from './formatters';
+import {
+  formatSeconds, formatSurgeMultiplier, formatDistance, formatPriceRange,
+} from './formatters';
 import DistanceUnit from '../data/DistanceUnit';
 import symbols from './symbols';
 

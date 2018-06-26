@@ -2,9 +2,9 @@ import { DISTANCE_UNIT_ABBREVIATIONS } from './converters';
 import symbols from './symbols';
 
 const formatSurgeMultiplier = surgeMultiplier => (
-  surgeMultiplier > 1 ?
-    `${surgeMultiplier}x ${symbols.SURGE_EXISTS}` :
-    symbols.NOT_APPLICABLE
+  surgeMultiplier > 1
+    ? `${surgeMultiplier}x ${symbols.SURGE_EXISTS}`
+    : symbols.NOT_APPLICABLE
 );
 
 const formatDistance = ({ value, unit }) => {
