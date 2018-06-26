@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 
 import program from 'commander';
-import { buildTimeEstimates } from '../';
+import { buildTimeEstimates } from '..';
 
 program
   .description('Get Time-To-Pickup Estimates')
