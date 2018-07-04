@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.47",
-    "@google/maps": "^0.4.6",
+    "@google/maps": "^0.5.3",
     "cli-table2": "^0.2.0",
     "commander": "^2.9.0",
     "convert-units": "^2.0.1",
