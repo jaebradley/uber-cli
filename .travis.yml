@@ -5,16 +5,16 @@ cache:
 notifications:
   email: true
 node_js:
-  - '8'
+  - 'node'
+  - 'lts/*'
 install: npm install
 before_install:
-  - npm install -g npm@5
   - npm install -g greenkeeper-lockfile@1
 jobs:
   include:
     - stage: test
       script:
-        - npm run build
+        - npm run build:prod
         - npm run lint
         - npm run test
       before_script: greenkeeper-lockfile-update
