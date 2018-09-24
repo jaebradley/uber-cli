@@ -27,7 +27,7 @@
     "ajv": "^5.5.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
-    "babel-preset-minify": "^0.4.3",
+    "babel-preset-minify": "^0.5.0",
     "codecov": "^3.0.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
