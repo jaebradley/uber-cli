@@ -13,5 +13,5 @@ program.version(pkg.version)
       program.outputHelp();
       console.log(`\n Unknown command ${cmd}.`));
       console.log();
-    }); 
+    }) 
   .parse(process.argv);
