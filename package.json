@@ -24,7 +24,7 @@
     "@commitlint/config-angular": "^7.0.1",
     "@commitlint/prompt": "^7.0.0",
     "@commitlint/prompt-cli": "^7.0.0",
-    "ajv": "^5.5.2",
+    "ajv": "^6.9.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
     "babel-preset-minify": "^0.4.3",
