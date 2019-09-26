@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0-beta.56",
     "@google/maps": "^0.5.5",
     "cli-table2": "^0.2.0",
-    "commander": "^2.17.0",
+    "commander": "^3.0.2",
     "convert-units": "^2.3.4",
     "uber-estimates-client": "^2.0.0"
   },
