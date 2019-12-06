@@ -7,7 +7,7 @@
     "uber": "build/executables/uber.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.56",
+    "@babel/runtime": "^7.7.5",
     "@google/maps": "^0.5.5",
     "cli-table2": "^0.2.0",
     "commander": "^2.17.0",
