@@ -34,7 +34,7 @@
     "eslint-plugin-import": "^2.13.0",
     "husky": "^0.14.3",
     "jest": "^23.4.2",
-    "semantic-release": "^15.9.5",
+    "semantic-release": "^16.0.4",
     "travis-deploy-once": "^5.0.2"
   },
   "homepage": "https://github.com/jaebradley/uber-cli",
