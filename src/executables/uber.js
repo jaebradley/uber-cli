@@ -9,9 +9,8 @@ program.version(pkg.version)
   .command('price', 'get price estimate')
   .command('time', 'get time to pickup estimate')
   .arguments('<command>')
-    .action((cmd) => {
-      program.outputHelp();
-      console.log(`\n Unknown command ${cmd}.`));
-      console.log();
-    }) 
+  .action((cmd) => {
+    program.outputHelp();
+    console.log(`\n Unknown command ${cmd}.`);
+  }) 
   .parse(process.argv);
